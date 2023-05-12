@@ -1,0 +1,26 @@
+.swal2-container {
+  z-index: 9999999999;
+}
+
+@media (min-width: 991px) {
+  .swal2-container .swal2-popup {
+    width: 45em;
+  }
+}
+
+.swal2-popup {
+  border-radius: 10px;
+}
+
+.confimation-alert-title {
+  margin-bottom: var(--space-sm);
+  color: var(--dark);
+}
+
+.confimation-alert-desc {
+  color: var(--gray);
+}
+
+.confimation-alert-btns {
+  padding: var(--space-md);
+}

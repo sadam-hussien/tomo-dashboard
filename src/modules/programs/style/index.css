@@ -1,0 +1,59 @@
+.add-program-extra-meal {
+  margin-bottom: var(--space-lg);
+}
+
+.add-program-extra-meal-name {
+  font-size: var(--font-size-md);
+  color: var(--primary);
+  margin-bottom: var(--space-lg);
+}
+
+.add-program-extra-meal-file-uploader {
+  height: 80px;
+  border-radius: var(--border-radius-base);
+  border: 1px dashed #dee6ed;
+  background: var(--natu);
+}
+
+.add-program-extra-meal-file-uploader-title {
+  font-size: var(--font-size-xs);
+  color: var(--primary);
+}
+
+.add-program-form .accordion-item {
+  border: none;
+  border-bottom: 1px solid rgb(41, 56, 78, 0.1);
+  margin-bottom: var(--space-xl);
+}
+
+.add-program-extra-meal-border {
+  border-top: 1px solid rgb(41, 56, 78, 0.1);
+  padding-top: var(--space-lg);
+}
+
+.add-program-form .accordion-item .accordion-button {
+  padding: var(--space-base);
+  font-weight: 500;
+  font-size: var(--font-size-lg);
+  color: var(--text);
+}
+
+.add-program-form .accordion-item .accordion-button::after {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.add-program-form .accordion-item .accordion-button:lang(ar)::after {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.add-program-form .accordion-item .accordion-button:not(.collapsed) {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.add-program-form .accordion-item .accordion-button:focus {
+  box-shadow: none;
+  border-color: none;
+}

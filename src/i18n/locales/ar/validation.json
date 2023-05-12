@@ -1,0 +1,21 @@
+{
+  "firstName_is_required": "ادخل الاسم الاول",
+  "lastName_is_required": "ادخل اسم العائلة",
+  "enter_valid_email": "ادخل بريد الكترونى",
+  "email_is_required": "ادخل البريد الالكترونى",
+  "power_is_required": "اختر صلاحية المستخدم",
+  "minmum_symbols": "minmum_symbols",
+  "maximum_symbols": "maximum_symbols",
+  "password_is_required": "كلمة السر مطلوبة",
+  "password_confirm_is_required": "الرجاء تاكيد كلمة السر",
+  "password_match": "كلمة السر يجب ان تطابق",
+  "phone_number_is_required": "رقم الهاتف مطلوب",
+  "address_is_required": "العنوان مطلوب",
+  "about_is_required": "نبذة عنك مطلوبة",
+  "jobtitle_is_required": "المسمى الوظيفى مطلوب",
+  "current_password_is_required": "الرجاء ادخال كلمة المرور القديمة",
+  "new_password_is_required": "كلمة المرور الجديدة مطلوبة",
+  "password_confirm": "الرجاء تاكيد كلمة السر",
+  "please_check_the_box_to_deactivate_your_account": "الرجاء تاكيد الاختيار لتعطيل الحساب",
+  "this_field_is_required": "هذا الحقل مطلوب"
+}

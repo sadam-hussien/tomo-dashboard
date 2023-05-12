@@ -1,0 +1,50 @@
+.header {
+  width: 100%;
+  height: var(--header-height);
+  right: 0;
+  left: auto;
+  background-color: var(--primary);
+  padding-inline: 100px;
+  transition: 0.3s;
+}
+
+.header:lang(ar) {
+  right: auto;
+  left: 0;
+}
+
+/* logo / */
+.header__logo img {
+  min-width: 52px;
+}
+
+.header input[type="search"]::placeholder {
+  color: var(--bs-white) !important;
+  opacity: 0.6 !important;
+}
+
+.header__profile__name {
+  color: var(--bs-white);
+  font-weight: 400;
+}
+
+.header__badge {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--secondary);
+  color: var(--bs-white);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: -4px;
+  right: -6px;
+}
+
+.header__toggle {
+  color: var(--bs-white);
+  font-size: 30px;
+}
