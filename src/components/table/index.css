@@ -225,10 +225,12 @@
 
 /* search  */
 
-.table-search {
-  /* max-width: 100%; */
-  min-width: 400px;
+@media (min-width: 992px) {
+  .table-search {
+    min-width: 400px;
+  }
 }
+
 .table-search .input-withicon-group {
   border-color: var(--natu) !important;
 }

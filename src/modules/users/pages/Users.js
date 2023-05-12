@@ -27,7 +27,7 @@ export default function Users() {
         search
         searchPlaceholder={t("search_about_users")}
         selection
-        tableHeaderClass="d-flex flex-row-reverse justify-content-between flex-wrao"
+        tableHeaderClass="d-flex flex-row-reverse justify-content-between flex-wrap"
         actions={{
           addAction: false,
           selectAction: true,

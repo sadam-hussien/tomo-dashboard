@@ -60,11 +60,11 @@ export default function Actions({
       {selectAction && (
         <Formik initialValues={{ [selectActionProps.name]: "" }}>
           {() => (
-            <Form>
+            <Form className="w-100">
               <SelectBox
                 item={{
                   ...selectActionProps,
-                  
+
                   props: {
                     components: { Option: FilterOption },
                   },

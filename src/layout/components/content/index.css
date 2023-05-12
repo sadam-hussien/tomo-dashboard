@@ -11,3 +11,14 @@
   border-radius: 10px;
   padding: var(--space-lg);
 }
+
+@media (max-width: 991px) {
+  .app-content {
+    padding: var(--space-base);
+  }
+
+  .app-content__inner,
+  .boxed {
+    padding: var(--space-base);
+  }
+}
