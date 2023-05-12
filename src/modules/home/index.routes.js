@@ -4,6 +4,7 @@ const routes = [
   {
     component: Dashboard,
     path: "/",
+    boxed: true,
   },
 ];
 

@@ -5,8 +5,10 @@ import { Formik, Form } from "formik";
 import { chatSocket, handleDate } from "helpers";
 
 import { DynamicFileUploaderInput, InputWithIcon } from "components";
+import EmojiPicker from "emoji-picker-react";
 
 export default function ChatBox({ ...props }) {
+  const [emojiIsShow, setEmojiIsShow] = useState(false);
   // chat data
   const [currentConversationData, setCurrentConversationData] = useState({});
 
@@ -117,14 +119,26 @@ export default function ChatBox({ ...props }) {
           ))}
         </div>
         {/* form  */}
-        <Formik initialValues={{ message: "", file: "" }} onSubmit={handleSubmit}>
-          {() => (
+        <Formik
+          initialValues={{ message: "", file: "" }}
+          onSubmit={handleSubmit}
+        >
+          {({ setFieldValue, values }) => (
             <Form>
               <div className="chat-box-body-form d-flex align-items-center gap-4">
-                <div className="d-flex align-items-center flex-fill chat-box-body-form-input h-100">
+                <div className="d-flex align-items-center flex-fill chat-box-body-form-input h-100 position-relative">
+                  <div className={`emoji-box ${emojiIsShow ? "active" : ""}`}>
+                    <EmojiPicker
+                      onEmojiClick={(e) => {
+                        setFieldValue("message", values.message + e.emoji);
+                        setEmojiIsShow((prev) => !prev);
+                      }}
+                    />
+                  </div>
                   <button
                     type="button"
                     className="chat-box-body-form-emoji bg-transparent border-0 p-0 h-100"
+                    onClick={() => setEmojiIsShow((prev) => !prev)}
                   >
                     <i className="las la-smile"></i>
                   </button>
