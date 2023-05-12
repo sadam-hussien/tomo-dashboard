@@ -52,6 +52,7 @@ export default function Users() {
         }}
         innerActions={{
           message: true,
+          messageBtn: t("send_message"),
           messageModalTitle: t("send_program"),
           messageModalBtnTitle: t("send"),
         }}

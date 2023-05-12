@@ -94,7 +94,7 @@ export default function InnerActions({
             alt="message"
             className="img-fluid"
           />
-          <span>{t("message")}</span>
+          <span>{actions?.messageBtn || t("message")}</span>
         </button>
       )}
       {actions.deleting && (
