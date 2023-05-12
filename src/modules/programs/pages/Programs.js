@@ -8,7 +8,7 @@ import { programs_columns } from "../columns";
 
 import { useTranslation } from "react-i18next";
 
-import { Add, Edit } from "../components";
+import { Add, Edit, ProgramToUser } from "../components";
 
 export default function Programs() {
   // translation
@@ -51,7 +51,6 @@ export default function Programs() {
               { label: t("highest_sales"), value: "highest_sales" },
               { label: t("less_sales"), value: "less_sales" },
             ],
-            
           },
           selectActionPlaceholder: t("program_type"),
           selectActionOnChange: (name, value) => console.log(name, value),
@@ -65,7 +64,7 @@ export default function Programs() {
           editingModalBtnTitle: t("save"),
         }}
       />
-      <Modal edit={<Edit />} add={<Add />} />
+      <Modal edit={<Edit />} add={<Add />} message={<ProgramToUser />} />
     </section>
   );
 }

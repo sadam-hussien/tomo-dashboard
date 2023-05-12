@@ -43,9 +43,33 @@ export default function Add({ handleClose }) {
     );
   }
 
-  function addExtraMeal(arrayHelpers) {
+  const subMealsTitle = [
+    "الوجبة الأولى",
+    "الوجبة الثانية",
+    "الوجبة الثالثة",
+    "الوجبة الرابعة",
+    "الوجبة الخامسة",
+    "الوجبة السادسة",
+    "الوجبة السابعة",
+    "الوجبة الثامنة",
+    "الوجبة التاسعة",
+    "الوجبة العاشرة",
+    "الوجبة الحادية عشرة",
+    "الوجبة الثانية عشرة",
+    "الوجبة الثالثة عشرة",
+    "الوجبة الرابعة عشرة",
+    "الوجبة الخامسة عشرة",
+    "الوجبة السادسة عشرة",
+    "الوجبة السابعة عشرة",
+    "الوجبة الثامنة عشرة",
+    "الوجبة التاسعة عشرة",
+    "الوجبة العشرين",
+  ];
+
+  function addExtraMeal(arrayHelpers, index) {
+    console.log(arrayHelpers.form.values.meals[index]);
     arrayHelpers.push({
-      name: "الوجبة",
+      name: subMealsTitle[arrayHelpers.form.values.meals[index].extra.length],
       details: "",
       calories: "",
       image: "",
@@ -61,7 +85,7 @@ export default function Add({ handleClose }) {
     program: Yup.string().required("this_field_is_required"),
   });
 
-  const mealsTitles = ["وجبة الافطار", "وجبة العشاء", "وجبة الغداء"];
+  const mealsTitles = ["وجبة الافطار", "وجبة الغداء", "وجبة العشاء"];
 
   return (
     <Formik
@@ -195,7 +219,7 @@ export default function Add({ handleClose }) {
                               height: "48px",
                             }}
                             type="button"
-                            onClick={() => addExtraMeal(arrayHelpers)}
+                            onClick={() => addExtraMeal(arrayHelpers, index)}
                           >
                             <i
                               className="las la-plus"

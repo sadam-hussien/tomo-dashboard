@@ -57,3 +57,32 @@
   box-shadow: none;
   border-color: none;
 }
+
+.assign-program-to-user .input-withicon-group {
+  border: none !important;
+}
+
+.list-of-users-inner {
+  height: calc(100vh - 450px);
+  overflow-y: auto;
+}
+
+.list-of-users-submit-btn .icon {
+  transform: rotate(-30deg);
+}
+
+.list-of-users-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.list-of-users-user-name {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--text);
+}
+
+.list-of-users-user {
+  margin-bottom: var(--space-xl);
+}

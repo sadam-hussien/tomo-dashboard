@@ -57,5 +57,7 @@
   "launch": "الغذاء",
   "dinner": "العشاء",
   "date": "التاريخ",
-  "search_about_day_meal": "ابحث عن يوم , وجبة , تمرينة"
+  "search_about_day_meal": "ابحث عن يوم , وجبة , تمرينة",
+  "send_program": "إرسال البرنامج",
+  "send": "ارسال"
 }

@@ -25,3 +25,7 @@ export function apiEditProgramMeals(data) {
 export function apiUploadImg(file) {
   return Api().post(`upload/image`, file);
 }
+
+export function apiAssignProgramToUser(data) {
+  return Api().post("programs/addUserToProgram", data);
+}

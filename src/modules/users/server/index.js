@@ -1,8 +1,8 @@
 import Api from "server/axios";
 
-export const apiGetUsers = ({ pageParam }) => {
+export const apiGetUsers = (config) => {
   return Api().get("leaders", {
-    params: pageParam,
+    params: config,
   });
 };
 

@@ -16,6 +16,12 @@
   padding: 63px;
 }
 
+@media (max-width: 576px) {
+  .custom-dialog-modal .modal-content {
+    padding: 20px;
+  }
+}
+
 .custom-dialog-modal .modal-header {
   padding: 0;
   border-bottom: none;
