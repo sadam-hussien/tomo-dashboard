@@ -122,7 +122,7 @@ const Dashboard = () => {
                 هنا يمكنك التحقق من تقارير أخر شهر ، والتحكم في برامج التدريب
                 والتعديل عليها{" "}
               </p>
-              <div className="d-flex align-items-center gap-4">
+              <div className="d-flex align-items-center flex-wrap gap-4">
                 <Btn
                   type="button"
                   title="اضافة برنامج"

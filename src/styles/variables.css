@@ -14,17 +14,6 @@
   --light-bg: #f4f5f7;
   --natu: #fafafa;
 
-  /* 
-  --other: #ff9300;
-  --other-rgb: 255 147 0;
-  --dark: #000028;
-  --gray: #6b6a72;
-  --shadow-el: 0 0 15px 0 rgb(34 41 47 / 5%);
-  --border: rgba(0 0 0 / 0.1);
-  --danger: #ff725e;
-  --danger-rgb: 255 114 94;
-  --danger-secondary: #e05c4a; */
-
   --primary-ar: "Tajawal", sans-serif;
 
   --font-size-xs: 0.75rem; /*12px*/
@@ -51,4 +40,10 @@
   --header-height: 101px;
 
   font-size: 16px;
+}
+
+@media (max-width: 991px) {
+  :root {
+    --sidebar-width: 100px;
+  }
 }

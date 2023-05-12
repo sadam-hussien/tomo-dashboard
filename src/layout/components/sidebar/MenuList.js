@@ -42,7 +42,7 @@ export default function MenuList({ menuListData = data }) {
             type="button"
             className={`${linkClass} bg-transparent border-0`}
           >
-            <div className="d-flex align-items-center gap-3">
+            <div className="d-flex align-items-center flex-fill  flex-column flex-lg-row align-items-center align-items-lg-start text-center gap-3 ">
               <img src={item.image} alt="navbar" className="img-fluid" />
               <span>{t(item.title)}</span>
             </div>
@@ -56,7 +56,7 @@ export default function MenuList({ menuListData = data }) {
                 aria-hidden="true"
               />
             ) : (
-              <i className="las la-angle-left icon"></i>
+              <i className="las la-angle-left icon d-none d-lg-block"></i>
             )}
           </button>
         ) : (
@@ -66,12 +66,12 @@ export default function MenuList({ menuListData = data }) {
             className={({ isActive }) => checkIsActive(isActive)}
             style={item.style || null}
           >
-            <div className="d-flex align-items-center gap-3">
+            <div className="d-flex flex-fill align-items-center flex-column flex-lg-row  align-items-center align-items-lg-start  text-center gap-3">
               <img src={item.image} alt="navbar" className="img-fluid" />
               <span>{t(item.title)}</span>
             </div>
 
-            <i className="las la-angle-left icon"></i>
+            <i className="las la-angle-left icon d-none d-lg-block"></i>
           </NavLink>
         )
       )}
