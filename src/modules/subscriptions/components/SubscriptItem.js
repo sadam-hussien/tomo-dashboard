@@ -13,7 +13,7 @@ export default function SubscriptItem(props) {
   return (
     <div className="subscriptions__item h-100  d-flex flex-column">
       <img
-        src={process.env.REACT_APP_BASE_URL + props.image}
+        src={props.image}
         alt={props.name}
         className="img-fluid subscriptions__item__img"
       />

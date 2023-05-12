@@ -44,9 +44,32 @@ export default function Edit({ handleClose, data: itemData }) {
     );
   }
 
-  function addExtraMeal(arrayHelpers) {
+  const subMealsTitle = [
+    "الوجبة الأولى",
+    "الوجبة الثانية",
+    "الوجبة الثالثة",
+    "الوجبة الرابعة",
+    "الوجبة الخامسة",
+    "الوجبة السادسة",
+    "الوجبة السابعة",
+    "الوجبة الثامنة",
+    "الوجبة التاسعة",
+    "الوجبة العاشرة",
+    "الوجبة الحادية عشرة",
+    "الوجبة الثانية عشرة",
+    "الوجبة الثالثة عشرة",
+    "الوجبة الرابعة عشرة",
+    "الوجبة الخامسة عشرة",
+    "الوجبة السادسة عشرة",
+    "الوجبة السابعة عشرة",
+    "الوجبة الثامنة عشرة",
+    "الوجبة التاسعة عشرة",
+    "الوجبة العشرين",
+  ];
+
+  function addExtraMeal(arrayHelpers, index) {
     arrayHelpers.push({
-      name: "الوجبة",
+      name: subMealsTitle[arrayHelpers.form.values.meals[index].extra.length],
       details: "",
       calories: "",
       image: "",
@@ -62,7 +85,7 @@ export default function Edit({ handleClose, data: itemData }) {
     program: Yup.string().required("this_field_is_required"),
   });
 
-  const mealsTitles = ["وجبة الافطار", "وجبة العشاء", "وجبة الغداء"];
+  const mealsTitles = ["وجبة الافطار", "وجبة الغداء", "وجبة العشاء"];
 
   const handleInitialValues = itemData?.data?.mainMeals
     ? itemData.data.mainMeals.map((item) => {
@@ -178,7 +201,7 @@ export default function Edit({ handleClose, data: itemData }) {
                               height: "48px",
                             }}
                             type="button"
-                            onClick={() => addExtraMeal(arrayHelpers)}
+                            onClick={() => addExtraMeal(arrayHelpers, index)}
                           >
                             <i
                               className="las la-plus"
@@ -250,10 +273,7 @@ function FileUploader({ name }) {
         <Spinner aria-label="Medium sized spinner example" size="md" />
       ) : imageRes ? (
         <>
-          <img
-            src={process.env.REACT_APP_BASE_URL + imageRes}
-            alt="file uploading"
-          />
+          <img src={imageRes} alt="file uploading" />
         </>
       ) : (
         <>

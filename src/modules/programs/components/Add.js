@@ -67,7 +67,6 @@ export default function Add({ handleClose }) {
   ];
 
   function addExtraMeal(arrayHelpers, index) {
-    console.log(arrayHelpers.form.values.meals[index]);
     arrayHelpers.push({
       name: subMealsTitle[arrayHelpers.form.values.meals[index].extra.length],
       details: "",
@@ -291,10 +290,7 @@ function FileUploader({ name }) {
         <Spinner aria-label="Medium sized spinner example" size="md" />
       ) : imageRes ? (
         <>
-          <img
-            src={process.env.REACT_APP_BASE_URL + imageRes}
-            alt="file uploading"
-          />
+          <img src={imageRes} alt="file uploading" />
         </>
       ) : (
         <>

@@ -5,7 +5,7 @@ export default function UploadImage({ files, deleteFile }) {
         src={
           files
             ? typeof files === "string"
-              ? process.env.REACT_APP_BASE_URL + files
+              ? files
               : window.URL.createObjectURL(files)
             : "/assets/images/placholder.png"
         }
