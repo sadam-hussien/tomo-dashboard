@@ -1,4 +1,3 @@
-// export { Toast, alertConfirmation, alertSuccess, alertError } from "./alert";
 export { Toast } from "./alert";
 
 // form

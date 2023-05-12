@@ -57,7 +57,10 @@ export default function Subscriptions() {
         }}
         grid={{
           rows: {
-            md: 4,
+            xl: 4,
+            lg: 3,
+            md: 2,
+            xs: 1,
             className: "g-5",
           },
         }}
