@@ -21,6 +21,15 @@ export default function Api() {
       return response.data;
     },
     (error) => {
+      if (
+        ["غير مصرح لك بالدخول", "unauthorized"].includes(
+          error.response?.data?.errors[0].toLowerCase()
+        )
+      ) {
+        localStorage.removeItem("persist:auth");
+        localStorage.removeItem("websoket_token");
+        window.location.reload();
+      }
       return Promise.reject(error.response);
     }
   );

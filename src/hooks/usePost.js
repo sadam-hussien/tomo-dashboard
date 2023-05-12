@@ -12,7 +12,11 @@ export default function usePost({
   const queryClient = useQueryClient();
   return useMutation(queryFn, {
     onSuccess: (data) => {
-      Toast({ icon: "success", title: data?.message });
+      if (data?.data?.message) {
+        Toast({ icon: "success", title: data.data.message });
+      } else {
+        Toast({ icon: "success", title: data.message });
+      }
       if (queryKey) {
         queryClient.invalidateQueries(queryKey);
       }

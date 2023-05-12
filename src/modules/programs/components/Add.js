@@ -25,6 +25,7 @@ export default function Add({ handleClose }) {
   const { mutate: mutateProgramMeals, isLoading: isLoadingProgramMeals } =
     usePost({
       queryFn: apiAddProgramMeals,
+      queryKey: "get-programs",
       onSuccess: () => handleClose(),
     });
 

@@ -25,7 +25,7 @@ export default function Edit({ handleClose, data: itemData }) {
   const { mutate: mutateProgramMeals, isLoading: isLoadingProgramMeals } =
     usePost({
       queryFn: apiEditProgramMeals,
-      // queryKey: "get-programs",
+      queryKey: "get-programs",
       onSuccess: () => handleClose(),
     });
 
@@ -37,7 +37,7 @@ export default function Edit({ handleClose, data: itemData }) {
         onSuccess: (response) => {
           mutateProgramMeals({
             ...values,
-            id: itemData.data.id,
+            program: itemData.data.id,
           });
         },
       }
@@ -185,6 +185,7 @@ export default function Edit({ handleClose, data: itemData }) {
                               </Row>
 
                               <FileUploader
+                                img={extraMeal.image}
                                 name={`meals[${index}].extra[${idx}].image`}
                               />
                             </div>
@@ -246,7 +247,7 @@ export default function Edit({ handleClose, data: itemData }) {
   );
 }
 
-function FileUploader({ name }) {
+function FileUploader({ name, img }) {
   const { setFieldValue } = useFormikContext();
   const [isLoading, setIsLoading] = useState(false);
   const [imageRes, setImageRes] = useState(null);
@@ -269,11 +270,12 @@ function FileUploader({ name }) {
   return (
     <label className="add-program-extra-meal-file-uploader d-flex flex-column align-items-center justify-content-center gap-2 m-0">
       <input type="file" className="d-none" onChange={handleUploadFile} />
+
       {isLoading ? (
         <Spinner aria-label="Medium sized spinner example" size="md" />
-      ) : imageRes ? (
+      ) : imageRes || img ? (
         <>
-          <img src={imageRes} alt="file uploading" />
+          <img src={imageRes || img} alt="file uploading" />
         </>
       ) : (
         <>

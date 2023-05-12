@@ -10,7 +10,7 @@
 
 @media (max-width: 991px) {
   .select-withicon-group {
-    min-width: 100%;
+    min-width: none;
   }
 }
 
