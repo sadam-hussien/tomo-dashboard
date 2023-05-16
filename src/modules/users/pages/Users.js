@@ -50,12 +50,6 @@ export default function Users() {
           selectActionPlaceholder: t("subscription_type"),
           selectActionOnChange: (name, value) => console.log(name, value),
         }}
-        innerActions={{
-          message: true,
-          messageBtn: t("send_message"),
-          messageModalTitle: t("send_program"),
-          messageModalBtnTitle: t("send"),
-        }}
       />
       <Modal message={<Message />} />
     </section>

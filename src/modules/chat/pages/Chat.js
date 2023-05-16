@@ -11,42 +11,23 @@ import { useSelector } from "react-redux";
 export default function Chat() {
   const { user } = useSelector((state) => state.auth);
 
-  // const [listOfConversations, setListOfConversations] = useState([]);
-
-  // const [currentConversationData, setCurrentConversationData] = useState({});
-
-  // listen create conversation
-  // chatSocket.listenOnCreateConversation((data) =>
-  //   setCurrentConversationData(data)
-  // );
-
-  // list of conversations
-  // useEffect(() => {
-  //   // request for get all conversations
-  //   chatSocket.getAllConversations({
-  //     id: user?.coach?.id,
-  //   });
-
-  //   // llistener
-  //   chatSocket.listenOnGetAllConversations((data) =>
-  //     setListOfConversations(data)
-  //   );
-
-  //   // listen create conversation
-  //   chatSocket.listenOnCreateConversation((data) =>
-  //     setCurrentConversationData(data)
-  //   );
-  // }, [user]);
+  const [currentConversationData, setCurrentConversationData] = useState({});
 
   return (
     <section>
-      <Row>
-        <Col lg={7}>
-          <ChatBox user={user} />
+      <Row className="g-4">
+        <Col lg={{ order: "first", span: 7 }} xs={{ order: "last" }}>
+          <ChatBox
+            user={user}
+            currentConversationData={currentConversationData}
+          />
         </Col>
 
         <Col lg={5}>
-          <ListOfChats user={user} />
+          <ListOfChats
+            user={user}
+            setCurrentConversationData={setCurrentConversationData}
+          />
         </Col>
       </Row>
     </section>

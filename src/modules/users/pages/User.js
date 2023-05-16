@@ -18,6 +18,8 @@ import { Modal } from "components";
 
 import { AssignProgramToUser, ViewWeight } from "../components";
 
+import { Edit } from "modules/programs/components";
+
 import { user_trainings_columns } from "../columns";
 
 import { Table as MyTable } from "components";
@@ -85,7 +87,7 @@ export default function User() {
                             openModal({
                               modal_type: modalTypes.view,
                               title: t("weights"),
-                              id,
+                              ...data.data.user,
                             })
                           )
                         }
@@ -111,15 +113,24 @@ export default function User() {
                       </span>
                       <button
                         type="button"
-                        onClick={() =>
-                          dispatch(
-                            openModal({
-                              modal_type: modalTypes.edit,
-                              title: t("assign_program_to_user"),
-                              btnTitle: t("save"),
-                              id,
-                            })
-                          )
+                        onClick={
+                          () =>
+                            dispatch(
+                              openModal({
+                                modal_type: modalTypes.edit,
+                                title: t("assign_program_to_user"),
+                                btnTitle: t("save"),
+                                ...data.data.user.programs[0],
+                              })
+                            )
+                          // dispatch(
+                          //   openModal({
+                          //     modal_type: modalTypes.edit,
+                          //     title: t("assign_program_to_user"),
+                          //     btnTitle: t("save"),
+                          //     id,
+                          //   })
+                          // )
                         }
                       >
                         <img
@@ -187,7 +198,11 @@ export default function User() {
         </>
       )}
 
-      <Modal edit={<AssignProgramToUser />} view={<ViewWeight />}></Modal>
+      <Modal
+        // edit={<AssignProgramToUser />}
+        edit={<Edit />}
+        view={<ViewWeight />}
+      ></Modal>
     </section>
   );
 }

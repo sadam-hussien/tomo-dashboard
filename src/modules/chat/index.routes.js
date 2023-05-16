@@ -5,6 +5,7 @@ const routes = [
     component: Chat,
     path: "/messages",
     boxed: true,
+    name: "chat",
   },
 ];
 

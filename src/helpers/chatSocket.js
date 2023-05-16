@@ -35,3 +35,24 @@ export function sendMessage({ ...args }) {
     sender: args.senderId,
   });
 }
+
+export function listenOnNewUpdatedConversation({ ...args }) {
+  socket.on("newUpdatedConversation", (data) => {
+    if (data.status) {
+      getAllConversations({ id: args.id });
+      getAllChatsInConversation({ conversationId: data.conversationId });
+    }
+  });
+}
+
+export function getAllChatsInConversation({ ...args }) {
+  socket.emit("AllChatsInConversation", {
+    id: args.conversationId,
+  });
+}
+
+export function listenOnGetAllChatsInConversation(callback) {
+  socket.on("allChatsBetweenUsersInConversation", (data) => {
+    callback(data);
+  });
+}

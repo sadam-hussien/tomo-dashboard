@@ -88,3 +88,12 @@
 .trainings-and-meals-tabs-search {
   margin-bottom: 0 !important;
 }
+
+.users-message-link {
+  font-size: var(--font-size-sm);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  padding: 0;
+  gap: var(--space-sm);
+}

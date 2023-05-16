@@ -2,7 +2,7 @@ import { ImageAndName, Status } from "components";
 
 import { Link } from "react-router-dom";
 
-import { MealCheck } from "../components";
+import { MealCheck, SendMessage } from "../components";
 
 import { handleDate } from "helpers";
 
@@ -26,6 +26,10 @@ export const users_columns = [
   {
     Header: "subscription_type",
     accessor: (col) => <Status status={"نشط"} />,
+  },
+  {
+    Header: "actions",
+    accessor: (col) => <SendMessage data={col} />,
   },
 ];
 

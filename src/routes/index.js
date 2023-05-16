@@ -18,6 +18,8 @@ import subscriptionsRoutes from "modules/subscriptions/index.routes";
 
 import chatRoutes from "modules/chat/index.routes";
 
+import settingsRoutes from "modules/settings/index.routes";
+
 const routers = [
   ...authRoutes,
   ...homeRoutes,
@@ -26,6 +28,7 @@ const routers = [
   ...coachesRoutes,
   ...subscriptionsRoutes,
   ...chatRoutes,
+  ...settingsRoutes,
 ];
 
 export default function Navigator() {

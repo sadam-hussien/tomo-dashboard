@@ -1,54 +1,40 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Formik, Form } from "formik";
 
 import { chatSocket, handleDate } from "helpers";
 
 import { DynamicFileUploaderInput, InputWithIcon } from "components";
+
 import EmojiPicker from "emoji-picker-react";
 
 export default function ChatBox({ ...props }) {
   const [emojiIsShow, setEmojiIsShow] = useState(false);
-  // chat data
-  const [currentConversationData, setCurrentConversationData] = useState({});
 
-  // listen create conversation
-  chatSocket.listenOnCreateConversation((data) =>
-    setCurrentConversationData(data)
-  );
+  const { currentConversationData } = props;
+
+  const [chatList, setChatList] = useState([]);
+
+  useEffect(() => {
+    // listen create conversation
+    chatSocket.listenOnGetAllChatsInConversation((data) => {
+      setChatList(data);
+    });
+  }, []);
 
   // handle submit
-  function handleSubmit(values) {
+  function handleSubmit(values, actions) {
     if (currentConversationData?._id) {
       chatSocket.sendMessage({
         conversationId: currentConversationData?._id,
         message: values.message,
         type: "text",
-        receiver: "",
-        sender: props.user?.coach?.id,
+        receiverId: "94ad8091-2188-4daa-8b8d-25cf35c7aeb6",
+        senderId: props.user?.coach?.id,
       });
+      actions.resetForm();
     }
   }
-
-  const chatList = [
-    {
-      type: "receiver",
-      message:
-        "انا خلصت الجدول انهارده اقدر اجدد امتي وعاوز اعرف اقدر اغير البرنامج ولا",
-      created_at: new Date("10-05-2023"),
-    },
-    {
-      type: "sender",
-      message: "تقدر تجدد في وقت وتغير للبرنامج المناسب ليك ",
-      created_at: new Date("10-06-2023"),
-      seen_at: new Date("10-06-2023"),
-    },
-    {
-      type: "receiver",
-      message: "تمام شكرا ليك",
-      created_at: new Date("10-07-2023"),
-    },
-  ];
 
   return (
     <div className="boxed chat-box chat-height d-flex flex-column">
@@ -59,7 +45,7 @@ export default function ChatBox({ ...props }) {
           <img
             src="/assets/images/avatar.png"
             alt="avatar"
-            className="img-fluid"
+            className="img-fluid d-none d-md-block"
           />
           <span className="chat-box-header-info-name d-flex flex-column gap-1">
             mohamrf ashraf
@@ -78,25 +64,27 @@ export default function ChatBox({ ...props }) {
           {chatList.map((item, index) => (
             <div
               key={index}
-              className={`chat-box-body-list-item d-flex gap-2 ${item.type}`}
+              className={`chat-box-body-list-item d-flex gap-2 ${
+                item.sender === props.user?.coach?.id ? "sender" : "receiver"
+              }`}
             >
-              {item.type === "receiver" && (
+              {item.sender !== props.user?.coach?.id && (
                 <img
                   src="/assets/images/avatar.png"
                   alt=""
-                  className="img-fluid chat-box-body-list-item-avatar"
+                  className="img-fluid chat-box-body-list-item-avatar d-none d-md-block"
                 />
               )}
 
               <div className="chat-box-body-list-item-info">
                 <div className="d-flex align-items-center gap-2">
-                  {item.type === "receiver" && (
+                  {item.sender !== props.user?.coach?.id && (
                     <span className="chat-box-body-list-item-info-name">
                       mohamrf ashraf
                     </span>
                   )}
                   <span className="chat-box-body-list-item-info-date">
-                    {handleDate(item.created_at)}
+                    {handleDate(item.updatedAt)}
                   </span>
                 </div>
 
@@ -104,16 +92,18 @@ export default function ChatBox({ ...props }) {
                   {item.message}
                 </div>
 
-                {item.type === "sender" && item.seen_at && (
-                  <div className="chat-box-body-list-item-info-seen d-flex align-items-center gap-2">
-                    <img
-                      src="/assets/images/avatar.png"
-                      alt=""
-                      className="img-fluid chat-box-body-list-item-info-seen-img"
-                    />
-                    <span>شاهد 9:10 صباحا</span>
-                  </div>
-                )}
+                {item.sender === props.user?.coach?.id &&
+                  item.receiver_is_seen && (
+                    <i class="las la-check-double"></i>
+                    // <div className="chat-box-body-list-item-info-seen d-flex align-items-center gap-2">
+                    //   <img
+                    //     src="/assets/images/avatar.png"
+                    //     alt=""
+                    //     className="img-fluid chat-box-body-list-item-info-seen-img"
+                    //   />
+                    //   <span>شاهد 9:10 صباحا</span>
+                    // </div>
+                  )}
               </div>
             </div>
           ))}
@@ -154,16 +144,17 @@ export default function ChatBox({ ...props }) {
 
                 <button
                   type="button"
-                  className="chat-box-body-form-camera chat-box-body-form-btn border-0 p-0"
+                  className="chat-box-body-form-camera chat-box-body-form-btn border-0 p-0 d-none d-md-block"
                 >
                   <i className="las la-camera"></i>
                 </button>
-
-                <DynamicFileUploaderInput
-                  item={{ name: "file", id: "chat-file-uploading" }}
-                >
-                  <UploadingBtn />
-                </DynamicFileUploaderInput>
+                <div className="d-none d-lg-block">
+                  <DynamicFileUploaderInput
+                    item={{ name: "file", id: "chat-file-uploading" }}
+                  >
+                    <UploadingBtn />
+                  </DynamicFileUploaderInput>
+                </div>
 
                 <button
                   type="submit"

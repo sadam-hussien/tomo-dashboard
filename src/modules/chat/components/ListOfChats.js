@@ -1,28 +1,42 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { InputWithIcon } from "components";
 
-import { chatSocket } from "helpers";
+import { chatSocket, handleDate } from "helpers";
+import { useSearchParams } from "react-router-dom";
 
 export default function ListOfChats({ ...props }) {
+  const [searchParams] = useSearchParams();
+
+  const userSearchParam = searchParams.get("user");
+
   // list of conversations
-  const [listOfConversations, setListOfConversations] = useState([
-    {
-      avatar: "/assets/images/avatar.png",
-      name: "mohamrf ashraf",
-      message: "إن شاء الله يا محمد.",
-    },
-  ]);
+  const [listOfConversations, setListOfConversations] = useState([]);
 
-  // request for get all conversations
-  chatSocket.getAllConversations({
-    id: props.user?.coach?.id,
-  });
+  useEffect(() => {
+    // request for get all conversations
+    chatSocket.getAllConversations({
+      id: props.user?.coach?.id,
+    });
 
-  // llistener
-  chatSocket.listenOnGetAllConversations((data) =>
-    setListOfConversations(data)
-  );
+    // llistener
+    chatSocket.listenOnGetAllConversations((data) => {
+      setListOfConversations(data);
+    });
+
+    // listen on updated conversations
+    chatSocket.listenOnNewUpdatedConversation({
+      id: props.user?.coach?.id,
+    });
+
+    // listen on listenOnCreateConversation
+    chatSocket.listenOnCreateConversation((data) => {
+      props.setCurrentConversationData(data);
+      chatSocket.getAllChatsInConversation({
+        conversationId: data._id,
+      });
+    });
+  }, []);
 
   // create new conversation
   function createConversation(id) {
@@ -31,6 +45,13 @@ export default function ListOfChats({ ...props }) {
       member_b_id: id,
     });
   }
+
+  // if there is query parameter
+  useEffect(() => {
+    if (userSearchParam) {
+      createConversation(userSearchParam);
+    }
+  }, []);
 
   return (
     <div className="boxed chat-conversations-list">
@@ -47,30 +68,37 @@ export default function ListOfChats({ ...props }) {
           flexDirection: "row-reverse",
         }}
       />
-      <div
-        onClick={() =>
-          createConversation("94ad8091-2188-4daa-8b8d-25cf35c7aeb6")
-        }
-      >
-        click test create conversation
-      </div>
       {listOfConversations.map((item, index) => (
         <button
           key={index}
           type="button"
-          className="bg-transparent border-0 p-0 d-flex align-items-center gap-2 chat-conversations-list-item"
+          className="bg-transparent border-0 p-0 d-flex justify-content-between flex-wrap gap-2 chat-conversations-list-item w-100"
+          onClick={() => {
+            console.log("item", item);
+            props.setCurrentConversationData(item);
+            chatSocket.getAllChatsInConversation({
+              conversationId: item._id,
+            });
+          }}
         >
-          <img
-            src={item.avatar}
-            alt=""
-            className="img-fluid chat-conversations-list-item-img"
-          />
-          <div className="flex-fill chat-conversations-list-item-info text-end">
-            <span className="chat-box-header-info-name d-flex flex-column gap-1">
-              {item.name}
-              <span>{item.message}</span>
-            </span>
+          <div className="d-flex align-items-center gap-2">
+            <img
+              src={
+                item?.member_b_id?.avatar ||
+                "/assets/images/user-placeholder.png"
+              }
+              alt=""
+              className="img-fluid chat-conversations-list-item-img"
+            />
+            <div className="flex-fill chat-conversations-list-item-info text-end">
+              <span className="chat-box-header-info-name d-flex flex-column gap-1">
+                {item?.member_b_id?.name}
+                <span>{item?.chats[0]?.message}</span>
+              </span>
+            </div>
           </div>
+
+          <span className="me-auto">{handleDate(item.updatedAt)}</span>
         </button>
       ))}
     </div>
