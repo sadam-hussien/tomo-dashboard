@@ -1,17 +1,10 @@
-// import React from "react";
-
-// import Confirmation from "./Confirmation";
-
-// import Success from "./Success";
-
-// import Error from "./Error";
-
-// // alerts
 import Swal from "sweetalert2";
 
-// import withReactContent from "sweetalert2-react-content";
+import withReactContent from "sweetalert2-react-content";
 
-// const MySwal = withReactContent(Swal);
+import Confirmation from "./Confirmation";
+
+const MySwal = withReactContent(Swal);
 
 export function Toast({
   position = "top-end",
@@ -39,27 +32,29 @@ export function Toast({
   });
 }
 
-// // alert confirmation
-// export function alertConfirmation({
+// {
 //   actions,
 //   title = "Be Carefull!",
 //   subtitle = "Are you sure you want to delete?",
 //   name,
-// }) {
-//   MySwal.fire({
-//     html: (
-//       <Confirmation
-//         title={title}
-//         subtitle={subtitle}
-//         swal={MySwal}
-//         actions={actions}
-//         name={name}
-//       />
-//     ),
-//     showConfirmButton: false,
-//     allowOutsideClick: false,
-//   });
 // }
+
+// // alert confirmation
+export function alertConfirmation({ isLoading, mutate, id }) {
+  MySwal.fire({
+    html: (
+      <Confirmation
+        swal={MySwal}
+        mutate={mutate}
+        isLoading={isLoading}
+        id={id}
+      />
+    ),
+    showConfirmButton: false,
+    allowOutsideClick: false,
+    icon: "warning",
+  });
+}
 
 // // alert successfully
 // export function alertSuccess({ title = "Good Job!", subtitle = "ok done" }) {

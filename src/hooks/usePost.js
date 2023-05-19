@@ -21,12 +21,18 @@ export default function usePost({
         queryClient.invalidateQueries(queryKey);
       }
       if (onSuccess) {
-        onSuccess();
+        onSuccess(data);
       }
     },
     onError: (error) => {
       if (Array.isArray(error.data?.errors)) {
         error.data.errors.forEach((item) => {
+          Toast({ icon: "error", title: item });
+        });
+      }
+
+      if (Array.isArray(error.data?.message)) {
+        error.data.message.forEach((item) => {
           Toast({ icon: "error", title: item });
         });
       }

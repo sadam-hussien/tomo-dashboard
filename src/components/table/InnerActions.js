@@ -8,19 +8,7 @@ import { openModal } from "store/global";
 
 import { modalTypes } from "constants";
 
-export default function InnerActions({
-  data,
-  actions,
-  // view = false,
-  // editing = false,
-  // editingModalTitle,
-  // editingModalBtnTitle,
-  // deleting = false,
-  // deletingFn,
-  // message = false,
-  // messageModalTitle,
-  // messageModalBtnTitle,
-}) {
+export default function InnerActions({ data, actions }) {
   const dispatch = useDispatch();
   const { t } = useTranslation("common");
   return (
@@ -100,13 +88,17 @@ export default function InnerActions({
       {actions.deleting && (
         <button
           type="button"
-          className="main-table-inner-actions-delete border-0 p-0 rounded-circle"
+          className="main-table-inner-actions-edit main-table-inner-actions-delete"
           onClick={() => {
-            actions.deletingFn();
+            actions.deletingFn(data.id);
           }}
         >
-          <i className="las la-times"></i>
-          <span>{t("delete")}</span>
+          <img
+            src="/assets/images/trash-icon.svg"
+            alt="delete"
+            className="img-fluid"
+          />
+          <span>{actions?.deleteBtn || t("delete")}</span>
         </button>
       )}
     </div>

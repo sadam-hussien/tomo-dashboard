@@ -17,5 +17,7 @@
   "new_password_is_required": "كلمة المرور الجديدة مطلوبة",
   "password_confirm": "الرجاء تاكيد كلمة السر",
   "please_check_the_box_to_deactivate_your_account": "الرجاء تاكيد الاختيار لتعطيل الحساب",
-  "this_field_is_required": "هذا الحقل مطلوب"
+  "this_field_is_required": "هذا الحقل مطلوب",
+  "please_enter_valid_email": "الرجاء ادخال بريد الكترونى صحيح",
+  "please_upload_your_image": "الرجاء رفع صورتك"
 }

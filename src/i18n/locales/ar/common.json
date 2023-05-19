@@ -62,5 +62,14 @@
   "send": "ارسال",
   "edit_program": "تعديل البرنامج",
   "send_message": "ارسال رسالة",
-  "weights": "الاوزان"
+  "weights": "الاوزان",
+  "add_coach": "اضافة مدرب",
+  "add_new_coach": "اضافة مدرب جديد",
+  "edit_coach": "تعديل مدرب",
+  "coach_description": "عن الاخصائية",
+  "coach_certification": "الشهادات الدراسية",
+  "coach_email": "البريد الالكترونى",
+  "coach_password": "كلمة السر",
+  "coach_experience": "خبرة المدرب",
+  "no_back": "لا , رجوع"
 }

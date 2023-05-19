@@ -1,4 +1,4 @@
-export { Toast } from "./alert";
+export { Toast, alertConfirmation } from "./alert";
 
 // form
 export { default as InputWithIcon } from "./form/inputWithIcon";
