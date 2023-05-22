@@ -12,15 +12,6 @@
   border-radius: 10px;
 }
 
-.confimation-alert-title {
-  margin-bottom: var(--space-sm);
-  color: var(--dark);
-}
-
-.confimation-alert-desc {
-  color: var(--gray);
-}
-
-.confimation-alert-btns {
-  padding: var(--space-md);
+.alert-title {
+  margin: 40px 0;
 }

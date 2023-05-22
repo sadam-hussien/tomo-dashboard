@@ -55,6 +55,7 @@ export default function MainTable({
     state: { globalFilter, pageSize, pageIndex },
     setGlobalFilter,
     page,
+    rows,
     canPreviousPage,
     canNextPage,
     pageOptions,
@@ -127,7 +128,7 @@ export default function MainTable({
   );
 
   useEffect(() => {
-    setPageSize(8);
+    // setPageSize(8);
   }, [setPageSize]);
 
   return (
@@ -204,7 +205,7 @@ export default function MainTable({
                   ))}
                 </thead>
                 <tbody {...getTableBodyProps()}>
-                  {page.map((row) => {
+                  {rows.map((row) => {
                     // Prepare the row for display
                     prepareRow(row);
                     return (

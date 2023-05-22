@@ -1,11 +1,14 @@
+import { useState } from "react";
 import Btn from "../core/buttons/Btn";
 
 import { useTranslation } from "react-i18next";
 
-export default function Confirmation({ swal, mutate, id, isLoading }) {
+export default function Confirmation({ swal, id, mutate }) {
   const { t } = useTranslation("common");
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <div>
+      <h4 className="alert-title">{t("are_you_sure_you_want_delete")}</h4>
       <div className="d-flex flex-column gap-3">
         <Btn
           type="submit"
@@ -17,7 +20,13 @@ export default function Confirmation({ swal, mutate, id, isLoading }) {
             fontWeight: 500,
           }}
           onClick={() => {
-            mutate(id);
+            setIsLoading(true);
+            mutate(id, {
+              onSuccess: () => {
+                setIsLoading(false);
+                swal.clickCancel();
+              },
+            });
           }}
         />
         <Btn

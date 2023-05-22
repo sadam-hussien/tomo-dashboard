@@ -32,24 +32,10 @@ export function Toast({
   });
 }
 
-// {
-//   actions,
-//   title = "Be Carefull!",
-//   subtitle = "Are you sure you want to delete?",
-//   name,
-// }
-
 // // alert confirmation
-export function alertConfirmation({ isLoading, mutate, id }) {
+export function alertConfirmation({ mutate, id }) {
   MySwal.fire({
-    html: (
-      <Confirmation
-        swal={MySwal}
-        mutate={mutate}
-        isLoading={isLoading}
-        id={id}
-      />
-    ),
+    html: <Confirmation swal={MySwal} mutate={mutate} id={id} />,
     showConfirmButton: false,
     allowOutsideClick: false,
     icon: "warning",

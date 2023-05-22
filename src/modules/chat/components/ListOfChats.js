@@ -92,7 +92,9 @@ export default function ListOfChats({ ...props }) {
             />
             <div className="flex-fill chat-conversations-list-item-info text-end">
               <span className="chat-box-header-info-name d-flex flex-column gap-1">
-                {item?.member_b_id?.name}
+                {props.user?.coach?.id === item?.member_b_id?.id
+                  ? item?.member_a_id?.name
+                  : item?.member_b_id?.name}
                 <span>{item?.chats[0]?.message}</span>
               </span>
             </div>

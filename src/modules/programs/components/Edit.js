@@ -107,7 +107,44 @@ export default function Edit({ handleClose, data: itemData }) {
     <Formik
       initialValues={{
         program: itemData.data.name,
-        meals: handleInitialValues,
+        meals:
+          handleInitialValues && handleInitialValues.length
+            ? handleInitialValues
+            : [
+                {
+                  name: "first",
+                  extra: [
+                    {
+                      name: "الوجبة الاولى",
+                      details: "",
+                      calories: "",
+                      image: "",
+                    },
+                  ],
+                },
+                {
+                  name: "second",
+                  extra: [
+                    {
+                      name: "الوجبة الاولى",
+                      details: "",
+                      calories: "",
+                      image: "",
+                    },
+                  ],
+                },
+                {
+                  name: "third",
+                  extra: [
+                    {
+                      name: "الوجبة الاولى",
+                      details: "",
+                      calories: "",
+                      image: "",
+                    },
+                  ],
+                },
+              ],
       }}
       validationSchema={schema}
       onSubmit={handleSubmit}

@@ -21,7 +21,7 @@ export default function Coaches() {
   });
 
   // delete coach
-  const { mutate, isLoading: isLoadingDelete } = usePost({
+  const { mutate } = usePost({
     queryFn: apiDeleteCoache,
     queryKey: "get-coaches",
   });
@@ -46,8 +46,7 @@ export default function Coaches() {
           editingModalTitle: t("edit_coach"),
           editingModalBtnTitle: t("save"),
           deleting: true,
-          deletingFn: (id) =>
-            alertConfirmation({ mutate, id, isLoading: isLoadingDelete }),
+          deletingFn: (id) => alertConfirmation({ mutate, id }),
         }}
         tableHeaderClass="d-flex flex-row-reverse justify-content-between align-items-center"
       />

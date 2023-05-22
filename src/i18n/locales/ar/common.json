@@ -71,5 +71,6 @@
   "coach_email": "البريد الالكترونى",
   "coach_password": "كلمة السر",
   "coach_experience": "خبرة المدرب",
-  "no_back": "لا , رجوع"
+  "no_back": "لا , رجوع",
+  "are_you_sure_you_want_delete": "هل انت متاكد من انك تريد الحذف؟"
 }

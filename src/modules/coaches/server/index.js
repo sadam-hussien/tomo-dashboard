@@ -9,9 +9,9 @@ export const apiAddCoache = (data) => {
 };
 
 export const apiEditCoache = (data) => {
-  return Api().put("coaches", data);
+  return Api().put("coaches/coach", data);
 };
 
-export const apiDeleteCoache = (data) => {
-  return Api().delete("coaches", data);
+export const apiDeleteCoache = (id) => {
+  return Api().delete(`coaches/${id}`);
 };
