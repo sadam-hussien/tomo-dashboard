@@ -9,6 +9,7 @@ export default function useScoket() {
 
   useEffect(() => {
     if (user?.token) {
+      console.log("token");
       // connect
       socket.connect();
 
