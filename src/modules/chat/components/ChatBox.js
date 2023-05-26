@@ -37,6 +37,7 @@ export default function ChatBox({ ...props }) {
       chatSocket.sendMessage({
         conversationId: currentConversationData?._id,
         message: values.message,
+        file: values.file,
         type: "text",
         receiverId:
           props.user?.coach?.id === currentConversationData?.member_a_id
@@ -46,6 +47,18 @@ export default function ChatBox({ ...props }) {
       });
       actions.resetForm();
     }
+  }
+
+  if (!Object.keys(currentConversationData).length) {
+    return (
+      <div className="boxed chat-box chat-height d-flex flex-column">
+        <img
+          src="/assets/images/chat.jpg"
+          alt=""
+          className="img-fluid chat-empty-img"
+        />
+      </div>
+    );
   }
 
   return (
@@ -102,7 +115,11 @@ export default function ChatBox({ ...props }) {
 
                 {/* handle message  */}
                 <div className="chat-box-body-list-item-info-message">
-                  {item.message}
+                  {item.file && (
+                    <img src={item.file} alt="" className="img-fluid" />
+                  )}
+
+                  {item.message && <span>{item.message}</span>}
                 </div>
 
                 {item.sender === props.user?.coach?.id &&

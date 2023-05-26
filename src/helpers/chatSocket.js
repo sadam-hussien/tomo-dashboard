@@ -30,6 +30,7 @@ export function sendMessage({ ...args }) {
   socket.emit("chat", {
     conversation: args.conversationId,
     message: args.message,
+    file: args.file,
     type: args.type,
     receiver: args.receiverId,
     sender: args.senderId,
