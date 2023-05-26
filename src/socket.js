@@ -4,7 +4,7 @@ import { getWebsoketToken } from "helpers";
 
 const URL =
   process.env.NODE_ENV === "production"
-    ? undefined
+    ? "https://tomo-api.onrender.com"
     : "https://tomo-api.onrender.com";
 
 const socket = new io(URL, {
