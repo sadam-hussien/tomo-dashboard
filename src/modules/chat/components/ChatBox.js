@@ -37,7 +37,7 @@ export default function ChatBox({ ...props }) {
       chatSocket.sendMessage({
         conversationId: currentConversationData?._id,
         message: values.message,
-        file: values.file,
+        file: values.file || "",
         type: "text",
         receiverId:
           props.user?.coach?.id === currentConversationData?.member_a_id
@@ -167,6 +167,7 @@ export default function ChatBox({ ...props }) {
                     name="message"
                     placeholder="إكتب رسالتك ....."
                     id="message-text"
+                    autoComplete={"off"}
                     noBorder
                     containerStyle={{ marginBottom: 0, flex: 1 }}
                   />
