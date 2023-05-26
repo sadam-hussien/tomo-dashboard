@@ -68,13 +68,20 @@ export default function ChatBox({ ...props }) {
         {/* info  */}
         <div className="chat-box-header-info d-flex align-items-center gap-3">
           <img
-            src="/assets/images/avatar.png"
+            src={
+              currentConversationData?.member_b_id?.avatar ||
+              "/assets/images/user-placeholder.png"
+            }
             alt="avatar"
             className="img-fluid d-none d-md-block"
           />
           <span className="chat-box-header-info-name d-flex flex-column gap-1">
-            mohamrf ashraf
-            <span>نشط الأن</span>
+            {currentConversationData?.member_b_id?.name}
+            <span>
+              {currentConversationData?.member_b_in_conversation
+                ? "نشط الان"
+                : "غير نشط"}
+            </span>
           </span>
         </div>
 
@@ -95,7 +102,10 @@ export default function ChatBox({ ...props }) {
             >
               {item.sender !== props.user?.coach?.id && (
                 <img
-                  src="/assets/images/avatar.png"
+                  src={
+                    currentConversationData?.member_b_id?.avatar ||
+                    "/assets/images/user-placeholder.png"
+                  }
                   alt=""
                   className="img-fluid chat-box-body-list-item-avatar d-none d-md-block"
                 />
@@ -105,7 +115,7 @@ export default function ChatBox({ ...props }) {
                 <div className="d-flex align-items-center gap-2">
                   {item.sender !== props.user?.coach?.id && (
                     <span className="chat-box-body-list-item-info-name">
-                      mohamrf ashraf
+                      {currentConversationData?.member_b_id?.name}
                     </span>
                   )}
                   <span className="chat-box-body-list-item-info-date">
