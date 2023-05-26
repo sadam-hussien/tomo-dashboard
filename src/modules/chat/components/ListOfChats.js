@@ -21,7 +21,10 @@ export default function ListOfChats({ ...props }) {
 
     // llistener
     chatSocket.listenOnGetAllConversations((data) => {
-      setListOfConversations(data);
+      console.log("ddd", data);
+      if (data) {
+        setListOfConversations(data);
+      }
     });
 
     // listen on updated conversations
@@ -74,7 +77,6 @@ export default function ListOfChats({ ...props }) {
           type="button"
           className="bg-transparent border-0 p-0 d-flex justify-content-between flex-wrap gap-2 chat-conversations-list-item w-100"
           onClick={() => {
-            console.log("item", item);
             props.setCurrentConversationData(item);
             chatSocket.getAllChatsInConversation({
               conversationId: item._id,

@@ -29,3 +29,7 @@ export function apiUploadImg(file) {
 export function apiAssignProgramToUser(data) {
   return Api().post("programs/addUserToProgram", data);
 }
+
+export function apiDeleteProgram(id) {
+  return Api().delete(`programs/${id}`);
+}

@@ -7,6 +7,9 @@ import { chatSocket, handleDate } from "helpers";
 import { DynamicFileUploaderInput, InputWithIcon } from "components";
 
 import EmojiPicker from "emoji-picker-react";
+import { usePost } from "hooks";
+import { apiUploadImage } from "server";
+import { Spinner } from "react-bootstrap";
 
 export default function ChatBox({ ...props }) {
   const [emojiIsShow, setEmojiIsShow] = useState(false);
@@ -14,6 +17,12 @@ export default function ChatBox({ ...props }) {
   const { currentConversationData } = props;
 
   const [chatList, setChatList] = useState([]);
+
+  // upload img
+  const { mutate: mutateImageUploading, isLoading: isLoadingImageUploading } =
+    usePost({
+      queryFn: apiUploadImage,
+    });
 
   useEffect(() => {
     // listen create conversation
@@ -29,7 +38,10 @@ export default function ChatBox({ ...props }) {
         conversationId: currentConversationData?._id,
         message: values.message,
         type: "text",
-        receiverId: "94ad8091-2188-4daa-8b8d-25cf35c7aeb6",
+        receiverId:
+          props.user?.coach?.id === currentConversationData?.member_a_id
+            ? currentConversationData?.member_b_id
+            : currentConversationData?.member_a_id,
         senderId: props.user?.coach?.id,
       });
       actions.resetForm();
@@ -88,13 +100,14 @@ export default function ChatBox({ ...props }) {
                   </span>
                 </div>
 
+                {/* handle message  */}
                 <div className="chat-box-body-list-item-info-message">
                   {item.message}
                 </div>
 
                 {item.sender === props.user?.coach?.id &&
                   item.receiver_is_seen && (
-                    <i class="las la-check-double"></i>
+                    <i className="las la-check-double"></i>
                     // <div className="chat-box-body-list-item-info-seen d-flex align-items-center gap-2">
                     //   <img
                     //     src="/assets/images/avatar.png"
@@ -115,7 +128,7 @@ export default function ChatBox({ ...props }) {
         >
           {({ setFieldValue, values }) => (
             <Form>
-              <div className="chat-box-body-form d-flex align-items-center gap-4">
+              <div className="chat-box-body-form d-flex align-items-center gap-4 position-relative">
                 <div className="d-flex align-items-center flex-fill chat-box-body-form-input h-100 position-relative">
                   <div className={`emoji-box ${emojiIsShow ? "active" : ""}`}>
                     <EmojiPicker
@@ -151,8 +164,12 @@ export default function ChatBox({ ...props }) {
                 <div className="d-none d-lg-block">
                   <DynamicFileUploaderInput
                     item={{ name: "file", id: "chat-file-uploading" }}
+                    serverCallback={mutateImageUploading}
                   >
-                    <UploadingBtn />
+                    <UploadingBtn
+                      name="file"
+                      isLoading={isLoadingImageUploading}
+                    />
                   </DynamicFileUploaderInput>
                 </div>
 
@@ -171,10 +188,42 @@ export default function ChatBox({ ...props }) {
   );
 }
 
-function UploadingBtn() {
+function UploadingBtn({ files, deleteFile, isLoading }) {
   return (
-    <div className="cursor-pointer chat-box-body-form-file chat-box-body-form-btn">
-      <i className="las la-paperclip"></i>{" "}
-    </div>
+    <>
+      <div className="cursor-pointer chat-box-body-form-file chat-box-body-form-btn">
+        <i className="las la-paperclip"></i>
+      </div>
+      {isLoading || files ? (
+        <div className="position-absolute chat-uploading-img">
+          <div className="position-relative">
+            <img
+              src={
+                files
+                  ? typeof files === "string"
+                    ? files
+                    : window.URL.createObjectURL(files)
+                  : "/assets/images/placholder.png"
+              }
+              alt="placholder"
+              className="img-fluid subscription-upload-img-img"
+            />
+            {isLoading && (
+              <>
+                <div className="position-absolute overlay-when-uploading-image d-flex align-items-center justify-content-center">
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="md"
+                    role="status"
+                    aria-hidden="true"
+                  />
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      ) : null}
+    </>
   );
 }

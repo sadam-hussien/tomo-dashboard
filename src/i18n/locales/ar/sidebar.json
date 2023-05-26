@@ -1,11 +1,12 @@
 {
   "dashboard": "لوحة التحكم",
   "programs": "برامج التدريب",
-  "users": "العملاء",
+  "users": "المستخدمين",
   "coaches": "المدربين",
   "reports": "التقارير",
   "messages": "الرسائل",
   "settings": "الإعدادت",
   "logout": "خروج",
-  "subscripers": "الأشتراكات"
+  "subscripers": "الأشتراكات",
+  "clients": "العملاء"
 }

@@ -14,8 +14,8 @@ export const menuListData = [
 
   {
     id: 3,
-    title: "users",
-    path: "/users",
+    title: "clients",
+    path: "/clients",
     image: "/assets/images/sidebar/client.svg",
   },
 
@@ -38,6 +38,13 @@ export const menuListData = [
     title: "reports",
     path: "/reports",
     image: "/assets/images/sidebar/reports.svg",
+  },
+
+  {
+    id: 5,
+    title: "users",
+    path: "/users",
+    image: "/assets/images/sidebar/users.svg",
   },
 
   {

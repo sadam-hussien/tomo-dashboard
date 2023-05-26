@@ -10,6 +10,8 @@ import homeRoutes from "modules/home/index.routes";
 
 import programsRoutes from "modules/programs/index.routes";
 
+import clientsRoutes from "modules/clients/index.routes";
+
 import usersRoutes from "modules/users/index.routes";
 
 import coachesRoutes from "modules/coaches/index.routes";
@@ -24,6 +26,7 @@ const routers = [
   ...authRoutes,
   ...homeRoutes,
   ...programsRoutes,
+  ...clientsRoutes,
   ...usersRoutes,
   ...coachesRoutes,
   ...subscriptionsRoutes,

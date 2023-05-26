@@ -181,3 +181,16 @@
   opacity: 1;
   visibility: visible;
 }
+
+.chat-uploading-img {
+  left: 0;
+  right: 0;
+  bottom: 105%;
+  padding: var(--space-sm);
+  height: 200px;
+  background: var(--gray);
+}
+
+.chat-uploading-img img {
+  
+}

@@ -8,8 +8,10 @@
 @import url(./form/textarea/index.css);
 /* select  */
 @import url(./form/selectBox/index.css);
-/* radio  */
+/* checkbox  */
 @import url(./form/checkboxInput/index.css);
+/* radio  */
+@import url(./form/radioboxInput/index.css);
 /* switch input  */
 @import url(./form/switchInput/index.css);
 /* date input  */

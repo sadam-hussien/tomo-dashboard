@@ -1,4 +1,4 @@
-import { Main, Profile } from "./pages";
+import { Main, Profile, Schedule, Security } from "./pages";
 
 const routes = [
   {
@@ -11,8 +11,17 @@ const routes = [
         index: true,
       },
       {
-        path: "profile",
         component: Profile,
+        path: "profile",
+      },
+      {
+        path: "security",
+        component: Security,
+      },
+
+      {
+        path: "schedule",
+        component: Schedule,
       },
     ],
   },

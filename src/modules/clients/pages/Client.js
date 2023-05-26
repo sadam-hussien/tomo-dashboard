@@ -20,11 +20,11 @@ import { AssignProgramToUser, ViewWeight } from "../components";
 
 import { Edit } from "modules/programs/components";
 
-import { user_trainings_columns } from "../columns";
+import { client_trainings_columns } from "../columns";
 
 import { Table as MyTable } from "components";
 
-export default function User() {
+export default function Client() {
   const { id } = useParams();
 
   const { data, isLoading } = useFetch({
@@ -49,9 +49,9 @@ export default function User() {
           <div className="boxed">
             <div className="d-flex justify-content-between align-items-center mb-lg">
               <div className="d-flex align-items-center gap-3">
-                {data.data.user.profile.avatar && (
+                {data.data.user?.profile?.avatar && (
                   <img
-                    src={data.data.user.profile.avatar}
+                    src={data.data.user.profile?.avatar}
                     className="img-fluid user-page-avatar"
                     alt="mahmoud hussien"
                   />
@@ -79,7 +79,7 @@ export default function User() {
                 <tr>
                   <td>
                     <div className="d-flex gap-1 justify-content-between align-items-center">
-                      <span>{data.data.user.profile.weight}kg</span>
+                      <span>{data.data.user?.profile?.weight}kg</span>
                       <button
                         type="button"
                         onClick={() =>
@@ -158,10 +158,10 @@ export default function User() {
               <tbody>
                 <tr>
                   <td className="large-td">
-                    {data.data.user?.profile.weeklyExcersiceRate?.name}
+                    {data.data.user?.profile?.weeklyExcersiceRate?.name}
                   </td>
                   <td className="large-td">
-                    {data.data.user?.profile.dailyMovementRate?.name}
+                    {data.data.user?.profile?.dailyMovementRate?.name}
                   </td>
                   <td className="large-td">ليمتلييس</td>
                   <td className="large-td">لا يوجد</td>
@@ -183,7 +183,7 @@ export default function User() {
                   <MyTable
                     tableHeaderClass="trainings-and-meals-tabs-search"
                     data={data.data?.user?.programs[0]?.mainMeals}
-                    columns={user_trainings_columns}
+                    columns={client_trainings_columns}
                     isLoading={isLoading}
                     search
                     searchPlaceholder={t("search_about_day_meal")}

@@ -1,8 +1,8 @@
-import { Modal, Table } from "components";
+import { Modal, Table, alertConfirmation } from "components";
 
-import { useFetch } from "hooks";
+import { useFetch, usePost } from "hooks";
 
-import { apiGetPrograms } from "../server";
+import { apiGetPrograms, apiDeleteProgram } from "../server";
 
 import { programs_columns } from "../columns";
 
@@ -20,6 +20,11 @@ export default function Programs() {
     queryFn: apiGetPrograms,
   });
 
+  // delete one program
+  const { mutate } = usePost({
+    queryFn: apiDeleteProgram,
+    queryKey: "get-programs",
+  });
   return (
     <section className="programs-page">
       <Table
@@ -62,6 +67,9 @@ export default function Programs() {
           editing: true,
           editingModalTitle: t("edit_program"),
           editingModalBtnTitle: t("save"),
+
+          deleting: true,
+          deletingFn: (id) => alertConfirmation({ mutate, id }),
         }}
       />
       <Modal edit={<Edit />} add={<Add />} message={<ProgramToUser />} />

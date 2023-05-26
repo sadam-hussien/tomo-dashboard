@@ -5,10 +5,12 @@
 @import url(modules/auth/style/index.css);
 @import url(modules/home/style/index.css);
 @import url(modules/programs/style/index.css);
+@import url(modules/clients/style/index.css);
 @import url(modules/users/style/index.css);
 @import url(modules/coaches/style/index.css);
 @import url(modules/subscriptions/style/index.css);
 @import url(modules/chat/style/index.css);
+@import url(modules/settings/style/index.css);
 
 /* layouts */
 @import url(layout/authLayout/index.css);

@@ -4,6 +4,7 @@ export { Toast, alertConfirmation } from "./alert";
 export { default as InputWithIcon } from "./form/inputWithIcon";
 export { default as SelectBox } from "./form/selectBox";
 export { default as CheckBoxInput } from "./form/checkboxInput";
+export { default as RadioBoxInput } from "./form/radioboxInput";
 export { default as SwitchInput } from "./form/switchInput";
 export { default as Textarea } from "./form/textarea";
 export { default as InputsHandler } from "./form/InputsHandler";
@@ -21,6 +22,7 @@ export { default as Message } from "./core/message";
 export { default as Table } from "./table";
 export { default as ImageAndName } from "./table/ImageAndName";
 export { default as Status } from "./table/Status";
+export { default as DynamicStatus } from "./table/DynamicStatus";
 
 // modal
 export { default as Modal } from "./modal";

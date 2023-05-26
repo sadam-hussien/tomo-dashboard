@@ -20,9 +20,9 @@ export default function DynamicFileUploaderInput({
       if (serverCallback) {
         const fd = new FormData();
         fd.append("image", e.target.files[0]);
+        setFieldValue(item.name, e.target.files[0]);
         serverCallback(fd, {
           onSuccess: (data) => {
-            console.log("data", data.data);
             setFieldValue(item.name, data.data.path);
           },
         });
@@ -50,7 +50,7 @@ export default function DynamicFileUploaderInput({
 
   return (
     <>
-      <div className="position-relative dynamic-file-uploader-input">
+      <div className="dynamic-file-uploader-input">
         <input
           {...item?.inputProps}
           type="file"

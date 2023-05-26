@@ -11,10 +11,14 @@ import InputWithIcon from "./inputWithIcon";
 import SelectBox from "./selectBox";
 
 import Textarea from "./textarea";
+
 import CheckBoxInput from "./checkboxInput";
+
 import SwitchInput from "./switchInput";
 
-export default function InputsHandler({ item, translation }) {
+import RadioBoxInput from "./radioboxInput";
+
+export default function InputsHandler({ item, translation = "common" }) {
   const { t } = useTranslation(translation);
 
   if (item.type === "file") {
@@ -63,6 +67,10 @@ export default function InputsHandler({ item, translation }) {
         label={item.label && t(item.label)}
       />
     );
+  }
+
+  if (item.type === "radiobox") {
+    return <RadioBoxInput {...item} label={item.label && t(item.label)} />;
   }
 
   if (item.type === "switch") {

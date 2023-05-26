@@ -1,19 +1,19 @@
 import Api from "server/axios";
 
-export const apiGetUsers = (config) => {
-  return Api().get("leaders", {
-    params: config,
+export const apiGetUsers = ({ pageParam }) => {
+  return Api().get("coaches/allUser", {
+    params: pageParam,
   });
 };
 
-export const apiGetUserById = (id) => {
-  return Api().get(`user/?id=${id}`);
+export const apiDeleteUser = (id) => {
+  return Api().delete(`coaches/?id=${id}`);
 };
 
-export const apiGetAllPrograms = (id) => {
-  return Api().get(`programs`);
+export const apiAddUser = (data) => {
+  return Api().post(`coaches/addUser`, data);
 };
 
-export const apiAddUserToProgram = (data) => {
-  return Api().post(`programs/addUserToProgram`, data);
+export const apiEditUser = (data) => {
+  return Api().put(`coaches/addUser`, data);
 };

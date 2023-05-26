@@ -1,49 +1,40 @@
-import { Modal, Table, alertConfirmation } from "components";
+import { Modal, Table, Message } from "components";
 
-import { useFetch, usePost } from "hooks";
+import { useFetch } from "hooks";
 
-import { apiDeleteUser, apiGetUsers } from "../server";
+import { apiGetUsers } from "../server";
 
-import { users_columns } from "../columns";
+import { clients_columns } from "../columns";
 
 import { useTranslation } from "react-i18next";
 
-import { Add, Edit } from "../components";
-
-export default function Users() {
+export default function Clients() {
   // translation
   const { t } = useTranslation("common");
 
   // fetch users using react-query library
   const { isLoading, data } = useFetch({
-    queryKey: "get-users",
+    queryKey: "get-clients",
     queryFn: apiGetUsers,
-  });
-
-  // delete one program
-  const { mutate } = usePost({
-    queryFn: apiDeleteUser,
-    queryKey: "get-users",
   });
 
   return (
     <section className="programs-page">
       <Table
-        data={data?.data}
-        columns={users_columns}
+        data={data?.data?.leaders}
+        columns={clients_columns}
         isLoading={isLoading}
         search
-        searchPlaceholder={t("search_about_users_user")}
+        searchPlaceholder={t("search_about_users")}
         selection
+        tableHeaderClass="d-flex flex-row-reverse justify-content-between flex-wrap"
         actions={{
-          addAction: true,
-          addActionModalTitle: t("add_new_user"),
-          addActionTitle: t("add_user"),
+          addAction: false,
           selectAction: true,
           selectActionProps: {
             id: "users-filter",
             name: "users_type",
-            placeholder: t("user_type"),
+            placeholder: t("search_about_users"),
             noBorder: true,
             options: [
               { label: t("all"), value: "all" },
@@ -56,18 +47,11 @@ export default function Users() {
               { label: t("latest_subscription"), value: "latest_subscription" },
             ],
           },
-          selectActionPlaceholder: t("user_type"),
+          selectActionPlaceholder: t("subscription_type"),
           selectActionOnChange: (name, value) => console.log(name, value),
         }}
-        innerActions={{
-          editing: true,
-          editingModalTitle: t("edit_user"),
-          editingModalBtnTitle: t("save"),
-          deleting: true,
-          deletingFn: (id) => alertConfirmation({ mutate, id }),
-        }}
       />
-      <Modal edit={<Edit />} add={<Add />} />
+      <Modal message={<Message />} />
     </section>
   );
 }
