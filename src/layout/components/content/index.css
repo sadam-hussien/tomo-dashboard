@@ -1,0 +1,24 @@
+.app-content {
+  margin-top: var(--header-height);
+  padding: var(--space-lg);
+  margin-inline-start: var(--sidebar-width);
+  transition: 0.3s;
+}
+
+.app-content__inner,
+.boxed {
+  background: var(--bs-white);
+  border-radius: 10px;
+  padding: var(--space-lg);
+}
+
+@media (max-width: 991px) {
+  .app-content {
+    padding: var(--space-base);
+  }
+
+  .app-content__inner,
+  .boxed {
+    padding: var(--space-base);
+  }
+}

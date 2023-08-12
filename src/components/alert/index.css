@@ -1,0 +1,17 @@
+.swal2-container {
+  z-index: 9999999999;
+}
+
+@media (min-width: 991px) {
+  .swal2-container .swal2-popup {
+    width: 45em;
+  }
+}
+
+.swal2-popup {
+  border-radius: 10px;
+}
+
+.alert-title {
+  margin: 40px 0;
+}

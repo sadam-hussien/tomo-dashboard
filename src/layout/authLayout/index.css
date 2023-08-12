@@ -1,0 +1,29 @@
+.auth-layout {
+  background: url(/public/assets/images/auth-bg.png);
+  background-size: cover;
+  min-height: 100vh;
+  height: 100%;
+  padding: 43px 37px;
+  width: 100%;
+}
+
+.auth-layout__desc {
+  margin-bottom: 200px;
+}
+
+.auth-layout__title {
+  font-size: 50px;
+  font-weight: 400;
+  color: var(--bs-white);
+  line-height: 60px;
+}
+
+.auth-layout-content {
+  padding: 50px;
+}
+
+@media (min-width: 991px) {
+  .auth-layout-content {
+    padding: 100px;
+  }
+}

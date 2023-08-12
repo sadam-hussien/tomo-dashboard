@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <!-- multipart media accept media -->
+    <form action="" enctype="multipart/form-data">
+      <input type="file" name="file" id="file" />
+      <button type="button" id="send">Send</button>
+    </form>
+
+    <script type="module">
+      import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
+      // const socket = io("ws://57.128.20.16:900", {
+      const socket = io("ws://localhost:3000", {
+        reconnectionDelayMax: 10000,
+        extraHeaders: {
+          access_token:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU3NWFjNDMyLWMyNjQtNGJmYi1iYWFiLTNlYjMxZjUwYTFlYyIsInBob25lIjoiMTAyODQ0MjI0MCIsInBob25lVmVyaWZpZWQiOnRydWUsIm5hbWUiOiJlaGFiIiwibnVtYmVyX29mX2NoYWxsZW5nZXMiOjAsInBvaW50cyI6MCwicHJvZmlsZSI6bnVsbCwicG9zaXRpb24iOiIxOS8gMTkiLCJpYXQiOjE2ODE4OTUyOTQsImV4cCI6MTAwMDAwMjc5MzAwNjQwNX0.mz3aCHJ_a7n0EJ4uFLUtHdiZrZK1h85C0sIbVsdl6Zo",
+        },
+      });
+
+      document.getElementById("send").addEventListener("click", () => {
+        console.log("send");
+
+        //             socket.emit("conversation",
+
+        //             {
+        //                   "member_a_id": "575ac432-c264-4bfb-baab-3eb31f50a1ec",
+        //                   "member_b_id": "e4404966-3d18-4e77-99a3-6cffe4c39e2b",
+        //                   "status": "public"
+        //                 }
+        //                   );
+        //                   socket.on("newConversation", (data) => {
+        //                         console.log(data);
+        //   });
+        //   socket.on("conversationOnScroll", (data) => {
+        //     console.log(data);
+        //   });
+        //   socket.emit("search", {
+        //     "search": "",
+        //     "id": "0222b5cc-8654-448a-a4b8-8fe7ddab131a",
+        //   });
+        //   socket.on("conversationOnScroll", (data) => {
+        //         console.log(data);
+        //   });
+        socket.emit("chat", {
+          conversation: "643fafd147eb19bbc73379d2",
+          message: "test",
+          type: "text",
+          receiver: "575ac432-c264-4bfb-baab-3eb31f50a1ec",
+          sender: "e4404966-3d18-4e77-99a3-6cffe4c39e2b",
+        });
+
+        //   socket.emit("conversationScroll",{
+        //    "id":"0222b5cc-8654-448a-a4b8-8fe7ddab131a"
+        //   });
+
+        socket.on("conversationOnScroll", (data) => {
+          console.log(data);
+        });
+        //     const file = document.getElementById("file").files[0];
+        //     const formData = new FormData();
+        //     formData.append("file", file);
+        //     socket.emit("upload", formData);
+        // });
+      }); // Send the FormData object with the file as part of the WebSocket request
+    </script>
+
+    <!-- <script>
+        const { io } = require("socket.io-client");
+
+    </script> -->
+  </body>
+</html>

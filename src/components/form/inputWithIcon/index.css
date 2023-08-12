@@ -1,0 +1,51 @@
+.input-with-icon-label {
+  margin-bottom: var(--space-base);
+  color: var(--primary);
+  font-size: var(--font-size-md);
+}
+
+.input-withicon-group {
+  margin-bottom: var(--space-xl);
+  padding: 0 var(--space-base);
+  border-radius: var(--border-radius-sm);
+  border-color: var(--gray) !important;
+  transition: 0.3s;
+}
+
+.input-withicon-group:focus-within {
+  border-color: var(--primary) !important;
+}
+
+.input-withicon-group .form-label {
+  font-size: 1.3rem;
+  color: var(--bs-gray-500);
+  transition: 0.3s;
+}
+
+.input-withicon-group:focus-within .form-label {
+  color: var(--primary);
+}
+
+.input-withicon {
+  height: 56px;
+  background-color: transparent;
+  padding: 0;
+  color: var(--dark);
+}
+
+.show-passowrd {
+  font-size: 1.5rem;
+  color: var(--dark);
+}
+
+.show-passowrd .la-eye {
+  color: var(--primary);
+}
+
+.input-error-msg {
+  color: red;
+  margin-top: -25px;
+  margin-bottom: var(--space-md);
+  text-transform: capitalize;
+  font-size: var(--font-size-sm);
+}

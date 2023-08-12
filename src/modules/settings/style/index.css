@@ -1,0 +1,31 @@
+.settings-nav {
+  border-bottom: 1px solid var(--natu);
+  margin-bottom: var(--space-xl);
+}
+
+.settings-nav-item {
+  font-size: var(--font-size-sm);
+  font-weight: 400;
+  color: var(--primary);
+  position: relative;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 15px;
+  transition: 0.3s;
+}
+
+.settings-nav-item.active {
+  color: var(--secondary);
+  border-bottom-color: var(--secondary);
+}
+
+.profile-title {
+  font-weight: 500;
+  color: var(--primary);
+  margin-bottom: var(--space-sm);
+}
+
+.profile-subtitle {
+  color: var(--gray);
+  margin-bottom: var(--space-xl);
+  font-size: var(--font-size-sm);
+}

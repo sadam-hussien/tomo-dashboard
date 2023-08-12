@@ -1,0 +1,32 @@
+/* 
+  * import all css component 
+  * import this file in main css file 
+*/
+/* input with icon  */
+@import url(./form/inputWithIcon/index.css);
+/* textarea  */
+@import url(./form/textarea/index.css);
+/* select  */
+@import url(./form/selectBox/index.css);
+/* checkbox  */
+@import url(./form/checkboxInput/index.css);
+/* radio  */
+@import url(./form/radioboxInput/index.css);
+/* switch input  */
+@import url(./form/switchInput/index.css);
+/* date input  */
+@import url(./form/dateInput/index.css);
+/* buttons  */
+@import url(./core/buttons/index.css);
+/* lang controller  */
+@import url(./core/langController/index.css);
+/* custom dropdown  */
+@import url(./core/customDropdown/index.css);
+/* filter opiton  */
+@import url(./core/filterOption/index.css);
+/* table  */
+@import url(./table/index.css);
+/* alert  */
+@import url(./alert/index.css);
+/* /modal */
+@import url(./modal/index.css);

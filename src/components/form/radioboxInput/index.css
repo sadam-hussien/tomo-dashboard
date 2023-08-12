@@ -1,0 +1,49 @@
+.input-radiobox {
+  margin-bottom: var(--space-xl);
+}
+
+.input-radiobox-label {
+  margin-bottom: var(--space-base);
+  color: var(--primary);
+  font-size: var(--font-size-md);
+}
+
+.radiobox-label {
+  font-size: var(--font-size-sm);
+  font-weight: 400;
+  color: var(--text);
+}
+
+.radiobox-circle {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--text);
+  transition: 0.3s;
+}
+
+.radiobox-circle::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--secondary);
+  border-radius: inherit;
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.input-radiobox input:checked ~ .radiobox-label {
+  color: var(--secondary);
+}
+
+.input-radiobox input:checked ~ .radiobox-label .radiobox-circle {
+  border-color: var(--secondary);
+}
+
+.input-radiobox input:checked ~ .radiobox-label .radiobox-circle::after {
+  opacity: 1;
+}

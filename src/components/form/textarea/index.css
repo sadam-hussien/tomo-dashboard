@@ -1,0 +1,21 @@
+.textarea {
+  margin-bottom: var(--space-md);
+}
+
+.textarea-label {
+  margin-bottom: var(--space-sm);
+  color: var(--dark);
+}
+
+.textarea-input {
+  padding: var(--space-sm);
+  border-radius: var(--border-radius-sm);
+  border-color: rgba(var(--bs-dark-rgb), 0.1) !important;
+  height: 100px;
+  resize: none;
+}
+
+.textarea-input:focus {
+  box-shadow: none;
+  border-color: var(--primary) !important;
+}

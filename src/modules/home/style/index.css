@@ -1,0 +1,92 @@
+.home-welcome-img {
+  min-height: 210px;
+}
+
+.home-welcome-title {
+}
+
+.home-welcome-desc {
+  font-size: var(--font-size-md);
+  font-weight: 300;
+}
+
+.boxed-section {
+  margin-bottom: 40px;
+}
+
+.stats-boxes {
+  padding-top: var(--space-xl);
+}
+
+.category-item-header-img {
+  margin-top: calc(-1 * 30px - var(--space-lg));
+}
+
+.mb-base {
+  margin-bottom: var(--space-base);
+}
+
+.category-item-header-number {
+  font-size: 30px;
+  font-weight: 400;
+  color: #172327;
+}
+
+.category-item-footer-percentage {
+  font-size: var(--font-size-md);
+  color: var(--dark);
+}
+
+.category-item-footer-month {
+  font-size: var(--font-size-sm);
+  color: var(--dark);
+}
+
+.category-item-hero .category-item-footer-percentage,
+.category-item-hero .category-item-header-title {
+  color: var(--active);
+}
+
+.category-item-hero .category-item-header-img {
+  margin-top: 0;
+}
+
+.client-item-img {
+  margin-bottom: var(--space-sm);
+}
+
+.client-item-img img {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+}
+
+.client-item-name {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--text);
+}
+
+.client-item-points {
+  margin-top: 8px;
+  color: var(--text);
+}
+
+.clients-header-filter {
+  font-size: var(--font-size-sm);
+}
+
+.clients-header-filter .for {
+  color: #748aa1;
+}
+
+.chart-percentage {
+  color: #e45f26;
+  font-size: 35px;
+  margin-bottom: 0;
+}
+
+.chart-percentage-title {
+  font-size: var(--space-md);
+  color: #172327;
+}

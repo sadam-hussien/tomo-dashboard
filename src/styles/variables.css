@@ -1,0 +1,49 @@
+:root {
+  --primary: #2e2e2e;
+  --primary-rgb: 46 46 46;
+  --secondary: #d02049;
+  --secondary-rgb: 208 32 73;
+  --text: #29384e;
+  --active: #2ad7a1;
+  --suspend: #ffa700;
+  --inactive: #d02049;
+  --secondary2: #ff725e;
+  --dark: #000;
+  --dark-rgb: 0 0 0;
+  --gray: #999999;
+  --light-bg: #f4f5f7;
+  --natu: #fafafa;
+
+  --primary-ar: "Tajawal", sans-serif;
+
+  --font-size-xs: 0.75rem; /*12px*/
+  --font-size-sm: 0.875rem; /*14px*/
+  --font-size-base: 1rem; /*16px*/
+  --font-size-md: 1.125rem; /*18px*/
+  --font-size-lg: 1.25rem; /*20px*/
+  --font-size-xl: 1.5rem; /*24px*/
+  --font-size-2xl: 1.875rem; /*30px*/
+
+  --space-sm: 10px;
+  --space-base: 16px;
+  --space-md: 20px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  --border-radius-sm: 8px;
+  --border-radius-base: 10px;
+  --border-radius-md: 15px;
+  --border-radius-lg: 20px;
+
+  --sidebar-width: 186px;
+  --sidebar-width-sm: 70px;
+  --header-height: 101px;
+
+  font-size: 16px;
+}
+
+@media (max-width: 991px) {
+  :root {
+    --sidebar-width: 100px;
+  }
+}

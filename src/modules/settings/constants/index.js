@@ -1,0 +1,32 @@
+export const change_password_fields = [
+  {
+    id: "current-password-inp",
+    type: "password",
+    name: "oldPassword",
+    placeholder: "type_your_current_password",
+    label: "type_your_current_password",
+    // icon: "las la-unlock-alt",
+    noBorder: true,
+    col: "4",
+  },
+  {
+    id: "new-password-inp",
+    type: "password",
+    name: "password",
+    placeholder: "type_your_new_password",
+    label: "type_your_new_password",
+    // icon: "las la-unlock-alt",
+    noBorder: true,
+    col: "4",
+  },
+  {
+    id: "confirm-new-password-inp",
+    type: "password",
+    name: "confirmPassword",
+    placeholder: "type_your_confirm_new_password",
+    label: "type_your_confirm_new_password",
+    // icon: "las la-unlock-alt",
+    noBorder: true,
+    col: "4",
+  },
+];

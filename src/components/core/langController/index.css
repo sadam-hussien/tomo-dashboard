@@ -1,0 +1,27 @@
+.lang-controller {
+  /* min-width: 105px; */
+}
+
+.lang-controller .text,
+.lang-controller .icon {
+  color: var(--bs-white);
+  font-size: var(--font-size-md);
+}
+
+.lang-controller .icon {
+  margin-inline-start: var(--space-base);
+}
+
+.lang-controller .lang-option {
+  padding: var(--space-sm) var(--space-md);
+  border-radius: inherit;
+  transition: 0.3s;
+}
+
+.lang-controller .lang-option .text {
+  color: var(--primaryw);
+}
+
+.lang-controller .lang-option:hover {
+  background-color: rgba(var(--primary-rgb) / 0.2) !important;
+}

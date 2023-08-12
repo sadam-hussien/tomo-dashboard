@@ -1,0 +1,39 @@
+/* ***************************** button with icon ****************  */
+.normal-btn {
+  min-width: 146px;
+  height: 41px;
+  background-color: var(--secondary);
+  border-color: var(--secondary);
+  padding-inline-end: var(--space-lg);
+  color: var(--bs-white);
+  font-size: var(--font-size-sm);
+  font-weight: 400;
+  border-radius: var(--border-radius-sm);
+}
+
+.normal-btn.transparent {
+  background-color: transparent;
+  color: var(--secondary);
+}
+
+.normal-btn:hover,
+.normal-btn:focus,
+.normal-btn:disabled {
+  background-color: #ba1c41;
+  border-color: var(--secondary);
+  box-shadow: none;
+}
+
+.normal-btn.transparent:hover {
+  color: var(--bs-white);
+}
+
+.normal-btn.transparent:focus {
+  background: transparent;
+}
+
+.normal-btn.transparent:disabled {
+  background-color: transparent;
+  border-color: var(--secondary);
+  box-shadow: none;
+}

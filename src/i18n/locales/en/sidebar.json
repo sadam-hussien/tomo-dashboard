@@ -1,0 +1,19 @@
+{
+  "dashboard": "dashboard",
+  "email": "email",
+  "todo": "todo",
+  "calendar": "calendar",
+  "invoice": "invoice",
+  "list": "list",
+  "preview": "preview",
+  "edit": "edit",
+  "add": "add",
+  "ecommerce": "ecommerce",
+  "shop": "shop",
+  "details": "details",
+  "whishlist": "whishlist",
+  "checkout": "checkout",
+  "users": "users",
+  "view": "view",
+  "view_profile": "view profile"
+}
