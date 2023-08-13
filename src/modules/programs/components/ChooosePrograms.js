@@ -1,22 +1,24 @@
 import { Btn, CheckBoxInput, InputWithIcon } from "components";
-import { Form, Formik } from "formik";
 import { useFetch, usePost } from "hooks";
-
-import { apiGetUsers } from "modules/users/server";
-
-import { apiAssignProgramToUser } from "../server";
-
-import { useState } from "react";
-
+import React, { useState } from "react";
 import { Spinner } from "react-bootstrap";
+import { apiAssignProgramToUser, apiGetPrograms } from "../server";
+import { Form, Formik } from "formik";
+import { modalTypes } from "constants";
+import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
+import { openModal } from "store/global";
 
-export default function ProgramToUser({ handleClose, data }) {
+export default function ChooosePrograms({ handleClose }) {
+  const { t } = useTranslation("common");
+
+  const dispatch = useDispatch();
+
   const [search, setSearch] = useState("");
 
-  // get users
-  const { data: usersData, isLoading } = useFetch({
-    queryKey: ["get-user-to-assign", search],
-    queryFn: () => apiGetUsers({ search: search }),
+  const { isLoading, data } = useFetch({
+    queryKey: ["get-programs", search],
+    queryFn: () => apiGetPrograms({ search: search }),
   });
 
   const { mutate, isLoading: isLoadingMutate } = usePost({
@@ -24,20 +26,37 @@ export default function ProgramToUser({ handleClose, data }) {
     onSuccess: () => handleClose(),
   });
 
-  // console.log(data.data.programs);
-
   function handleSubmit(values) {
-    mutate({
-      programId: data.data.id,
-      ...values,
-    });
+    dispatch(
+      openModal({
+        modal_type: modalTypes.message,
+        title: t("send_program"),
+        // btnTitle: t("choose_clienr"),
+        programs: [...values.programId],
+      })
+    );
+    // mutate({
+    //   programId: data.data.id,
+    //   ...values,
+    // }, {
+    //   onSuccess: () => {
+    //     dispatch(
+    //       openModal({
+    //         modal_type: modalTypes.message,
+    //         title: t("send_program"),
+    //         // btnTitle: t("choose_clienr"),
+    //         programs: [...valuesprogramId]
+    //       })
+    //     )
+    //   }
+    // });
   }
 
   return (
     <div className="assign-program-to-user">
       <InputWithIcon
-        name="search-user"
-        id="search-user"
+        name="search-program"
+        id="search-program"
         basic={{ onChange: (value) => setSearch(value) }}
         type="search"
         placeholder="أبحث عن عميل"
@@ -59,28 +78,20 @@ export default function ProgramToUser({ handleClose, data }) {
         <div className="list-of-users">
           <Formik
             initialValues={{
-              userId: [],
+              programId: [],
             }}
             onSubmit={handleSubmit}
           >
             {() => (
               <Form>
                 <div className="list-of-users-inner">
-                  {usersData?.data && usersData.data.length
-                    ? usersData.data.map((item) => (
+                  {data?.data && data.data.length
+                    ? data.data.map((item) => (
                         <div
                           className="d-flex align-items-center justify-content-between list-of-users-user"
                           key={item.id}
                         >
                           <div className="d-flex align-items-center gap-2">
-                            <img
-                              src={
-                                item?.avatar ||
-                                "/assets/images/user-placeholder.png"
-                              }
-                              alt={item?.name}
-                              className="img-fluid list-of-users-img"
-                            />
                             <span className="list-of-users-user-name">
                               {item.name}
                             </span>
@@ -90,7 +101,7 @@ export default function ProgramToUser({ handleClose, data }) {
                             // containerStyle,
                             // style,
                             id={item?.id}
-                            name="userId"
+                            name="programId"
                             value={item?.id}
                           />
                         </div>
@@ -103,15 +114,15 @@ export default function ProgramToUser({ handleClose, data }) {
                     classes="list-of-users-submit-btn"
                     style={{
                       width: "100px",
-                      height: "34px",
+                      height: "40px",
                       borderRadius: "15px",
-                      minWidth: "auto",
+                      minWidth: "150px",
                       padding: 0,
                     }}
                     loading={isLoadingMutate}
                   >
                     <div className="d-flex justify-content-center align-items-center gap-2">
-                      <span>ارسال</span>
+                      <span>اختيار العميل</span>
                       <i className="las la-paper-plane icon"></i>
                     </div>
                   </Btn>

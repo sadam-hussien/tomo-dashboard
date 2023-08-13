@@ -24,5 +24,23 @@ export { default as ImageAndName } from "./table/ImageAndName";
 export { default as Status } from "./table/Status";
 export { default as DynamicStatus } from "./table/DynamicStatus";
 
+// table v2
+export { default as Table2 } from "./table2";
+
+export { default as DefaultActions } from "./table2/defaultActions";
+export {
+  EditBtn,
+  MessageBtn,
+  RemoveBtn,
+  ViewBtn,
+  ViewLink,
+} from "./table2/defaultActions";
+
+export { default as Search } from "./search";
+
+export { default as Filter } from "./filter";
+
+export { default as AddBtn } from "./addBtn";
+
 // modal
 export { default as Modal } from "./modal";

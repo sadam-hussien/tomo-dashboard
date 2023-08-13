@@ -30,3 +30,11 @@
 @import url(./alert/index.css);
 /* /modal */
 @import url(./modal/index.css);
+/* table v   */
+@import url(./table2/index.css);
+/* search  */
+@import url(./search/index.css);
+/* add btn  */
+@import url(./addBtn/index.css);
+/* filter  */
+@import url(./filter/index.css);

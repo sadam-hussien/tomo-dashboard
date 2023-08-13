@@ -8,7 +8,7 @@ import * as Yup from "yup";
 
 import { useTranslation } from "react-i18next";
 
-import { Btn, InputWithIcon, Textarea } from "components";
+import { Btn, InputWithIcon, SelectBox, Textarea } from "components";
 
 import { Accordion, Col, Row, Spinner } from "react-bootstrap";
 
@@ -107,6 +107,7 @@ export default function Edit({ handleClose, data: itemData }) {
     <Formik
       initialValues={{
         program: itemData.data.name,
+        program_type: itemData.data.program_type,
         meals:
           handleInitialValues && handleInitialValues.length
             ? handleInitialValues
@@ -151,6 +152,23 @@ export default function Edit({ handleClose, data: itemData }) {
     >
       {({ values }) => (
         <Form>
+          <SelectBox
+            item={{
+              name: "program_type",
+              options: [
+                { label: "برنامج غذائى", value: "برنامج غذائى" },
+                { label: "برنامج رياضى", value: "برنامج رياضى" },
+                { label: "برنامج نفسى", value: "برنامج نفسى" },
+                { label: "مكملات", value: "مكملات" },
+              ],
+            }}
+            label={t("program_type")}
+            placeholder={t("program_type")}
+            containerStyle={{
+              height: "54px",
+            }}
+          />
+
           <InputWithIcon
             type="text"
             name="program"

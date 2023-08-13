@@ -3,7 +3,7 @@ import Btn from "../core/buttons/Btn";
 
 import { useTranslation } from "react-i18next";
 
-export default function Confirmation({ swal, id, mutate }) {
+export default function Confirmation({ swal, id, mutate, confirmTitle }) {
   const { t } = useTranslation("common");
   const [isLoading, setIsLoading] = useState(false);
   return (
@@ -12,7 +12,7 @@ export default function Confirmation({ swal, id, mutate }) {
       <div className="d-flex flex-column gap-3">
         <Btn
           type="submit"
-          title={t("save")}
+          title={confirmTitle ? t(confirmTitle) : t("save")}
           loading={isLoading}
           style={{
             height: "48px",

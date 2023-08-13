@@ -1,8 +1,8 @@
 import Api from "server/axios";
 
-export const apiGetPrograms = ({ pageParam }) => {
+export const apiGetPrograms = (params) => {
   return Api().get("programs", {
-    params: pageParam,
+    params: params,
   });
 };
 
