@@ -1,0 +1,93 @@
+.main-table-content {
+  --col-height: 64px;
+  padding: 0;
+  border: none;
+}
+
+.table-responsive {
+  overflow-y: hidden;
+}
+
+.main-table-header {
+  margin-bottom: var(--space-xl);
+}
+
+.main-table tbody {
+  border-top: none !important;
+}
+
+.main-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.main-table thead {
+  height: var(--col-height);
+  background-color: #fafafa;
+  vertical-align: middle;
+}
+
+.main-table thead th {
+  border-bottom: none;
+  padding: 0 var(--space-md);
+  color: var(--text);
+  font-size: var(--font-size-sm);
+  font-weight: 400;
+  white-space: nowrap;
+  text-transform: capitalize;
+}
+
+.main-table tbody tr {
+  height: calc(var(--col-height) + 20px);
+  vertical-align: middle;
+  transition: 0.3s;
+}
+
+.main-table tbody td {
+  padding: 0 var(--space-md);
+  border: none;
+  color: var(--text);
+  font-size: var(--font-size-sm);
+  font-weight: 400;
+}
+
+/* select input -> checkbox  */
+.table-custom-checkbox-label {
+  cursor: pointer;
+}
+
+.table-custom-checkbox {
+  --w: 18px;
+  width: var(--w);
+  height: var(--w);
+  border: 2px solid var(--gray);
+  border-radius: 2px;
+  transition: 0.3s;
+}
+
+.table-custom-checkbox:hover {
+  border-color: var(--primary);
+}
+
+.table-custom-checkbox .icon {
+  opacity: 0;
+  color: var(--bs-white);
+}
+
+.table-custom-checkbox-label input:checked ~ .table-custom-checkbox {
+  background-color: var(--primary);
+}
+
+.table-custom-checkbox-label input:checked ~ .table-custom-checkbox .icon {
+  opacity: 1;
+}
+
+.main-table-inner-actions-btn {
+  background: transparent;
+  border: none;
+  font-size: var(--font-size-sm);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  padding: 0;
+  gap: var(--space-sm);
+}

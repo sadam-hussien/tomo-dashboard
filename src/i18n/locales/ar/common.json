@@ -95,5 +95,8 @@
   "user_confirm_password": "تاكيد كلمة المرور",
   "active_user": "نشط",
   "personal_info": "معلومات شخصية",
-  "personal_info_subtitle": "المعلومات الشخصية ، مثل اسمك وصورتك الذي سيتم عرضه"
+  "personal_info_subtitle": "المعلومات الشخصية ، مثل اسمك وصورتك الذي سيتم عرضه",
+  "yes_sure": "نعم متأكد",
+  "food_program": "برنامج غذائى",
+"sporting_program": "برنامج رياضى"
 }

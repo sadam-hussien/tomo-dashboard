@@ -91,3 +91,16 @@
 .list-of-users-user {
   margin-bottom: var(--space-xl);
 }
+
+.program-type {
+  color: #29384e;
+  font-weight: 500;
+  border-bottom: 1px solid transparent;
+  transition: 0.3s;
+}
+
+.program-type.active,
+.program-type:hover {
+  color: var(--secondary);
+  border-bottom-color: var(--secondary);
+}

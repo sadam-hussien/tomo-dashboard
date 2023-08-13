@@ -33,9 +33,16 @@ export function Toast({
 }
 
 // // alert confirmation
-export function alertConfirmation({ mutate, id }) {
+export function alertConfirmation({ mutate, id, confirmTitle }) {
   MySwal.fire({
-    html: <Confirmation swal={MySwal} mutate={mutate} id={id} />,
+    html: (
+      <Confirmation
+        swal={MySwal}
+        mutate={mutate}
+        id={id}
+        confirmTitle={confirmTitle}
+      />
+    ),
     showConfirmButton: false,
     allowOutsideClick: false,
     icon: "warning",
