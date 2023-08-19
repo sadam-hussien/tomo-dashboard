@@ -17,6 +17,7 @@ import { edit_coach_fields } from "../constants";
 import { Btn, DynamicFileUploaderInput, InputsHandler } from "components";
 
 import UploadImage from "./UploadImage";
+import UploadVideo from "./UploadVideo";
 
 export default function Edit({ handleClose, data }) {
   const { t } = useTranslation("common");
@@ -56,13 +57,14 @@ export default function Edit({ handleClose, data }) {
         certification: data.data?.certification || "",
         image: data.data?.image || "",
         experience: data.data?.experience || "",
+        active: true
       }}
       validationSchema={schema}
       onSubmit={handleSubmit}
     >
       {() => (
         <Form>
-          <Row>
+          <Row style={{overflow:"auto",height:"400px"}}>
             {edit_coach_fields.map((item) => (
               <Col key={item.id} xs={12} md={item.col}>
                 {item.type === "file" ? (
@@ -75,8 +77,19 @@ export default function Edit({ handleClose, data }) {
                       isLoading={isLoadingImageUploading}
                     />
                   </DynamicFileUploaderInput>
-                ) : (
-                  <InputsHandler item={item} translation="common" />
+                ) : item.type === "video-file" ?(
+                  <DynamicFileUploaderInput
+                  item={item}
+                  serverCallback={mutateImageUploading}
+                >
+                  <UploadVideo
+                    name={item.name}
+                    // isLoading={isLoadingImageUploading}
+                  />
+                </DynamicFileUploaderInput>
+              )
+              : (
+                <InputsHandler item={item} translation="common" />
                 )}
               </Col>
             ))}

@@ -23,10 +23,14 @@ import InnerActions from "./InnerActions";
 import Checkbox from "./Checkbox";
 
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import Selector from "../selectors";
+import { Filter } from "..";
 
 export default function MainTable({
   actions,
   search,
+  selector,
   searchPlaceholder,
   pagination,
   pageSizeOption = false,
@@ -37,6 +41,10 @@ export default function MainTable({
   columns,
   tableHeaderClass,
   grid = null,
+  isLoadingPrograms,
+  programsData,
+  programType,
+  filter
 }) {
   // translation
   const { t } = useTranslation("common");
@@ -175,6 +183,24 @@ export default function MainTable({
         </div>
       ) : (
         <>
+          <div className="d-flex justify-content-between mb-3 align-items-center">
+            {selector && <Selector programType={programType}/>}
+            { !filter && 
+              <Filter
+              placeholder={t("all")}
+              selectActionProps={{
+                id: "program-filter",
+                name: "program_type",
+                options: [
+                  { label: t("all"), value: "all" },
+                  { label: t("highest_renewal"), value: "highest_renewal" },
+                  { label: t("highest_income"), value: "highest_income" },
+                  { label: t("highest_customer"), value: "highest_customer" },
+                ],
+              }}
+            />
+          }
+          </div>
           {/* table  */}
           {!grid ? (
             <div className="main-table-content">
@@ -218,7 +244,7 @@ export default function MainTable({
                             return (
                               <td
                                 {...cell.getCellProps()}
-                                className={cell.column.class}
+                                
                                 style={cell.column.style}
                               >
                                 {

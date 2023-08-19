@@ -12,9 +12,10 @@ import { modalTypes } from "constants";
 
 export default function ModalEl({ children, edit, add, view, message }) {
   // get modal from store
+
   const dispatch = useDispatch();
   const { modal } = useSelector((state) => state.global);
-
+  console.log(modal)
   const handleClose = () => {
     dispatch(closeModal());
   };

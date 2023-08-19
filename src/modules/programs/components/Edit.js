@@ -67,17 +67,17 @@ export default function Edit({ handleClose, data: itemData }) {
     "الوجبة العشرين",
   ];
 
-  function addExtraMeal(arrayHelpers, index) {
-    arrayHelpers.push({
-      name: subMealsTitle[arrayHelpers.form.values.meals[index].extra.length],
-      details: "",
-      calories: "",
-      image: "",
-    });
-  }
+  // function addExtraMeal(arrayHelpers, index) {
+  //   arrayHelpers.push({
+  //     name: subMealsTitle[arrayHelpers.form.values.meals[index].extra.length],
+  //     details: "",
+  //     calories: "",
+  //     image: "",
+  //   });
+  // }
 
   function deleteMeal(arrayHelpers, index) {
-    arrayHelpers.remove(index);
+    arrayHelpers.remove(arrayHelpers.form.values.meals.length-1);
   }
 
   // schema
@@ -85,7 +85,7 @@ export default function Edit({ handleClose, data: itemData }) {
     program: Yup.string().required("this_field_is_required"),
   });
 
-  const mealsTitles = ["وجبة الافطار", "وجبة الغداء", "وجبة العشاء"];
+  // const mealsTitles = ["وجبة الافطار", "وجبة الغداء", "وجبة العشاء"];
 
   const handleInitialValues = itemData?.data?.mainMeals
     ? itemData.data.mainMeals.map((item) => {
@@ -113,7 +113,7 @@ export default function Edit({ handleClose, data: itemData }) {
             ? handleInitialValues
             : [
                 {
-                  name: "first",
+                  name: "الوجبة الاولى",
                   extra: [
                     {
                       name: "الوجبة الاولى",
@@ -124,10 +124,10 @@ export default function Edit({ handleClose, data: itemData }) {
                   ],
                 },
                 {
-                  name: "second",
+                  name: "الوجبة الثانية",
                   extra: [
                     {
-                      name: "الوجبة الاولى",
+                      name: "الوجبة الثانية",
                       details: "",
                       calories: "",
                       image: "",
@@ -135,10 +135,10 @@ export default function Edit({ handleClose, data: itemData }) {
                   ],
                 },
                 {
-                  name: "third",
+                  name: "الوجبة الثالثة",
                   extra: [
                     {
-                      name: "الوجبة الاولى",
+                      name: "الوجبة الثالثة",
                       details: "",
                       calories: "",
                       image: "",
@@ -152,6 +152,22 @@ export default function Edit({ handleClose, data: itemData }) {
     >
       {({ values }) => (
         <Form>
+
+          <InputWithIcon
+            type="text"
+            name="program"
+            label={t("program_name")}
+            placeholder={t("program_name")}
+            icon="las la-edit"
+            id="program"
+            noBorder
+            containerStyle={{
+              flexDirection: "row-reverse",
+              border: "1px solid rgba(38, 50, 56, 0.1)",
+            }}
+            style={{ height: "54px" }}
+          />
+
           <SelectBox
             item={{
               name: "program_type",
@@ -169,33 +185,21 @@ export default function Edit({ handleClose, data: itemData }) {
             }}
           />
 
-          <InputWithIcon
-            type="text"
-            name="program"
-            label={t("program_name")}
-            placeholder={t("program_name")}
-            icon="las la-edit"
-            id="program"
-            noBorder
-            containerStyle={{
-              flexDirection: "row-reverse",
-              border: "1px solid rgba(38, 50, 56, 0.1)",
-            }}
-            style={{ height: "54px" }}
-          />
           <div className="add-program-form">
             {/* program meals  */}
+
             <Accordion>
+              <FieldArray
+                  name={`meals`}
+                  render={(arrayHelpers) => (
+              <div>
               {values.meals.map((meal, index) => (
                 <Accordion.Item
                   eventKey={meal.name + index}
                   key={meal.name + index}
                 >
-                  <Accordion.Header>{mealsTitles[index]}</Accordion.Header>
+                  <Accordion.Header>{meal.name}</Accordion.Header>
                   <Accordion.Body>
-                    <FieldArray
-                      name={`meals[${index}].extra`}
-                      render={(arrayHelpers) => (
                         <div>
                           {meal.extra.map((extraMeal, idx) => (
                             <div
@@ -204,22 +208,21 @@ export default function Edit({ handleClose, data: itemData }) {
                                 idx > 0 ? "add-program-extra-meal-border" : ""
                               }`}
                             >
-                              <div className="d-flex justify-content-between align-items-center">
-                                <h6 className="add-program-extra-meal-name">
-                                  {extraMeal.name}
-                                </h6>
-                                {idx > 0 && (
-                                  <img
-                                    src="/assets/images/trash-icon.svg"
-                                    alt="delete meal"
-                                    className="cursor-pointer img-fluid"
-                                    onClick={() =>
-                                      deleteMeal(arrayHelpers, idx)
-                                    }
-                                  />
-                                )}
-                              </div>
-
+                              <InputWithIcon
+                                type="text"
+                                name="program"
+                                label={t("program_name")}
+                                placeholder={t("program_name")}
+                                icon="las la-edit"
+                                id="program"
+                                noBorder
+                                containerStyle={{
+                                  flexDirection: "row-reverse",
+                                  border: "1px solid rgba(38, 50, 56, 0.1)",
+                                }}
+                                style={{ height: "54px" }}
+                              />
+                              
                               <Row xs={1} md={2} className="g-3">
                                 <Col>
                                   <Textarea
@@ -240,38 +243,31 @@ export default function Edit({ handleClose, data: itemData }) {
                               </Row>
 
                               <FileUploader
-                                img={extraMeal.image}
                                 name={`meals[${index}].extra[${idx}].image`}
                               />
                             </div>
                           ))}
-
-                          <Btn
-                            style={{
-                              background: "transparent",
-                              border: "1px solid #2AD7A1",
-                              marginTop: "var(--space-lg)",
-                              color: "#2AD7A1",
-                              fontSize: "var(--font-size-sm)",
-                              minWidth: "121px",
-                              height: "48px",
-                            }}
-                            type="button"
-                            onClick={() => addExtraMeal(arrayHelpers, index)}
-                          >
-                            <i
-                              className="las la-plus"
-                              style={{ fontSize: "20px" }}
-                            ></i>
-                            <span>اضافة وجبة</span>
-                          </Btn>
                         </div>
-                      )}
-                    />
                   </Accordion.Body>
                 </Accordion.Item>
-              ))}
+                ))}
+                <div onClick={() =>
+                        deleteMeal(arrayHelpers)
+                      } 
+                      className="d-flex gap-2 align-items-center px-2 mb-3"
+                >
+                    <img
+                      src="/assets/images/trash-icon.svg"
+                      alt="delete meal"
+                      className="cursor-pointer img-fluid"
+                    />
+                    <p style={{margin:"0",color:"var(--secondary)",cursor:"pointer"}}>حذف الوجبه</p>
+                </div>
+              </div>
+              )}
+              />
             </Accordion>
+
             <div className="d-flex flex-column gap-3">
               <Btn
                 type="submit"

@@ -85,6 +85,14 @@ export const add_coach_fields = [
     col: "6",
     label: "coach_password",
   },
+
+  {
+    id: "coach-video",
+    type: "video-file",
+    name: "video",
+    col: "12",
+    label: "coach_video",
+  },
 ];
 
 // edit
@@ -151,4 +159,29 @@ export const edit_coach_fields = [
       flexDirection: "row-reverse",
     },
   },
+
+  {
+    id: "coach-video",
+    type: "video-file",
+    name: "video",
+    col: "12",
+    label: "coach_video",
+  },
+
+  {
+    id: "coach-active-inp",
+    type: "switch",
+    name: "active",
+    col: "auto",
+    labelInner: "activate_coach",
+  }
 ];
+
+export const coach_page = [
+  {
+    id: "coach-date",
+    type: "date",
+    name: "date",
+    col: "12",
+  }
+]

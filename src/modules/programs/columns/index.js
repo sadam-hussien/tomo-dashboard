@@ -30,10 +30,6 @@ export const programs_columns = (mutate) => [
           title: "edit_program",
           btnTitle: "save",
         }}
-        remove={{
-          removeFn: () =>
-            alertConfirmation({ mutate, id: col.id, confirmTitle: "yes_sure" }),
-        }}
         message={{
           title: "send_program",
           btnTitle: "send",

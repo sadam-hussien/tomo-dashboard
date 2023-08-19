@@ -17,6 +17,8 @@ export default function Clients() {
     queryKey: "get-clients",
     queryFn: apiGetUsers,
   });
+  console.log(data)
+  console.log(data?.data?.leaders)
 
   return (
     <section className="programs-page">

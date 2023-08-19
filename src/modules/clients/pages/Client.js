@@ -26,7 +26,7 @@ import { Table as MyTable } from "components";
 
 export default function Client() {
   const { id } = useParams();
-
+  console.log(id)
   const { data, isLoading } = useFetch({
     queryKey: ["get-user", id],
     queryFn: () => apiGetUserById(id),

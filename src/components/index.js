@@ -44,3 +44,4 @@ export { default as AddBtn } from "./addBtn";
 
 // modal
 export { default as Modal } from "./modal";
+

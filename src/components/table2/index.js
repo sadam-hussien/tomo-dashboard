@@ -56,7 +56,8 @@ export default function Table2({
         });
       }
     );
-
+      console.log(tableColumns)
+      console.log(tableData)
   return (
     <section className="main-table-section">
       {isLoading ? (
