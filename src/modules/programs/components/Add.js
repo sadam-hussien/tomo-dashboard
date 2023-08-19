@@ -37,21 +37,17 @@ export default function Add({ handleClose }) {
 
   // handle submit function
   function handleSubmit(values, actions) {
-    console.log(values)
-    console.log(programType)
-    console.log(values.program_type)
-    console.log(programType === values.program_type,"ffffffffffffff")
-    // mutateProgram(
-    //   { name: values.program },
-    //   {
-    //     onSuccess: (response) => {
-    //       mutateProgramMeals({
-    //         ...values,
-    //         program: response.data.id,
-    //       });
-    //     },
-    //   }
-    // );
+    mutateProgram(
+      { name: values.program },
+      {
+        onSuccess: (response) => {
+          mutateProgramMeals({
+            ...values,
+            program: response.data.id,
+          });
+        },
+      }
+    );
   }
 
   const subMealsTitle = [
@@ -148,30 +144,30 @@ export default function Add({ handleClose }) {
       ],
     }
   ]
-  const [mealz,setMealz] = useState([
-    {
-      name: "الوجبة الاولى",
-      extra: [
-        {
-          name: "الوجبة الاولى",
-          details: "",
-          calories: "",
-          image: "",
-        },
-      ],
-    },
-    {
-      name: "الوجبة الثانية",
-      extra: [
-        {
-          name: "الوجبة الثانية",
-          details: "",
-          calories: "",
-          image: "",
-        },
-      ],
-    }
-  ])
+  // const [mealz,setMealz] = useState([
+  //   {
+  //     name: "الوجبة الاولى",
+  //     extra: [
+  //       {
+  //         name: "الوجبة الاولى",
+  //         details: "",
+  //         calories: "",
+  //         image: "",
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     name: "الوجبة الثانية",
+  //     extra: [
+  //       {
+  //         name: "الوجبة الثانية",
+  //         details: "",
+  //         calories: "",
+  //         image: "",
+  //       },
+  //     ],
+  //   }
+  // ])
 
   function addExtraMeal(arrayHelpers) {
     arrayHelpers.push({
@@ -185,23 +181,23 @@ export default function Add({ handleClose }) {
         },
       ],
     },);
-    setMealz(prev=>{
-      return([
-        ...prev,
-        {
-          name: programType === "برنامج غذائى" ? subMealsTitle[arrayHelpers.form.values.meals.length] : subWorkOutTitle[arrayHelpers.form.values.meals.length],
-          extra: [
-            {
-              name: "الوجبة الاولى",
-              details: "",
-              calories: "",
-              image: "",
-            },
-          ],
-        }
-      ]
-      )
-    })
+    // setMealz(prev=>{
+    //   return([
+    //     ...prev,
+    //     {
+    //       name: programType === "برنامج غذائى" ? subMealsTitle[arrayHelpers.form.values.meals.length] : subWorkOutTitle[arrayHelpers.form.values.meals.length],
+    //       extra: [
+    //         {
+    //           name: "الوجبة الاولى",
+    //           details: "",
+    //           calories: "",
+    //           image: "",
+    //         },
+    //       ],
+    //     }
+    //   ]
+    //   )
+    // })
   }
 
 
@@ -225,7 +221,7 @@ export default function Add({ handleClose }) {
       initialValues={{
         program: "",
         program_type: programType,
-        meals: programType === "برنامج غذائى" ? mealz : workout ,
+        meals: programType === "برنامج غذائى" ? meals : workout,
       }}
       validationSchema={schema}
       onSubmit={handleSubmit}
@@ -278,7 +274,7 @@ export default function Add({ handleClose }) {
             {/* program meals  */}
             <Accordion>
               <FieldArray
-                  name={`mealz`}
+                  name={`meals`}
                   render={(arrayHelpers) => (
               <div>
               {values.meals.map((meal, index) => (
