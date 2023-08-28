@@ -29,6 +29,7 @@ export default function Clients() {
         search
         searchPlaceholder={t("search_about_users")}
         selection
+        filter
         tableHeaderClass="d-flex flex-row-reverse justify-content-between flex-wrap"
         actions={{
           addAction: false,

@@ -24,6 +24,7 @@ import { Link, useParams, useSearchParams } from "react-router-dom";
 import LeftSide from "../components/LeftSide";
 
 import DatePicker from "../components/DatePicker";
+import { useRef, useState } from "react";
 
 export default function Coach() {
   // translation
@@ -87,6 +88,11 @@ export default function Coach() {
     degree_img:["/assets/images/placholder.png","/assets/images/placholder.png","/assets/images/placholder.png","/assets/images/placholder.png"]
   }]
 
+
+  const handleIconClick = () => {
+    document.querySelector('input[placeholder="التاريخ"]').focus() 
+  };
+
   return (
     <section className="coach-page"> 
         <div className="coach-container">
@@ -99,8 +105,9 @@ export default function Coach() {
                           <i class="las la-angle-left"></i>
                         </div>
                     </div>
-                    <div style={{width:"100%"}}>
+                    <div style={{width:"100%",position:"relative"}}>
                       <DatePicker/>
+                      <i onClick={handleIconClick} style={{position:"absolute",fontSize:"2rem",left:"0",top:"15%"}} class="las la-calendar"></i>
                     </div>
                 </div>
                 <Table
@@ -109,9 +116,9 @@ export default function Coach() {
                 columns={coaches_columns}
                 isLoading={isLoadingCoaches}
                 tableHeaderClass="d-flex flex-row-reverse justify-content-between align-items-center"
-            />
-        </div>
-        <LeftSide items={coachDetails}/>
+                />
+            </div>
+          <LeftSide items={coachDetails}/>
         </div>
     </section>
   );

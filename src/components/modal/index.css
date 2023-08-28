@@ -8,6 +8,11 @@
   width: 750px;
   max-width: 95%;
 }
+.custom-dialog-modal-info {
+  /* width: auto; */
+  width: 1500px;
+  max-width: 95%;
+}
 
 .custom-dialog-modal .modal-content {
   border: none;

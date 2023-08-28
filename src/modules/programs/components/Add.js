@@ -144,6 +144,7 @@ export default function Add({ handleClose }) {
       ],
     }
   ]
+
   // const [mealz,setMealz] = useState([
   //   {
   //     name: "الوجبة الاولى",
@@ -202,6 +203,7 @@ export default function Add({ handleClose }) {
 
 
   function deleteMeal(arrayHelpers, index) {
+    // arrayHelpers.remove(index);
     arrayHelpers.remove(arrayHelpers.form.values.meals.length-1);
   }
 
@@ -309,8 +311,9 @@ export default function Add({ handleClose }) {
                                     style={{ height: "54px" }}
                                   />
                                 </div>
-                                <div onClick={() =>
-                                        deleteMeal(arrayHelpers, idx)
+                                <div onClick={() =>{
+                                        deleteMeal(arrayHelpers, index);
+                                        console.log()}
                                       } 
                                       className="d-flex justify-content-between gap-3 align-items-center"
                                 >

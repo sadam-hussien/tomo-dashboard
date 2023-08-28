@@ -107,5 +107,18 @@
   "highest_customer":"الاعلي في العملاء",
   "highest_renewal":"الاعلي في التجديد",
   "activate_coach" :"تنشيط المدرب",
-  "import_program" : "استيراد برنامج"
+  "import_program" : "استيراد برنامج",
+  "quota" : "الباقة",
+  "register_date":"تاريخ التسجيل",
+  "subscription_data":"تاريخ الاشتراك",
+  "subscription_expire_date" : "نهاية الاشتراك",
+  "current_nutritionist": "الاخصائية الحالية",
+  "current_coach": "المدربة الحالية",
+  "subscription_status":"حالة الاشتراك",
+  "food":"الغذائي",
+  "sport":"الرياضي",
+  "reports":"التقارير",
+  "updates":"التحديثات",
+  "clients": "العملاء",
+  "subscription_info":"معلومات الاشتراك"
 }

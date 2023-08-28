@@ -4,5 +4,7 @@ export const modalTypes = {
   add: "add",
   delete: "delete",
   message: "message",
-  import: "import"
+  import: "import",
+  info:"info",
+  measure:"measure"
 };

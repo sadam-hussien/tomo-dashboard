@@ -5,6 +5,12 @@ import range from "lodash/range";
 import "react-datepicker/dist/react-datepicker.css";
 
 const DatePicker = ({disabled}) => {
+
+  const handleIconClick = () => {
+    document.querySelector('input[placeholder="التاريخ"]').focus() 
+
+  };
+
   const calRef = React.useRef();
   const [dateRange, setDateRange] = useState([null, null]);
   const [startDate, endDate] = dateRange;
@@ -24,7 +30,7 @@ const DatePicker = ({disabled}) => {
     "December",
   ];
   return (
-    <div>
+    <div className="date-picker">
       <ReactDatePicker
         renderCustomHeader={({
           date,
@@ -120,6 +126,7 @@ const DatePicker = ({disabled}) => {
             </button>
         </div>
         </ReactDatePicker>
+        <i onClick={handleIconClick} style={{position:"absolute",fontSize:"2rem",left:"0",top:"15%",color:"#D02049"}} class="las la-calendar"></i>
     </div>
   );
 };
