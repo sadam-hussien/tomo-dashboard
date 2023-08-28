@@ -14,11 +14,11 @@ export default function RadioBoxInput({
   value,
   onChange,
   options,
+  checked
 }) {
   const { t } = useTranslation("validation");
 
   const { setFieldValue } = useFormikContext();
-
   return (
     <Form.Group className="form-group input-radiobox" style={containerStyle}>
       {label && (
@@ -34,6 +34,7 @@ export default function RadioBoxInput({
             {basic ? (
               <input
                 value={opt}
+                checked = {checked === opt}
                 type="radio"
                 name={name}
                 id={id + opt}
@@ -41,7 +42,7 @@ export default function RadioBoxInput({
                 onChange={(e) => {
                   setFieldValue(name, e.target.value);
                   if (onChange) {
-                    onChange(e.target.value);
+                    onChange(name,e.target.value);
                   }
                 }}
               />

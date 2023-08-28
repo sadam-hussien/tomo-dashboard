@@ -10,11 +10,12 @@ import { closeModal } from "store/global";
 
 import { modalTypes } from "constants";
 
-export default function ModalEl({ children, edit, add, view, message }) {
+export default function ModalEl({ children, edit, add, view, message, info, measure }) {
   // get modal from store
+
   const dispatch = useDispatch();
   const { modal } = useSelector((state) => state.global);
-
+  console.log(modal)
   const handleClose = () => {
     dispatch(closeModal());
   };
@@ -41,6 +42,16 @@ export default function ModalEl({ children, edit, add, view, message }) {
         handleClose,
         data: modal,
       });
+    }else if (modal.data.modal_type === modalTypes.info) {
+      return React.cloneElement(info, {
+        handleClose,
+        data: modal,
+      });
+    }else if (modal.data.modal_type === modalTypes.measure) {
+      return React.cloneElement(measure, {
+        handleClose,
+        data: modal,
+      });
     }
     return React.cloneElement(children, {
       handleClose,
@@ -53,14 +64,14 @@ export default function ModalEl({ children, edit, add, view, message }) {
       show={modal.isShow}
       onHide={handleClose}
       className="custom-modal"
-      dialogClassName="custom-dialog-modal"
+      dialogClassName= {modal?.data?.modal_type === modalTypes?.info ? "custom-dialog-modal-info" : "custom-dialog-modal" }
       aria-labelledby="example-custom-modal-styling-title"
       centered
       backdrop="static"
       keyboard={false}
     >
       <div className="modal-container-content">
-        <Modal.Header className="d-flex align-items-center justify-content-between">
+        <Modal.Header className="d-flex align-items-center justify-content-between">  
           <Modal.Title className="text-capitalize">
             {modal.data?.title}
           </Modal.Title>

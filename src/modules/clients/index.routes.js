@@ -9,6 +9,7 @@ const routes = [
     component: Client,
     path: "/clients/:id",
     boxed: true,
+    nopadding:true
   },
 ];
 

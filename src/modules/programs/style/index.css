@@ -104,3 +104,15 @@
   color: var(--secondary);
   border-bottom-color: var(--secondary);
 }
+
+.coach-type {
+  color: #29384e;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.coach-type.active,
+.coach-type:hover {
+  color: var(--secondary);
+}
+

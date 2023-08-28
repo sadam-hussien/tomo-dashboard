@@ -17,6 +17,7 @@ import { add_coach_fields } from "../constants";
 import { Btn, DynamicFileUploaderInput, InputsHandler } from "components";
 
 import UploadImage from "./UploadImage";
+import UploadVideo from "./UploadVideo";
 
 export default function Add({ handleClose }) {
   const { t } = useTranslation("common");
@@ -27,7 +28,7 @@ export default function Add({ handleClose }) {
     onSuccess: () => handleClose(),
     queryKey: "get-coaches",
   });
-
+  
   function handleSubmit(values) {
     mutate(values);
   }
@@ -67,7 +68,7 @@ export default function Add({ handleClose }) {
     >
       {() => (
         <Form>
-          <Row>
+          <Row style={{overflow:"auto",height:"400px"}}>
             {add_coach_fields.map((item) => (
               <Col key={item.id} xs={12} md={item.col}>
                 {item.type === "file" ? (
@@ -80,7 +81,18 @@ export default function Add({ handleClose }) {
                       isLoading={isLoadingImageUploading}
                     />
                   </DynamicFileUploaderInput>
-                ) : (
+                ) : item.type === "video-file" ?(
+                    <DynamicFileUploaderInput
+                    item={item}
+                    serverCallback={mutateImageUploading}
+                  >
+                    <UploadVideo
+                      name={item.name}
+                      // isLoading={isLoadingImageUploading}
+                    />
+                  </DynamicFileUploaderInput>
+                )
+                : (
                   <InputsHandler item={item} translation="common" />
                 )}
               </Col>

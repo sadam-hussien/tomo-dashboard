@@ -15,3 +15,9 @@ export const apiEditCoache = (data) => {
 export const apiDeleteCoache = (id) => {
   return Api().delete(`coaches/${id}`);
 };
+
+export const apiGetPrograms = (params) => {
+  return Api().get("programs", {
+    params: params,
+  });
+};

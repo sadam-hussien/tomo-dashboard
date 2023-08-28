@@ -2,7 +2,7 @@ import { Modal, Table, alertConfirmation } from "components";
 
 import { useFetch, usePost } from "hooks";
 
-import { apiGetCoaches, apiDeleteCoache } from "../server";
+import { apiGetCoaches, apiDeleteCoache, apiGetPrograms } from "../server";
 
 import { coaches_columns } from "../columns";
 
@@ -10,14 +10,28 @@ import { useTranslation } from "react-i18next";
 
 import { Add, Edit } from "../components";
 
+import { Link, useSearchParams } from "react-router-dom";
+
 export default function Coaches() {
   // translation
   const { t } = useTranslation("common");
 
   // fetch users using react-query library
-  const { isLoading, data } = useFetch({
+  const { isLoading: isLoadingCoaches, data: coachesData } = useFetch({
     queryKey: "get-coaches",
     queryFn: apiGetCoaches,
+  });
+  
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const programType = searchParams.get("program_type");
+
+  const { isLoading: isLoadingPrograms, data: programsData } = useFetch({
+    queryKey: ["get-programs", programType],
+    queryFn: () =>
+      apiGetPrograms({
+        program_type: programType,
+      }),
   });
 
   // delete coach
@@ -26,13 +40,18 @@ export default function Coaches() {
     queryKey: "get-coaches",
   });
 
+  console.log(coachesData)
+
   return (
-    <section className="coaches-page">
+    <section className="coaches-page"> 
       <Table
-        data={data?.data}
+        data={coachesData?.data}
         columns={coaches_columns}
-        isLoading={isLoading}
+        isLoading={isLoadingCoaches}
+        programType = {programType}
+        selector
         search
+        selection
         searchPlaceholder={t("search_about_coach")}
         actions={{
           addAction: true,

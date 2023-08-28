@@ -17,6 +17,8 @@ export default function Clients() {
     queryKey: "get-clients",
     queryFn: apiGetUsers,
   });
+  console.log(data)
+  console.log(data?.data?.leaders)
 
   return (
     <section className="programs-page">
@@ -27,6 +29,7 @@ export default function Clients() {
         search
         searchPlaceholder={t("search_about_users")}
         selection
+        filter
         tableHeaderClass="d-flex flex-row-reverse justify-content-between flex-wrap"
         actions={{
           addAction: false,
