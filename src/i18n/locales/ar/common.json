@@ -120,5 +120,10 @@
   "reports":"التقارير",
   "updates":"التحديثات",
   "clients": "العملاء",
-  "subscription_info":"معلومات الاشتراك"
+  "subscription_info":"معلومات الاشتراك",
+  "add_blog":"انشاء مقال جديد",
+  "blog_name":"اسم المقال",
+  "blog_and_img":"مقالي و صور",
+  "img_only":"صور فقط",
+  "show_blog": "عرض المقال"
 }

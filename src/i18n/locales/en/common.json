@@ -1,3 +1,8 @@
 {
-  "no_items": "no items.."
+  "no_items": "no items..",
+  "add_blog": "Add New Blog",
+  "blog_name": "Blog Name",
+  "blog_and_img":"Blog and Images",
+  "img_only":"Images",
+  "show_blog": "Show Blog"
 }

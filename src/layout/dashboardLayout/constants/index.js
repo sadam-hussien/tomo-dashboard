@@ -39,6 +39,13 @@ export const menuListData = [
     path: "/reports",
     image: "/assets/images/sidebar/reports.svg",
   },
+  
+  {
+    id: 5,
+    title: "news",
+    path: "/news",
+    image: "/assets/images/sidebar/users.svg",
+  },
 
   {
     id: 5,

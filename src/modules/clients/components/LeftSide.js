@@ -14,10 +14,12 @@ const LeftSide = ({items}) => {
 
   const userDetails = [
     "570/1200 نقطة",
-    items?.user?.profile?.plan?.name,
+    "صوم 1200",
     "25 سنه",
-    items?.user?.profile?.height,
+    "188",
   ];
+
+  const currentWeight = parseInt(items?.user?.profile?.weight) - parseInt(items?.user?.userGoal[0]?.value);
 
   const progress =
     ((parseInt(items?.user?.profile?.weight) -
@@ -35,7 +37,6 @@ const LeftSide = ({items}) => {
     queryFn: () => apiGetUserById(id),
   });
 
-
   const dispatch = useDispatch();
 
   return (
@@ -45,15 +46,24 @@ const LeftSide = ({items}) => {
           <div className="client-left-side-top">
             <img src={items?.user?.profile?.avatar} alt="" />
             <p style={{fontSize: "1.1rem"}}>{items?.user?.name}</p>
-            <div style={{display: "flex", alignitems: "center", gap: "5px"}}>
-              <img
-                style={{width: "20px", height: "auto", margin: "0"}}
-                src="/assets/images/active-icon.svg"
-                alt=""
-              />
-              <p style={{fontSize: "0.9rem"}}>
-                {items?.active ? "نشط" : "مش نشط"}
-              </p>
+            <div className="d-flex gap-3 m-3">
+              <div style={{display: "flex", alignItems: "center", gap: "5px"}}>
+                <div style={{width:"20px"}}>
+                  <img
+                    style={{width: "100%", height: "auto", margin: "0"}}
+                    src="/assets/images/active-icon.svg"
+                    alt=""
+                  />
+                </div>
+                <p style={{fontSize: "0.9rem"}}>
+                  {items?.active ? "نشط" : "مش نشط"}
+                </p>
+              </div>
+              <div>
+              <div>
+                <small style={{padding:"3px",backgroundColor:"var(--light-bg)"}}>منذ 4 اشهر</small>
+              </div>
+              </div>
             </div>
           </div>
 
@@ -70,8 +80,8 @@ const LeftSide = ({items}) => {
                 <span>
                   {e?.includes("سنه")
                     ? "السن :25 سنه"
-                    : !isNaN(parseInt(e))
-                    ? ":الطول" + "CM" + e
+                    : !isNaN(+e)
+                    ? "الطول:" + " CM " + e
                     : e}
                 </span>
               );
@@ -90,7 +100,9 @@ const LeftSide = ({items}) => {
               </div>
             </div>
             <div className="contact-details">
-              <i class="las la-credit-card"></i>
+              <div className="contact-details-img">
+                <img src="/assets/images/envelope.svg" alt="" />
+              </div>
               <div>
                 <p>البريد الاكتروني</p>
                 <p>mad@gmail.com</p>
@@ -109,23 +121,25 @@ const LeftSide = ({items}) => {
                 style={{
                   borderRadius: "10px",
                   border: "1px solid var(--secondary)",
-                  overflow:"visible"
+                  overflow:"visible",
+                  marginBlock:"5px",
+                  height:"10px"
                 }}
               >
                 <div
                   class="progress-bar bg-danger d-flex"
                   role="progressbar"
                   style={{
-                    width: progress,
+                    width: progress === "NaN%" ? "15%" : progress,
                     borderRadius: "10px",
                     position: "relative",
                     overflow:"visible"
                   }}
                   aria-valuenow="25"
-                  aria-valuemin={parseInt(items?.user?.userGoal[0]?.value)}
+                  aria-valuemin={isNaN(parseInt(items?.user?.userGoal[0]?.value))}
                   aria-valuemax={parseInt(items?.user?.profile?.weight)}
                 >
-                  <p style={{position: "absolute",right:"-10px",top:"-25px",color:"black",fontSize:"1rem"}}>{parseInt(items?.user?.profile?.weight) - parseInt(items?.user?.userGoal[0]?.value)}Kg</p>
+                  <p style={{position: "absolute",right:"-10px",top:"-25px",color:"black",fontSize:"1rem"}}>{isNaN(currentWeight) ? "25" :currentWeight}Kg</p>
                 </div>
               </div>
               <div style={{display: "flex", justifyContent: "space-between"}}>

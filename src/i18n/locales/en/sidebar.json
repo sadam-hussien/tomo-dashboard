@@ -15,5 +15,6 @@
   "checkout": "checkout",
   "users": "users",
   "view": "view",
-  "view_profile": "view profile"
+  "view_profile": "view profile",
+  "news":"News"
 }
