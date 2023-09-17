@@ -1,0 +1,88 @@
+.news__item__edit {
+  color: var(--secondary);
+  font-size: var(--font-size-xs);
+  font-weight: 400;
+}
+
+.news__item {
+  border-radius: var(--border-radius-md);
+  background: var(--bs-white);
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.news-cam{
+  position: absolute;
+  right: 2%;
+  top: 2%;
+}
+
+.news__item__img {
+  width: 100%;
+  max-height: 181px;
+  object-fit: cover;
+  border-start-end-radius: inherit;
+  border-start-start-radius: inherit;
+}
+
+.news__item__info {
+  padding: var(--space-xl) var(--space-md);
+}
+
+.news__item__info__name {
+  font-size: var(--font-size-base);
+  color: var(--text);
+  margin-bottom: var(--space-lg);
+  font-weight: 400;
+}
+
+.news__item__info__desc {
+  line-height: 14px;
+  font-size: var(--font-size-xs);
+  color: var(--gray);
+  margin-bottom: var(--space-lg);
+}
+
+.news__item__footer {
+  margin-top: auto;
+}
+
+.news__item__info__discount {
+  font-size: var(--font-size-sm);
+  color: var(--gray);
+  display: block;
+  margin-bottom: 5px;
+}
+
+.news__item__info__price {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--secondary2);
+}
+
+.news-upload-img button {
+  font-size: var(--font-size-md);
+  color: var(--text);
+}
+
+.news-upload-img .btn-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.news-upload-img .btn-icon img {
+  max-width: 18px;
+}
+
+.news-upload-img button:last-child .btn-icon {
+  border-color: #29384e;
+}
+
+.news-upload-img-img {
+  max-width: 270px;
+  max-height: 176px;
+}
