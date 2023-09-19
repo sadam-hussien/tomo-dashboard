@@ -9,6 +9,7 @@ import { apiAssignProgramToUser } from "../server";
 import { useState } from "react";
 
 import { Spinner } from "react-bootstrap";
+import ChooosePrograms from "./ChooosePrograms";
 
 export default function ProgramToUser({ handleClose, data }) {
   const [search, setSearch] = useState("");
@@ -24,16 +25,14 @@ export default function ProgramToUser({ handleClose, data }) {
     onSuccess: () => handleClose(),
   });
 
-  // console.log(data.data.programs);
-
   function handleSubmit(values) {
     mutate({
-      programId: data.data.id,
+      programId: data.data.programs ? data.data.programs : data.data.id,
       ...values,
     });
   }
 
-  return (
+  return data?.data?.id ? (
     <div className="assign-program-to-user">
       <InputWithIcon
         name="search-user"
@@ -122,5 +121,10 @@ export default function ProgramToUser({ handleClose, data }) {
         </div>
       )}
     </div>
+  ) : (
+    <ChooosePrograms
+      selectedPrograms={data?.data?.data}
+      handleClose={handleClose}
+    />
   );
 }

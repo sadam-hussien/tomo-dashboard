@@ -156,3 +156,7 @@ a {
 ::-webkit-scrollbar-thumb {
   background: var(--secondary);
 }
+
+.white-space-nowrap {
+  white-space: nowrap;
+}

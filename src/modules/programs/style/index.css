@@ -99,10 +99,20 @@
   transition: 0.3s;
 }
 
+.program-type img {
+  /* transition: 0.3s; */
+}
+
 .program-type.active,
 .program-type:hover {
   color: var(--secondary);
   border-bottom-color: var(--secondary);
+}
+
+.program-type.active img,
+.program-type:hover img {
+  filter: invert(21%) sepia(65%) saturate(5159%) hue-rotate(336deg)
+    brightness(85%) contrast(90%);
 }
 
 .coach-type {
@@ -116,3 +126,6 @@
   color: var(--secondary);
 }
 
+/* .programs-send-program:hover {
+  color: var(--secondary);
+} */

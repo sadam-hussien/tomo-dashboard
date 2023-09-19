@@ -4,6 +4,7 @@ import {
   Filter,
   MessageBtn,
   Modal,
+  Pagination,
   Search,
   Table,
   Table2,
@@ -27,6 +28,7 @@ import { useDispatch } from "react-redux";
 import { openModal } from "store/global";
 
 import { Link, useSearchParams } from "react-router-dom";
+import { useState } from "react";
 
 export default function Programs() {
   // translation
@@ -34,25 +36,36 @@ export default function Programs() {
 
   const dispatch = useDispatch();
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
-  const programType = searchParams.get("program_type");
+  const programType = searchParams.get("programType");
+
+  const searchParam = searchParams.get("search");
+
+  const pageParam = searchParams.get("page");
 
   // fetch users using react-query library
   const { isLoading, data } = useFetch({
-    queryKey: ["get-programs", programType],
+    queryKey: ["get-programs", programType, pageParam, searchParam],
     queryFn: () =>
       apiGetPrograms({
-        program_type: programType,
+        programType: programType,
+        page: pageParam,
+        search: searchParam,
       }),
   });
-    
+
+  const programsData = data?.data?.programs;
+
+  const meta = data?.data?.meta;
 
   // delete one program
   const { mutate } = usePost({
     queryFn: apiDeleteProgram,
     queryKey: "get-programs",
   });
+
+  const [selectedPrograms, setSelectedPrograms] = useState([]);
 
   return (
     <section className="programs-page">
@@ -86,14 +99,15 @@ export default function Programs() {
         />
 
         <Btn
-          classes="transparent"
+          classes="transparent programs-send-program"
           type="button"
           onClick={() =>
             dispatch(
               openModal({
+                modal_type: modalTypes.message,
                 title: t("send_program"),
-                btnTitle: t("choose_clienr"),
-                // data: data?.data,
+                btnTitle: t("choose_client"),
+                data: selectedPrograms,
               })
             )
           }
@@ -115,10 +129,10 @@ export default function Programs() {
         <Link
           to={{
             pathname: "",
-            search: "?program_type=food",
+            search: "?programType=nutrition",
           }}
           className={`d-flex gap-3 pb-4 px-4 program-type align-items-center ${
-            programType === "food" || programType === "" ? "active" : ""
+            programType === "nutrition" || !programType ? "active" : ""
           }`}
         >
           <img
@@ -131,10 +145,10 @@ export default function Programs() {
         <Link
           to={{
             pathname: "",
-            search: "?program_type=sporting",
+            search: "?programType=sports",
           }}
           className={`d-flex gap-3 pb-4 px-4 program-type align-items-center ${
-            programType === "sporting" ? "active" : ""
+            programType === "sports" ? "active" : ""
           }`}
         >
           <img
@@ -147,10 +161,18 @@ export default function Programs() {
       </div>
 
       <Table2
-        data={data?.data}
-        columns={programs_columns(mutate)}
+        data={programsData}
+        columns={programs_columns}
         isLoading={isLoading}
         selection
+        dispatchSelectedRows={setSelectedPrograms}
+      />
+
+      <Pagination
+        page={meta?.page}
+        total={meta?.pageCount}
+        hasPreviousPage={meta?.hasPreviousPage}
+        hasNextPage={meta?.hasNextPage}
       />
 
       <Modal edit={<Edit />} add={<Add />} message={<ProgramToUser />}>

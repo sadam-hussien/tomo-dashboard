@@ -14,7 +14,7 @@ export default function RadioBoxInput({
   value,
   onChange,
   options,
-  checked
+  checked,
 }) {
   const { t } = useTranslation("validation");
 
@@ -30,11 +30,11 @@ export default function RadioBoxInput({
       )}
       <div className="d-flex align-items-center flex-wrap gap-5">
         {options.map((opt) => (
-          <div key={opt}>
+          <div key={typeof opt === "object" ? opt.value : opt}>
             {basic ? (
               <input
                 value={opt}
-                checked = {checked === opt}
+                checked={checked === opt}
                 type="radio"
                 name={name}
                 id={id + opt}
@@ -42,7 +42,7 @@ export default function RadioBoxInput({
                 onChange={(e) => {
                   setFieldValue(name, e.target.value);
                   if (onChange) {
-                    onChange(name,e.target.value);
+                    onChange(name, e.target.value);
                   }
                 }}
               />
@@ -50,18 +50,20 @@ export default function RadioBoxInput({
               <Field
                 type="radio"
                 name={name}
-                id={id + opt}
+                id={id + (typeof opt === "object" ? opt.value : opt)}
                 className="d-none"
-                value={opt}
+                value={typeof opt === "object" ? opt.value : opt}
               />
             )}
             <Form.Label
-              htmlFor={id + opt}
+              htmlFor={id + (typeof opt === "object" ? opt.value : opt)}
               className="radiobox-label text-capitalize d-flex align-items-center gap-2 m-0"
               style={style}
             >
               <div className="position-relative radiobox-circle"></div>
-              <div className="radiobox-label-label text-capitalize">{opt}</div>
+              <div className="radiobox-label-label text-capitalize">
+                {typeof opt === "object" ? opt.label : opt}
+              </div>
             </Form.Label>
           </div>
         ))}

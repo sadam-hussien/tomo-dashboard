@@ -7,6 +7,7 @@ const globalReducer = createSlice({
       isShow: false,
       data: null,
     },
+    selectedRows: [],
   },
   reducers: {
     openModal: (state, action) => {
@@ -17,9 +18,12 @@ const globalReducer = createSlice({
       state.modal.isShow = false;
       state.modal.data = null;
     },
+    addSelectedRows: (state, action) => {
+      state.selectedRows = action.payload;
+    },
   },
 });
 
 export default globalReducer.reducer;
 
-export const { closeModal, openModal } = globalReducer.actions;
+export const { closeModal, openModal, addSelectedRows } = globalReducer.actions;
