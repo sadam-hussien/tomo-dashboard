@@ -1,6 +1,11 @@
 import { useState } from "react";
 
-import { apiAddProgram, apiAddProgramMeals, apiUploadImg } from "../server";
+import {
+  apiAddProgram,
+  apiAddProgramExcercise,
+  apiAddProgramMeals,
+  apiUploadImg,
+} from "../server";
 
 import { Formik, Form, FieldArray, useFormikContext } from "formik";
 
@@ -17,6 +22,23 @@ import { usePost } from "hooks";
 import { useDispatch } from "react-redux";
 
 import { openModal } from "store/global";
+
+import {
+  programTypeOptions,
+  defaultProgramType,
+  programTypeSports,
+  programTypePsychological,
+  programTypeSupplements,
+  excersices,
+  meals,
+  subMealsTitle,
+  subWorkOutTitle,
+} from "../constants";
+
+// schema
+const schema = Yup.object().shape({
+  program: Yup.string().required("this_field_is_required"),
+});
 
 export default function Add({ handleClose }) {
   // translation
@@ -35,236 +57,119 @@ export default function Add({ handleClose }) {
       onSuccess: () => handleClose(),
     });
 
+  const { mutate: mutateProgramExcercise, isLoading: isLoadingExcercise } =
+    usePost({
+      queryFn: apiAddProgramExcercise,
+      queryKey: "get-programs",
+      onSuccess: () => handleClose(),
+    });
+
   // handle submit function
   function handleSubmit(values, actions) {
     mutateProgram(
-      { name: values.program },
+      { name: values.program, programType: values.program_type },
       {
         onSuccess: (response) => {
-          mutateProgramMeals({
-            ...values,
-            program: response.data.id,
-          });
+          const payload = { ...values };
+          delete payload.program_type;
+          if (values.program_type === defaultProgramType) {
+            delete payload.excersices;
+            mutateProgramMeals({
+              ...payload,
+              program: response.data.id,
+            });
+          } else if (values.program_type === programTypeSports) {
+            delete payload.meals;
+            mutateProgramExcercise({
+              ...payload,
+              program: response.data.id,
+            });
+          }
         },
       }
     );
   }
 
-  const subMealsTitle = [
-    "الوجبة الأولى",
-    "الوجبة الثانية",
-    "الوجبة الثالثة",
-    "الوجبة الرابعة",
-    "الوجبة الخامسة",
-    "الوجبة السادسة",
-    "الوجبة السابعة",
-    "الوجبة الثامنة",
-    "الوجبة التاسعة",
-    "الوجبة العاشرة",
-    "الوجبة الحادية عشرة",
-    "الوجبة الثانية عشرة",
-    "الوجبة الثالثة عشرة",
-    "الوجبة الرابعة عشرة",
-    "الوجبة الخامسة عشرة",
-    "الوجبة السادسة عشرة",
-    "الوجبة السابعة عشرة",
-    "الوجبة الثامنة عشرة",
-    "الوجبة التاسعة عشرة",
-    "الوجبة العشرين",
-  ];
-  
-  const subWorkOutTitle = [
-    "التمرين الأولى",
-    "التمرين الثانية",
-    "التمرين الثالثة",
-    "التمرين الرابعة",
-    "التمرين الخامسة",
-    "التمرين السادسة",
-    "التمرين السابعة",
-    "التمرين الثامنة",
-    "التمرين التاسعة",
-    "التمرين العاشرة",
-    "التمرين الحادية عشرة",
-    "التمرين الثانية عشرة",
-    "التمرين الثالثة عشرة",
-    "التمرين الرابعة عشرة",
-    "التمرين الخامسة عشرة",
-    "التمرين السادسة عشرة",
-    "التمرين السابعة عشرة",
-    "التمرين الثامنة عشرة",
-    "التمرين التاسعة عشرة",
-    "التمرين العشرين",
-  ];
-
-  const meals= [
-    {
-      name: "الوجبة الاولى",
-      extra: [
-        {
-          name: "الوجبة الاولى",
-          details: "",
-          calories: "",
-          image: "",
-        },
-      ],
-    },
-    {
-      name: "الوجبة الثانية",
-      extra: [
-        {
-          name: "الوجبة الثانية",
-          details: "",
-          calories: "",
-          image: "",
-        },
-      ],
-    }
-  ]
-  const workout = [
-    {
-      name: "التمرين الأولى",
-      extra: [
-        {
-          name: "الوجبة الاولى",
-          details: "",
-          calories: "",
-          image: "",
-        },
-      ],
-    },
-    {
-      name: "التمرين الثانية",
-      extra: [
-        {
-          name: "الوجبة الثانية",
-          details: "",
-          calories: "",
-          image: "",
-        },
-      ],
-    }
-  ]
-
-  // const [mealz,setMealz] = useState([
-  //   {
-  //     name: "الوجبة الاولى",
-  //     extra: [
-  //       {
-  //         name: "الوجبة الاولى",
-  //         details: "",
-  //         calories: "",
-  //         image: "",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     name: "الوجبة الثانية",
-  //     extra: [
-  //       {
-  //         name: "الوجبة الثانية",
-  //         details: "",
-  //         calories: "",
-  //         image: "",
-  //       },
-  //     ],
-  //   }
-  // ])
-
   function addExtraMeal(arrayHelpers) {
     arrayHelpers.push({
-      name: programType === "برنامج غذائى" ? subMealsTitle[arrayHelpers.form.values.meals.length] : subWorkOutTitle[arrayHelpers.form.values.meals.length],
+      name: subMealsTitle[arrayHelpers.form.values.meals.length],
       extra: [
         {
-          name: "الوجبة الاولى",
+          name: subMealsTitle[arrayHelpers.form.values.meals.length],
           details: "",
           calories: "",
           image: "",
         },
       ],
-    },);
-    // setMealz(prev=>{
-    //   return([
-    //     ...prev,
-    //     {
-    //       name: programType === "برنامج غذائى" ? subMealsTitle[arrayHelpers.form.values.meals.length] : subWorkOutTitle[arrayHelpers.form.values.meals.length],
-    //       extra: [
-    //         {
-    //           name: "الوجبة الاولى",
-    //           details: "",
-    //           calories: "",
-    //           image: "",
-    //         },
-    //       ],
-    //     }
-    //   ]
-    //   )
-    // })
+    });
   }
-
 
   function deleteMeal(arrayHelpers, index) {
-    // arrayHelpers.remove(index);
-    arrayHelpers.remove(arrayHelpers.form.values.meals.length-1);
+    arrayHelpers.remove(arrayHelpers.form.values.meals.length - 1);
   }
 
-  // schema
-  const schema = Yup.object().shape({
-    program: Yup.string().required("this_field_is_required"),
-  });
+  function addExcercise(arrayHelpers) {
+    arrayHelpers.push({
+      ...excersices[0],
+      name: subWorkOutTitle[arrayHelpers.form.values.excersices.length],
+    });
+  }
 
-  const mealNumber = ["الوجبة الاولي", "الوجبة الثانية"];
-  const radioLabels = ["برنامج غذائى", "برنامج رياضى", "برنامج نفسى","مكملات"];
-
-  const [programType,setProgramType] = useState("برنامج غذائى")
+  function deleteExcercise(arrayHelpers, index) {
+    arrayHelpers.remove(arrayHelpers.form.values.excersices.length - 1);
+  }
 
   return (
     <Formik
       enableReinitialize
       initialValues={{
         program: "",
-        program_type: programType,
-        meals: programType === "برنامج غذائى" ? meals : workout,
+        program_type: defaultProgramType,
+        meals: meals,
+        excersices: excersices,
       }}
       validationSchema={schema}
       onSubmit={handleSubmit}
     >
       {({ values }) => (
         <Form>
-              <Btn
-                classes="transparent"
-                type="button"
-                onClick={() =>
-                  dispatch(
-                    openModal({
-                      title: t("import_program"),
-                      btnTitle: t("choose_clienr"),
-                      // data: data?.data,
-                    })
-                  )
-                }
-                style={{
-                  minWidth: "159px",
-                  height: "48px",
-                  marginBottom:"20px"
-                }}
-              >
-              <i className="las la-plus icon" style={{fontSize:"20px"}}></i>
-                <span>{t("import_program")}</span>  
-              </Btn>
-            <RadioBoxInput
-            checked = {values.program_type}
-            options={radioLabels}
-            basic={true}
+          {/* import  */}
+          <Btn
+            classes="transparent"
+            type="button"
+            onClick={() =>
+              dispatch(
+                openModal({
+                  title: t("import_program"),
+                  btnTitle: t("choose_clienr"),
+                  // data: data?.data,
+                })
+              )
+            }
+            style={{
+              minWidth: "159px",
+              height: "48px",
+              marginBottom: "20px",
+            }}
+          >
+            <i className="las la-plus icon" style={{ fontSize: "20px" }}></i>
+            <span>{t("import_program")}</span>
+          </Btn>
+
+          {/* program type  */}
+          <RadioBoxInput
+            checked={values.program_type}
+            options={programTypeOptions}
             name="program_type"
-            onChange= {(name, value) => {console.log(name, value); setProgramType((value))}}
-            />
+          />
+
           <InputWithIcon
             type="text"
             name="program"
             label={t("program_name")}
             placeholder={t("program_name")}
             icon="las la-edit"
-            id="program"
+            id="program_name"
             noBorder
             containerStyle={{
               flexDirection: "row-reverse",
@@ -272,37 +177,190 @@ export default function Add({ handleClose }) {
             }}
             style={{ height: "54px" }}
           />
+
           <div className="add-program-form">
             {/* program meals  */}
-            <Accordion>
-              <FieldArray
+
+            {values.program_type === defaultProgramType ? (
+              <Accordion>
+                <FieldArray
                   name={`meals`}
                   render={(arrayHelpers) => (
-              <div>
-              {values.meals.map((meal, index) => (
-                <Accordion.Item
-                  eventKey={meal.name + index}
-                  key={meal.name + index}
-                >
-                  <Accordion.Header>{meal.name}</Accordion.Header>
-                  <Accordion.Body>
-                        <div>
-                          {meal.extra.map((extraMeal, idx) => (
+                    <div>
+                      {values.meals.map((meal, index) => (
+                        <Accordion.Item
+                          eventKey={"meal.name__" + index}
+                          key={"meal.name-" + index}
+                        >
+                          <Accordion.Header>{meal.name}</Accordion.Header>
+                          <Accordion.Body>
+                            <div>
+                              {meal.extra.map((extraMeal, idx) => (
+                                <div
+                                  key={index + "--" + idx}
+                                  className={`add-program-extra-meal ${
+                                    idx > 0
+                                      ? "add-program-extra-meal-border"
+                                      : ""
+                                  }`}
+                                >
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      justifyContent: "space-between",
+                                    }}
+                                  >
+                                    <div>
+                                      <InputWithIcon
+                                        type="text"
+                                        name={`meals[${index}].extra[${idx}].name`}
+                                        label={t("meal_name")}
+                                        placeholder={t("meal_name")}
+                                        icon="las la-edit"
+                                        id="program-extra-meal-name"
+                                        noBorder
+                                        containerStyle={{
+                                          flexDirection: "row-reverse",
+                                          border:
+                                            "1px solid rgba(38, 50, 56, 0.1)",
+                                        }}
+                                        style={{ height: "54px" }}
+                                      />
+                                    </div>
+                                    <div
+                                      onClick={() => {
+                                        deleteMeal(arrayHelpers, index);
+                                      }}
+                                      className="d-flex justify-content-between gap-3 align-items-center"
+                                    >
+                                      <img
+                                        src="/assets/images/trash-icon.svg"
+                                        alt="delete meal"
+                                        className="cursor-pointer img-fluid"
+                                      />
+                                      <p
+                                        style={{
+                                          margin: "0",
+                                          color: "var(--secondary)",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        حذف الوجبه
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <Row xs={1} md={2} className="g-3">
+                                    <Col>
+                                      <Textarea
+                                        name={`meals[${index}].extra[${idx}].details`}
+                                        placeholder={t("meal_details")}
+                                        label={t("meal_details")}
+                                        id={
+                                          "program-extra-meal-" +
+                                          index +
+                                          "__" +
+                                          idx
+                                        }
+                                      />
+                                    </Col>
+                                    {/* <Col>
+                                      <Textarea
+                                        name={`meals[${index}].extra[${idx}].details`}
+                                        placeholder={t("meal_details")}
+                                        label={t("meal_details")}
+                                        id={
+                                          "program-extra-meal-" +
+                                          index +
+                                          "__" +
+                                          idx
+                                        }
+                                      />
+                                    </Col> */}
+
+                                    <Col>
+                                      <Textarea
+                                        name={`meals[${index}].extra[${idx}].calories`}
+                                        placeholder={t("meal_calories")}
+                                        label={t("meal_calories")}
+                                        id={
+                                          "program-extra-meal-" +
+                                          index +
+                                          "__" +
+                                          idx +
+                                          "calories"
+                                        }
+                                      />
+                                    </Col>
+                                  </Row>
+
+                                  <FileUploader
+                                    name={`meals[${index}].extra[${idx}].image`}
+                                  />
+                                </div>
+                              ))}
+                            </div>
+                          </Accordion.Body>
+                        </Accordion.Item>
+                      ))}
+                      <Btn
+                        style={{
+                          background: "transparent",
+                          border: "1px solid #2AD7A1",
+                          marginTop: "var(--space-lg)",
+                          marginBottom: "var(--space-lg)",
+                          color: "#2AD7A1",
+                          fontSize: "var(--font-size-sm)",
+                          minWidth: "121px",
+                          height: "48px",
+                        }}
+                        type="button"
+                        onClick={() => addExtraMeal(arrayHelpers)}
+                      >
+                        <i
+                          className="las la-plus"
+                          style={{ fontSize: "20px" }}
+                        ></i>
+                        <span>اضافة وجبة</span>
+                      </Btn>
+                    </div>
+                  )}
+                />
+              </Accordion>
+            ) : values.program_type === programTypeSports ? (
+              <Accordion>
+                <FieldArray
+                  name="excersices"
+                  render={(arrayHelpers) => (
+                    <div>
+                      {values.excersices.map((excercise, index) => (
+                        <Accordion.Item
+                          eventKey={excercise.name + index}
+                          key={excercise.name + index}
+                        >
+                          <Accordion.Header>{excercise.name}</Accordion.Header>
+                          <Accordion.Body>
                             <div
-                              key={index + "--" + idx}
-                              className={`add-program-extra-meal ${
-                                idx > 0 ? "add-program-extra-meal-border" : ""
+                              key={index + "--"}
+                              className={`add-program-extra-excercise ${
+                                index > 0
+                                  ? "add-program-extra-excercise-border"
+                                  : ""
                               }`}
                             >
-                              <div style={{display:"flex",justifyContent:'space-between'}}>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  justifyContent: "space-between",
+                                }}
+                              >
                                 <div>
                                   <InputWithIcon
                                     type="text"
-                                    name="program"
-                                    label={t("program_name")}
-                                    placeholder={t("program_name")}
+                                    name={`excersices[${index}].name`}
+                                    label={t("excercise_name")}
+                                    placeholder={t("excercise_name")}
                                     icon="las la-edit"
-                                    id="program"
+                                    id={`program--excercise_name--${index}`}
                                     noBorder
                                     containerStyle={{
                                       flexDirection: "row-reverse",
@@ -311,78 +369,143 @@ export default function Add({ handleClose }) {
                                     style={{ height: "54px" }}
                                   />
                                 </div>
-                                <div onClick={() =>{
-                                        deleteMeal(arrayHelpers, index);
-                                        console.log()}
-                                      } 
-                                      className="d-flex justify-content-between gap-3 align-items-center"
+                                <div
+                                  onClick={() => {
+                                    deleteExcercise(arrayHelpers, index);
+                                  }}
+                                  className="d-flex justify-content-between gap-3 align-items-center"
                                 >
-                                    <img
-                                      src="/assets/images/trash-icon.svg"
-                                      alt="delete meal"
-                                      className="cursor-pointer img-fluid"
-                                    />
-                                    <p style={{margin:"0",color:"var(--secondary)",cursor:"pointer"}}>حذف الوجبه</p>
+                                  <img
+                                    src="/assets/images/trash-icon.svg"
+                                    alt="delete excercise"
+                                    className="cursor-pointer img-fluid"
+                                  />
+                                  <p
+                                    style={{
+                                      margin: "0",
+                                      color: "var(--secondary)",
+                                      cursor: "pointer",
+                                    }}
+                                  >
+                                    حذف التمرين
+                                  </p>
                                 </div>
                               </div>
                               <Row xs={1} md={2} className="g-3">
                                 <Col>
                                   <Textarea
-                                    name={`meals[${index}].extra[${idx}].details`}
-                                    placeholder={t("meal_details")}
-                                    label={t("meal_details")}
-                                    id={index + "__" + idx}
+                                    name={`excersices[${index}].details`}
+                                    placeholder={t("excercise_details")}
+                                    label={t("excercise_details")}
+                                    id={index + "__"}
                                   />
                                 </Col>
                                 <Col>
                                   <Textarea
-                                    name={`meals[${index}].extra[${idx}].calories`}
-                                    placeholder={t("meal_calories")}
-                                    label={t("meal_calories")}
-                                    id={index + "__" + idx + "calories"}
+                                    name={`excersices[${index}].tools`}
+                                    placeholder={t("excercise_tools")}
+                                    label={t("excercise_tools")}
+                                    id={
+                                      index + "__program--excercise_duration--"
+                                    }
+                                  />
+                                </Col>
+                              </Row>
+
+                              <Row xs={1} md={3} className="g-3">
+                                <Col>
+                                  <InputWithIcon
+                                    type="text"
+                                    name={`excersices[${index}].duration`}
+                                    label={t("excercise_duration")}
+                                    placeholder={t("excercise_duration")}
+                                    icon="las la-edit"
+                                    id={`program--excercise_duration--${index}`}
+                                    noBorder
+                                    containerStyle={{
+                                      flexDirection: "row-reverse",
+                                      border: "1px solid rgba(38, 50, 56, 0.1)",
+                                    }}
+                                    style={{ height: "54px" }}
+                                  />
+                                </Col>
+                                <Col>
+                                  <InputWithIcon
+                                    type="text"
+                                    name={`excersices[${index}].reps`}
+                                    label={t("excercise_reps")}
+                                    placeholder={t("excercise_reps")}
+                                    icon="las la-edit"
+                                    id={`program--excercise_reps--${index}`}
+                                    noBorder
+                                    containerStyle={{
+                                      flexDirection: "row-reverse",
+                                      border: "1px solid rgba(38, 50, 56, 0.1)",
+                                    }}
+                                    style={{ height: "54px" }}
+                                  />
+                                </Col>
+
+                                <Col>
+                                  <InputWithIcon
+                                    type="text"
+                                    name={`excersices[${index}].calories`}
+                                    label={t("excercise_calories")}
+                                    placeholder={t("excercise_calories")}
+                                    icon="las la-edit"
+                                    id={`program--excercise_calories--${index}`}
+                                    noBorder
+                                    containerStyle={{
+                                      flexDirection: "row-reverse",
+                                      border: "1px solid rgba(38, 50, 56, 0.1)",
+                                    }}
+                                    style={{ height: "54px" }}
                                   />
                                 </Col>
                               </Row>
 
                               <FileUploader
-                                name={`meals[${index}].extra[${idx}].image`}
+                                name={`excersices[${index}].images`}
                               />
                             </div>
-                          ))}
-                        </div>
-                  </Accordion.Body>
-                </Accordion.Item>
-                ))}
-                <Btn
-                  style={{
-                    background: "transparent",
-                    border: "1px solid #2AD7A1",
-                    marginTop: "var(--space-lg)",
-                    marginBottom:"var(--space-lg)",
-                    color: "#2AD7A1",
-                    fontSize: "var(--font-size-sm)",
-                    minWidth: "121px",
-                    height: "48px",
-                  }}
-                  type="button"
-                  onClick={() => addExtraMeal(arrayHelpers)}
-                >
-                  <i
-                    className="las la-plus"
-                    style={{ fontSize: "20px" }}
-                  ></i>
-                  <span>اضافة وجبة</span>
-                </Btn>
-              </div>
-              )}
-              />
-            </Accordion>
+                          </Accordion.Body>
+                        </Accordion.Item>
+                      ))}
+                      <Btn
+                        style={{
+                          background: "transparent",
+                          border: "1px solid #2AD7A1",
+                          marginTop: "var(--space-lg)",
+                          marginBottom: "var(--space-lg)",
+                          color: "#2AD7A1",
+                          fontSize: "var(--font-size-sm)",
+                          minWidth: "121px",
+                          height: "48px",
+                        }}
+                        type="button"
+                        onClick={() => addExcercise(arrayHelpers)}
+                      >
+                        <i
+                          className="las la-plus"
+                          style={{ fontSize: "20px" }}
+                        ></i>
+                        <span>اضافة تمرين</span>
+                      </Btn>
+                    </div>
+                  )}
+                />
+              </Accordion>
+            ) : null}
 
             <div className="d-flex flex-column gap-3">
               <Btn
                 type="submit"
                 title={t("save")}
-                loading={isLoadingProgram || isLoadingProgramMeals}
+                loading={
+                  isLoadingProgram ||
+                  isLoadingProgramMeals ||
+                  isLoadingExcercise
+                }
                 style={{
                   height: "48px",
                   fontSize: "var(--font-size-md)",
@@ -399,6 +522,11 @@ export default function Add({ handleClose }) {
                   fontSize: "var(--font-size-md)",
                   fontWeight: 500,
                 }}
+                disabled={
+                  isLoadingProgram ||
+                  isLoadingProgramMeals ||
+                  isLoadingExcercise
+                }
               />
             </div>
           </div>
@@ -409,7 +537,7 @@ export default function Add({ handleClose }) {
 }
 
 function FileUploader({ name }) {
-  const { setFieldValue } = useFormikContext();
+  const { setFieldValue, values } = useFormikContext();
   const [isLoading, setIsLoading] = useState(false);
   const [imageRes, setImageRes] = useState(null);
   function handleUploadFile(e) {
@@ -420,9 +548,13 @@ function FileUploader({ name }) {
 
     apiUploadImg(fd)
       .then((res) => {
-        console.log(res);
         setImageRes(res.data.path);
-        setFieldValue(name, res.data.path);
+        setFieldValue(
+          name,
+          values.program_type === defaultProgramType
+            ? res.data.path
+            : [res.data.path]
+        );
       })
       .finally(() => {
         setIsLoading(false);

@@ -67,10 +67,10 @@ export default function Header() {
         </button>
 
         <div className="header__profile d-flex align-items-center gap-3">
-          {coach.image && (
+          {coach?.image && (
             <img src={coach.image} alt={coach.name} className="img-fluid" />
           )}
-          <h5 className="header__profile__name m-0">{coach.name}</h5>
+          <h5 className="header__profile__name m-0">{coach?.name}</h5>
         </div>
       </div>
 

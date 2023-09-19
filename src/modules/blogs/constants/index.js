@@ -1,26 +1,21 @@
-
-export const add_news_fields = [
+export const add_blogs_fields = [
   {
     id: "subscription-image",
     type: "file",
-    name: "image",
+    name: "feature_image",
     col: "12",
     label: "subscription_image",
   },
-
   {
     id: "blog-radio-inp",
     type: "radiobox",
-    options:["مقالي و صور","صور فقط"],
-    name: "name",
-    placeholder: "blog_name",
-    icon: "las la-edit",
-    noBorder: true,
+    options: [
+      { label: "مقالي وصور ", value: "image_with_blog" },
+      { label: "صور فقط ", value: "image" },
+    ],
+    name: "type",
     col: "12",
     label: "نوع الخبر",
-    containerStyle: {
-      flexDirection: "row-reverse",
-    },
   },
   {
     id: "blog-name-inp",
@@ -35,25 +30,35 @@ export const add_news_fields = [
       flexDirection: "row-reverse",
     },
   },
-
+  {
+    id: "blog-body-inp",
+    type: "textarea",
+    name: "body",
+    col: "12",
+    label: "blog_body",
+    placeholder: "blog_body",
+    containerStyle: {
+      flexDirection: "row-reverse",
+    },
+  },
   {
     id: "news-images",
-    type: "video-file",
-    name: "video",
+    type: "file",
+    name: "images",
     col: "12",
-    label: "coach_video",
+    label: "blog_image",
+    multiple: true,
   },
-
   {
     id: "subscription-active-inp",
     type: "switch",
-    name: "active",
+    name: "show",
     col: "auto",
     labelInner: "show_blog",
   },
 ];
 
-export const edit_news_fields = [
+export const edit_blogs_fields = [
   {
     id: "news-image",
     type: "file",

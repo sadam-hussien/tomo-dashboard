@@ -1,4 +1,10 @@
 .news__item__edit {
+  color: #097d4f;
+  font-size: var(--font-size-xs);
+  font-weight: 400;
+}
+
+.news__item__delete {
   color: var(--secondary);
   font-size: var(--font-size-xs);
   font-weight: 400;
@@ -10,7 +16,7 @@
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.news-cam{
+.news-cam {
   position: absolute;
   right: 2%;
   top: 2%;

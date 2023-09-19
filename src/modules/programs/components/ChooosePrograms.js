@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { openModal } from "store/global";
 
-export default function ChooosePrograms({ handleClose }) {
+export default function ChooosePrograms({ handleClose, selectedPrograms }) {
   const { t } = useTranslation("common");
 
   const dispatch = useDispatch();
@@ -18,38 +18,26 @@ export default function ChooosePrograms({ handleClose }) {
 
   const { isLoading, data } = useFetch({
     queryKey: ["get-programs", search],
-    queryFn: () => apiGetPrograms({ search: search }),
+    queryFn: () => apiGetPrograms({ search }),
   });
 
-  const { mutate, isLoading: isLoadingMutate } = usePost({
-    queryFn: apiAssignProgramToUser,
-    onSuccess: () => handleClose(),
-  });
+  const programsData = data?.data?.programs;
+
+  const [isLoadingMutate, setIsLoadingMutate] = useState(false);
 
   function handleSubmit(values) {
-    dispatch(
-      openModal({
-        modal_type: modalTypes.message,
-        title: t("send_program"),
-        // btnTitle: t("choose_clienr"),
-        programs: [...values.programId],
-      })
-    );
-    // mutate({
-    //   programId: data.data.id,
-    //   ...values,
-    // }, {
-    //   onSuccess: () => {
-    //     dispatch(
-    //       openModal({
-    //         modal_type: modalTypes.message,
-    //         title: t("send_program"),
-    //         // btnTitle: t("choose_clienr"),
-    //         programs: [...valuesprogramId]
-    //       })
-    //     )
-    //   }
-    // });
+    setIsLoadingMutate(true);
+    setTimeout(() => {
+      setIsLoadingMutate(false);
+      dispatch(
+        openModal({
+          modal_type: modalTypes.message,
+          title: t("send_program"),
+          id: true,
+          programs: [...values.programId],
+        })
+      );
+    }, 1000);
   }
 
   return (
@@ -78,15 +66,15 @@ export default function ChooosePrograms({ handleClose }) {
         <div className="list-of-users">
           <Formik
             initialValues={{
-              programId: [],
+              programId: selectedPrograms || [],
             }}
             onSubmit={handleSubmit}
           >
             {() => (
               <Form>
                 <div className="list-of-users-inner">
-                  {data?.data && data.data.length
-                    ? data.data.map((item) => (
+                  {programsData && programsData.length
+                    ? programsData.map((item) => (
                         <div
                           className="d-flex align-items-center justify-content-between list-of-users-user"
                           key={item.id}
@@ -98,8 +86,6 @@ export default function ChooosePrograms({ handleClose }) {
                           </div>
 
                           <CheckBoxInput
-                            // containerStyle,
-                            // style,
                             id={item?.id}
                             name="programId"
                             value={item?.id}

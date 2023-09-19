@@ -14,6 +14,14 @@ export function apiAddProgramMeals(data) {
   return Api().post(`main-meals`, data);
 }
 
+export function apiAddProgramExcercise(data) {
+  return Api().post(`excersice`, data);
+}
+
+export function apiEditProgramExcercise(data) {
+  return Api().put(`excersice`, data);
+}
+
 export function apiEditProgram(data) {
   return Api().put(`programs`, data);
 }

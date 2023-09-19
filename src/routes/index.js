@@ -22,7 +22,7 @@ import chatRoutes from "modules/chat/index.routes";
 
 import settingsRoutes from "modules/settings/index.routes";
 
-import newsRoutes from "modules/news/index.routes";
+import blogsRoutes from "modules/blogs/index.routes";
 
 const routers = [
   ...authRoutes,
@@ -34,7 +34,7 @@ const routers = [
   ...subscriptionsRoutes,
   ...chatRoutes,
   ...settingsRoutes,
-  ...newsRoutes
+  ...blogsRoutes,
 ];
 
 export default function Navigator() {

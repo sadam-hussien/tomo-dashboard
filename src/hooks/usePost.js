@@ -36,6 +36,10 @@ export default function usePost({
           Toast({ icon: "error", title: item });
         });
       }
+
+      if (error.data?.message) {
+        Toast({ icon: "error", title: error.data?.message });
+      }
     },
   });
 }

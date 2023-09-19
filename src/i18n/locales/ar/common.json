@@ -23,7 +23,7 @@
   "less_sales": "اقل مبيعات",
   "add_new_program": "إنشاء برنامج جديد",
   "meal_calories": "السعرات الحرارية",
-  "meal_details": "تفاصل الوجبة",
+  "meal_details": "مكونات الوجبة",
   "user_name": "اسم العميل",
   "used_program": "البرنامج المستخدم",
   "subscription_period": "مدة الاشتراك",
@@ -125,5 +125,15 @@
   "blog_name":"اسم المقال",
   "blog_and_img":"مقالي و صور",
   "img_only":"صور فقط",
-  "show_blog": "عرض المقال"
+  "show_blog": "عرض المقال",
+  "meal_name": "اسم الوجبة",
+  "excercise_name": "اسم التمرين",
+  "excercise_details": "تفاصيل التمرينة",
+  "excercise_calories": "الحرق",
+  "excercise_tools": "الادوات المستخدمة",
+  "excercise_duration": "مدة التمرين",
+  "excercise_reps": "العدادات",
+  "add_new_blog": "انشاء مقال جديد",
+  "search_about_blog": "ابحث عن مقال",
+  "blog_body": "المقال"
 }

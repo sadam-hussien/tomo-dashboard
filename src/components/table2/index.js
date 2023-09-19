@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
 import { Col, Row, Spinner, Table, Alert } from "react-bootstrap";
 
@@ -8,12 +8,17 @@ import { useTable, useRowSelect } from "react-table";
 
 import Checkbox from "./Checkbox";
 
+import { useDispatch, useSelector } from "react-redux";
+
+import { addSelectedRows } from "store/global";
+
 export default function Table2({
   data,
   columns,
   isLoading,
   grid = null,
   selection,
+  dispatchSelectedRows,
 }) {
   // translation
   const { t } = useTranslation("common");
@@ -24,40 +29,52 @@ export default function Table2({
   // table columns
   const tableColumns = useMemo(() => columns || [], [columns]);
 
-  const { getTableProps, getTableBodyProps, headerGroups, prepareRow, rows } =
-    useTable(
-      {
-        columns: tableColumns,
-        data: tableData,
-      },
-      useRowSelect,
-      // handle selection -> checkbox
-      (hooks) => {
-        hooks.visibleColumns.push((columns) => {
-          if (selection) {
-            return [
-              {
-                id: "selection",
-                Header: ({ getToggleAllRowsSelectedProps }) => (
-                  <Checkbox {...getToggleAllRowsSelectedProps()} />
-                ),
-                Cell: ({ row }) => (
-                  <Checkbox {...row.getToggleRowSelectedProps()} />
-                ),
-                style: {
-                  width: "70px",
-                },
-                class: "select-inp",
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    prepareRow,
+    rows,
+    selectedFlatRows,
+  } = useTable(
+    {
+      columns: tableColumns,
+      data: tableData,
+    },
+    useRowSelect,
+    // handle selection -> checkbox
+    (hooks) => {
+      hooks.visibleColumns.push((columns) => {
+        if (selection) {
+          return [
+            {
+              id: "selection",
+              Header: ({ getToggleAllRowsSelectedProps }) => (
+                <Checkbox {...getToggleAllRowsSelectedProps()} />
+              ),
+              Cell: ({ row }) => (
+                <Checkbox {...row.getToggleRowSelectedProps()} />
+              ),
+              style: {
+                width: "70px",
               },
-              ...columns,
-            ];
-          }
-          return columns;
-        });
-      }
-    );
-      console.log(tableColumns)
-      console.log(tableData)
+              class: "select-inp",
+            },
+            ...columns,
+          ];
+        }
+        return columns;
+      });
+    }
+  );
+
+  useEffect(() => {
+    if (selectedFlatRows && dispatchSelectedRows) {
+      const getIds = selectedFlatRows.map((item) => item?.original?.id);
+      dispatchSelectedRows(getIds);
+    }
+  }, [selectedFlatRows]);
+
   return (
     <section className="main-table-section">
       {isLoading ? (

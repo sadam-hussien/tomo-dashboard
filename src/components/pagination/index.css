@@ -1,0 +1,31 @@
+.pagination-container {
+  padding-top: 32px;
+  margin-top: 32px;
+}
+
+.pagination-btn {
+  background: transparent;
+  padding: 0;
+  border: none;
+}
+
+.pagination-text {
+  font-size: 14px;
+  font-weight: 400;
+  color: #666;
+}
+
+.pagination-select .select__control {
+  background: rgba(94, 99, 102, 0.08);
+  border-radius: 8px;
+  max-height: 23px;
+  overflow: hidden;
+  border: none;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+.pagination-select .select__indicator-separator {
+  display: none;
+}

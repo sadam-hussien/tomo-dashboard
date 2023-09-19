@@ -1,6 +1,6 @@
 import { DefaultActions, alertConfirmation } from "components";
 
-export const programs_columns = (mutate) => [
+export const programs_columns = [
   {
     Header: "program_name",
     accessor: "name",
@@ -24,17 +24,7 @@ export const programs_columns = (mutate) => [
   {
     Header: "actions",
     accessor: (col) => (
-      <DefaultActions
-        data={col}
-        edit={{
-          title: "edit_program",
-          btnTitle: "save",
-        }}
-        message={{
-          title: "send_program",
-          btnTitle: "send",
-        }}
-      />
+      <DefaultActions data={col} edit message={{ title: "send_program" }} />
     ),
   },
 ];
