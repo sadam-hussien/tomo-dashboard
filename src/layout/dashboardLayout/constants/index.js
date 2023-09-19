@@ -39,11 +39,11 @@ export const menuListData = [
     path: "/reports",
     image: "/assets/images/sidebar/reports.svg",
   },
-  
+
   {
     id: 5,
     title: "news",
-    path: "/news",
+    path: "/blogs",
     image: "/assets/images/sidebar/users.svg",
   },
 

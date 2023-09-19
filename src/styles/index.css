@@ -11,7 +11,7 @@
 @import url(modules/subscriptions/style/index.css);
 @import url(modules/chat/style/index.css);
 @import url(modules/settings/style/index.css);
-@import url(modules/news/style/index.css);
+@import url(modules/blogs/style/index.css);
 
 /* layouts */
 @import url(layout/authLayout/index.css);

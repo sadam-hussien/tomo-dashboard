@@ -46,3 +46,5 @@ export { default as AddBtn } from "./addBtn";
 export { default as Modal } from "./modal";
 
 export { default as Pagination } from "./pagination";
+
+export { default as ImageUploaderPreview } from "./imageUploaderPreview";

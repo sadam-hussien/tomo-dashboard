@@ -14,7 +14,21 @@ export default function DynamicFileUploaderInput({
 
   function onChange(e) {
     if (item.multiple) {
-      setFieldValue(item.name, [...values[item.name], ...e.target.files]);
+      if (serverCallback) {
+        const fd = new FormData();
+        fd.append("image", e.target.files[0]);
+        const lengthOfItems = values[item.name].length;
+        setFieldValue(item.name, [...values[item.name], ...e.target.files]);
+        serverCallback(fd, {
+          onSuccess: (data) => {
+            const oldValues = values[item.name];
+            oldValues.splice(lengthOfItems, 1);
+            setFieldValue(item.name, [...oldValues, data.data.path]);
+          },
+        });
+      } else {
+        setFieldValue(item.name, [...values[item.name], ...e.target.files]);
+      }
     } else {
       // if there is server call back
       if (serverCallback) {
