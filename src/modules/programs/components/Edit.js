@@ -22,7 +22,7 @@ import {
   Textarea,
 } from "components";
 
-import { Accordion, Col, Row, Spinner } from "react-bootstrap";
+import { Accordion, Alert, Col, Row, Spinner } from "react-bootstrap";
 
 import { usePost } from "hooks";
 
@@ -46,6 +46,58 @@ import { apiUploadImage } from "server";
 // schema
 const schema = Yup.object().shape({
   program: Yup.string().required("this_field_is_required"),
+
+  meals: Yup.array().when("program_type", {
+    is: defaultProgramType,
+    then: Yup.array().of(
+      Yup.object().shape({
+        name: Yup.string().required("this_field_is_required"),
+        extra: Yup.array().of(
+          Yup.object().shape({
+            name: Yup.string().required("this_field_is_required"),
+            details: Yup.string().required("this_field_is_required"),
+            calories: Yup.string().required("this_field_is_required"),
+          })
+        ),
+      })
+    ),
+    otherwise: Yup.array().of(
+      Yup.object().shape({
+        name: Yup.string().notRequired(),
+        extra: Yup.array().of(
+          Yup.object().shape({
+            name: Yup.string().notRequired(),
+            details: Yup.string().notRequired(),
+            calories: Yup.string().notRequired(),
+          })
+        ),
+      })
+    ),
+  }),
+
+  excersices: Yup.array().when("program_type", {
+    is: programTypeSports,
+    then: Yup.array().of(
+      Yup.object().shape({
+        name: Yup.string().required("this_field_is_required"),
+        details: Yup.string().required("this_field_is_required"),
+        tools: Yup.string().required("this_field_is_required"),
+        duration: Yup.string().required("this_field_is_required"),
+        reps: Yup.string().required("this_field_is_required"),
+        calories: Yup.string().required("this_field_is_required"),
+      })
+    ),
+    otherwise: Yup.array().of(
+      Yup.object().shape({
+        name: Yup.string().notRequired(),
+        details: Yup.string().notRequired(),
+        tools: Yup.string().notRequired(),
+        duration: Yup.string().notRequired(),
+        reps: Yup.string().notRequired(),
+        calories: Yup.string().notRequired(),
+      })
+    ),
+  }),
 });
 
 export default function Edit({ handleClose, data }) {
@@ -92,15 +144,17 @@ export default function Edit({ handleClose, data }) {
           delete payload.program_type;
           if (values.program_type === defaultProgramType) {
             delete payload.excersices;
+            delete payload.id;
             mutateProgramMeals({
               ...payload,
-              program: response.data.id,
+              program: values.id,
             });
           } else if (values.program_type === programTypeSports) {
             delete payload.meals;
+            delete payload.id;
             mutateProgramExcercise({
               ...payload,
-              program: response.data.id,
+              program: values.id,
             });
           }
         },
@@ -110,13 +164,12 @@ export default function Edit({ handleClose, data }) {
 
   function addExtraMeal(arrayHelpers) {
     arrayHelpers.push({
+      ...meals[0],
       name: subMealsTitle[arrayHelpers.form.values.meals.length],
       extra: [
         {
+          ...meals[0].extra[0],
           name: subMealsTitle[arrayHelpers.form.values.meals.length],
-          details: "",
-          calories: "",
-          image: "",
         },
       ],
     });
@@ -183,8 +236,11 @@ export default function Edit({ handleClose, data }) {
       validationSchema={schema}
       onSubmit={handleSubmit}
     >
-      {({ values, initialValues }) => (
+      {({ values, initialValues, errors }) => (
         <Form>
+          {Object.keys(errors).length > 0 && (
+            <Alert variant="danger">الرجاء ادخال كل الحقول المطلوبة</Alert>
+          )}
           {/* import  */}
           <Btn
             classes="transparent"

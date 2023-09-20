@@ -27,7 +27,7 @@ export default function ProgramToUser({ handleClose, data }) {
 
   function handleSubmit(values) {
     mutate({
-      programId: data.data.programs ? data.data.programs : data.data.id,
+      programId: data.data.programs ? data.data.programs : [data.data.id],
       ...values,
     });
   }

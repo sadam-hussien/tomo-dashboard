@@ -22,7 +22,7 @@ import {
   Textarea,
 } from "components";
 
-import { Accordion, Col, Row, Spinner } from "react-bootstrap";
+import { Accordion, Alert, Col, Row, Spinner } from "react-bootstrap";
 
 import { usePost } from "hooks";
 
@@ -46,6 +46,58 @@ import { apiUploadImage } from "server";
 // schema
 const schema = Yup.object().shape({
   program: Yup.string().required("this_field_is_required"),
+
+  meals: Yup.array().when("program_type", {
+    is: defaultProgramType,
+    then: Yup.array().of(
+      Yup.object().shape({
+        name: Yup.string().required("this_field_is_required"),
+        extra: Yup.array().of(
+          Yup.object().shape({
+            name: Yup.string().required("this_field_is_required"),
+            details: Yup.string().required("this_field_is_required"),
+            calories: Yup.string().required("this_field_is_required"),
+          })
+        ),
+      })
+    ),
+    otherwise: Yup.array().of(
+      Yup.object().shape({
+        name: Yup.string().notRequired(),
+        extra: Yup.array().of(
+          Yup.object().shape({
+            name: Yup.string().notRequired(),
+            details: Yup.string().notRequired(),
+            calories: Yup.string().notRequired(),
+          })
+        ),
+      })
+    ),
+  }),
+
+  excersices: Yup.array().when("program_type", {
+    is: programTypeSports,
+    then: Yup.array().of(
+      Yup.object().shape({
+        name: Yup.string().required("this_field_is_required"),
+        details: Yup.string().required("this_field_is_required"),
+        tools: Yup.string().required("this_field_is_required"),
+        duration: Yup.string().required("this_field_is_required"),
+        reps: Yup.string().required("this_field_is_required"),
+        calories: Yup.string().required("this_field_is_required"),
+      })
+    ),
+    otherwise: Yup.array().of(
+      Yup.object().shape({
+        name: Yup.string().notRequired(),
+        details: Yup.string().notRequired(),
+        tools: Yup.string().notRequired(),
+        duration: Yup.string().notRequired(),
+        reps: Yup.string().notRequired(),
+        calories: Yup.string().notRequired(),
+      })
+    ),
+  }),
 });
 
 export default function Add({ handleClose }) {
@@ -81,7 +133,7 @@ export default function Add({ handleClose }) {
   // handle submit function
   function handleSubmit(values, actions) {
     mutateProgram(
-      { name: values.program, programType: values.program_type },
+      { name: values.program, program_type: values.program_type },
       {
         onSuccess: (response) => {
           const payload = { ...values };
@@ -106,13 +158,12 @@ export default function Add({ handleClose }) {
 
   function addExtraMeal(arrayHelpers) {
     arrayHelpers.push({
+      ...meals[0],
       name: subMealsTitle[arrayHelpers.form.values.meals.length],
       extra: [
         {
+          ...meals[0].extra[0],
           name: subMealsTitle[arrayHelpers.form.values.meals.length],
-          details: "",
-          calories: "",
-          image: "",
         },
       ],
     });
@@ -145,8 +196,11 @@ export default function Add({ handleClose }) {
       validationSchema={schema}
       onSubmit={handleSubmit}
     >
-      {({ values }) => (
+      {({ values, initialValues, errors }) => (
         <Form>
+          {Object.keys(errors).length > 0 && (
+            <Alert variant="danger">الرجاء ادخال كل الحقول المطلوبة</Alert>
+          )}
           {/* import  */}
           <Btn
             classes="transparent"
@@ -361,10 +415,12 @@ export default function Add({ handleClose }) {
                     <div>
                       {values.excersices.map((excercise, index) => (
                         <Accordion.Item
-                          eventKey={excercise.name + index}
-                          key={excercise.name + index}
+                          eventKey={"excercise.name__" + index}
+                          key={"excercise.name-" + index}
                         >
-                          <Accordion.Header>{excercise.name}</Accordion.Header>
+                          <Accordion.Header>
+                            {initialValues.excersices[index].name}
+                          </Accordion.Header>
                           <Accordion.Body>
                             <div
                               key={index + "--"}

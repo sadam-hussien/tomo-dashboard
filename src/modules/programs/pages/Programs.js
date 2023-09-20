@@ -38,7 +38,7 @@ export default function Programs() {
 
   const [searchParams] = useSearchParams();
 
-  const programType = searchParams.get("programType");
+  const programType = searchParams.get("program_type");
 
   const searchParam = searchParams.get("search");
 
@@ -49,7 +49,7 @@ export default function Programs() {
     queryKey: ["get-programs", programType, pageParam, searchParam],
     queryFn: () =>
       apiGetPrograms({
-        programType: programType,
+        program_type: programType,
         page: pageParam,
         search: searchParam,
       }),
@@ -129,10 +129,10 @@ export default function Programs() {
         <Link
           to={{
             pathname: "",
-            search: "?programType=nutrition",
+            search: "?program_type=nutrition",
           }}
           className={`d-flex gap-3 pb-4 px-4 program-type align-items-center ${
-            programType === "nutrition" || !programType ? "active" : ""
+            programType === "nutrition" ? "active" : ""
           }`}
         >
           <img
@@ -145,7 +145,7 @@ export default function Programs() {
         <Link
           to={{
             pathname: "",
-            search: "?programType=sports",
+            search: "?program_type=sports",
           }}
           className={`d-flex gap-3 pb-4 px-4 program-type align-items-center ${
             programType === "sports" ? "active" : ""

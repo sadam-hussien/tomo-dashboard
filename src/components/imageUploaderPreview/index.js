@@ -28,13 +28,13 @@ export default function ImageUploaderPreview(props) {
             >
               {typeof file === "string" ? (
                 <ImageItem {...props} url={file} index={index} />
-              ) : (
+              ) : file.name ? (
                 <ImageItem
                   {...props}
                   url={window.URL.createObjectURL(file)}
                   index={index}
                 />
-              )}
+              ) : null}
             </div>
           ))}
 
