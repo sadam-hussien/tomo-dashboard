@@ -7,27 +7,30 @@ export default function DynamicFileUploaderInput({
   item,
   children,
   serverCallback,
+  currentValue,
 }) {
   const { t } = useTranslation("validation");
 
   const { setFieldValue, values } = useFormikContext();
+
+  const getValue = currentValue || values[item.name];
 
   function onChange(e) {
     if (item.multiple) {
       if (serverCallback) {
         const fd = new FormData();
         fd.append("image", e.target.files[0]);
-        const lengthOfItems = values[item.name].length;
-        setFieldValue(item.name, [...values[item.name], ...e.target.files]);
+        const lengthOfItems = getValue.length;
+        setFieldValue(item.name, [...getValue, ...e.target.files]);
         serverCallback(fd, {
           onSuccess: (data) => {
-            const oldValues = values[item.name];
+            const oldValues = getValue;
             oldValues.splice(lengthOfItems, 1);
             setFieldValue(item.name, [...oldValues, data.data.path]);
           },
         });
       } else {
-        setFieldValue(item.name, [...values[item.name], ...e.target.files]);
+        setFieldValue(item.name, [...getValue, ...e.target.files]);
       }
     } else {
       // if there is server call back
@@ -48,9 +51,7 @@ export default function DynamicFileUploaderInput({
 
   const deleteFile = (index) => {
     if (item.multiple) {
-      const filterItems = values[item.name].filter(
-        (item, idx) => idx !== index
-      );
+      const filterItems = getValue.filter((item, idx) => idx !== index);
       setFieldValue(item.name, filterItems);
     } else {
       setFieldValue(item.name, "");
@@ -58,7 +59,7 @@ export default function DynamicFileUploaderInput({
   };
 
   const handleChildren = React.cloneElement(children, {
-    files: values[item.name],
+    files: getValue,
     deleteFile,
   });
 

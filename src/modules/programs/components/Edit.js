@@ -13,7 +13,14 @@ import * as Yup from "yup";
 
 import { useTranslation } from "react-i18next";
 
-import { Btn, InputWithIcon, RadioBoxInput, Textarea } from "components";
+import {
+  Btn,
+  DynamicFileUploaderInput,
+  ImageUploaderPreview,
+  InputWithIcon,
+  RadioBoxInput,
+  Textarea,
+} from "components";
 
 import { Accordion, Col, Row, Spinner } from "react-bootstrap";
 
@@ -34,6 +41,7 @@ import {
   subMealsTitle,
   subWorkOutTitle,
 } from "../constants";
+import { apiUploadImage } from "server";
 
 // schema
 const schema = Yup.object().shape({
@@ -62,6 +70,12 @@ export default function Edit({ handleClose, data }) {
       queryFn: apiEditProgramExcercise,
       queryKey: "get-programs",
       onSuccess: () => handleClose(),
+    });
+
+  // image uploading
+  const { mutate: mutateImageUploading, isLoading: isLoadingImageUploading } =
+    usePost({
+      queryFn: apiUploadImage,
     });
 
   // handle submit function
@@ -331,9 +345,22 @@ export default function Edit({ handleClose, data }) {
                                     </Col>
                                   </Row>
 
-                                  <FileUploader
-                                    name={`meals[${index}].extra[${idx}].image`}
-                                  />
+                                  <DynamicFileUploaderInput
+                                    item={{
+                                      id: `meals[${index}].extra[${idx}].image`,
+                                      name: `meals[${index}].extra[${idx}].image`,
+                                      multiple: true,
+                                    }}
+                                    serverCallback={mutateImageUploading}
+                                    currentValue={
+                                      values.meals[index].extra[idx].image
+                                    }
+                                  >
+                                    <ImageUploaderPreview
+                                      multiple={true}
+                                      isLoading={isLoadingImageUploading}
+                                    />
+                                  </DynamicFileUploaderInput>
                                 </div>
                               ))}
                             </div>
@@ -504,9 +531,20 @@ export default function Edit({ handleClose, data }) {
                                 </Col>
                               </Row>
 
-                              <FileUploader
-                                name={`excersices[${index}].images`}
-                              />
+                              <DynamicFileUploaderInput
+                                item={{
+                                  id: `excersices[${index}].images`,
+                                  name: `excersices[${index}].images`,
+                                  multiple: true,
+                                }}
+                                serverCallback={mutateImageUploading}
+                                currentValue={values.excersices[index].images}
+                              >
+                                <ImageUploaderPreview
+                                  multiple={true}
+                                  isLoading={isLoadingImageUploading}
+                                />
+                              </DynamicFileUploaderInput>
                             </div>
                           </Accordion.Body>
                         </Accordion.Item>
