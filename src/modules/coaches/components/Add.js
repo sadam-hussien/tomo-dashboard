@@ -14,10 +14,27 @@ import { Col, Row } from "react-bootstrap";
 
 import { add_coach_fields } from "../constants";
 
-import { Btn, DynamicFileUploaderInput, InputsHandler } from "components";
+import {
+  Btn,
+  DynamicFileUploaderInput,
+  ImageUploaderPreview,
+  InputsHandler,
+} from "components";
 
-import UploadImage from "./UploadImage";
-import UploadVideo from "./UploadVideo";
+import UploadImage from "modules/blogs/components/UploadImage";
+
+// schema
+const schema = Yup.object().shape({
+  name: Yup.string().required("this_field_is_required"),
+  description: Yup.string().required("this_field_is_required"),
+  certification: Yup.string().required("this_field_is_required"),
+  experience: Yup.string().required("this_field_is_required"),
+  email: Yup.string()
+    .email("please_enter_valid_email")
+    .required("this_field_is_required"),
+  password: Yup.string().required("this_field_is_required"),
+  image: Yup.string().required("please_upload_your_image"),
+});
 
 export default function Add({ handleClose }) {
   const { t } = useTranslation("common");
@@ -28,7 +45,7 @@ export default function Add({ handleClose }) {
     onSuccess: () => handleClose(),
     queryKey: "get-coaches",
   });
-  
+
   function handleSubmit(values) {
     mutate(values);
   }
@@ -38,19 +55,6 @@ export default function Add({ handleClose }) {
     usePost({
       queryFn: apiUploadImage,
     });
-
-  // schema
-  const schema = Yup.object().shape({
-    name: Yup.string().required("this_field_is_required"),
-    description: Yup.string().required("this_field_is_required"),
-    certification: Yup.string().required("this_field_is_required"),
-    experience: Yup.string().required("this_field_is_required"),
-    email: Yup.string()
-      .email("please_enter_valid_email")
-      .required("this_field_is_required"),
-    password: Yup.string().required("this_field_is_required"),
-    image: Yup.string().required("please_upload_your_image"),
-  });
 
   return (
     <Formik
@@ -62,37 +66,37 @@ export default function Add({ handleClose }) {
         password: "",
         image: "",
         experience: "",
+        type: "food",
+        images: [],
       }}
       validationSchema={schema}
       onSubmit={handleSubmit}
     >
       {() => (
         <Form>
-          <Row style={{overflow:"auto",height:"400px"}}>
+          <Row style={{ overflow: "auto", height: "400px" }}>
             {add_coach_fields.map((item) => (
               <Col key={item.id} xs={12} md={item.col}>
                 {item.type === "file" ? (
-                  <DynamicFileUploaderInput
-                    item={item}
-                    serverCallback={mutateImageUploading}
-                  >
-                    <UploadImage
-                      name={item.name}
-                      isLoading={isLoadingImageUploading}
-                    />
-                  </DynamicFileUploaderInput>
-                ) : item.type === "video-file" ?(
+                  item.multiple ? (
                     <DynamicFileUploaderInput
-                    item={item}
-                    serverCallback={mutateImageUploading}
-                  >
-                    <UploadVideo
-                      name={item.name}
-                      // isLoading={isLoadingImageUploading}
-                    />
-                  </DynamicFileUploaderInput>
-                )
-                : (
+                      item={item}
+                      serverCallback={mutateImageUploading}
+                    >
+                      <ImageUploaderPreview
+                        multiple={item.multiple}
+                        isLoading={isLoadingImageUploading}
+                      />
+                    </DynamicFileUploaderInput>
+                  ) : (
+                    <DynamicFileUploaderInput
+                      item={item}
+                      serverCallback={mutateImageUploading}
+                    >
+                      <UploadImage />
+                    </DynamicFileUploaderInput>
+                  )
+                ) : (
                   <InputsHandler item={item} translation="common" />
                 )}
               </Col>

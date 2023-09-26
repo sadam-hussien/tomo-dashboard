@@ -4,5 +4,9 @@ export { default as MealCheck } from "./MealCheck";
 export { default as SendMessage } from "./SendMessage";
 export { default as SubscriptionInfo } from "./SubscriptionInfo";
 export { default as Measure } from "./Measure";
-
-
+export { default as ClientFilter } from "./ClientFilter";
+export { default as Meals } from "./Meals";
+export { default as Workout } from "./Workout";
+export { default as Reports } from "./Reports";
+export { default as Updates } from "./Updates";
+export { default as Progress } from "./Progress";

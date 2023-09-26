@@ -1,12 +1,10 @@
-
 import { ImageAndName } from "components";
+
 import { Link } from "react-router-dom";
 
+import { Actions } from "../pages/Coaches";
+
 export const coaches_columns = [
-  // {
-  //   Header: "count",
-  //   accessor: (col, index) => index + 1,
-  // },
   {
     Header: "coach_name",
     accessor: (col) => (
@@ -21,19 +19,80 @@ export const coaches_columns = [
   },
   {
     Header: "active_users",
-    accessor: (col) => 10,
+    accessor: "active_clients",
   },
 
   {
     Header: "average_renewal",
-    accessor: "rate",
+    accessor: "renew_number",
   },
   {
     Header: "total_income",
-    accessor: (col) => 3000 + "ج",
+    accessor: "total_income",
   },
   {
     Header: "total_profit",
-    accessor: (col) => 2000 + "ج",
+    accessor: "total_profit",
+  },
+  {
+    Header: "actions",
+    accessor: (col) => <Actions col={col} />,
+  },
+];
+
+export const coach_columns = [
+  {
+    Header: "client_name",
+    accessor: (col) =>
+      col.total ? (
+        "الاجمالى"
+      ) : (
+        <Link to={`/clients/${col.id}`}>
+          <ImageAndName img={col?.profile?.avatar} title={col?.name} />
+        </Link>
+      ),
+  },
+  {
+    Header: "coach_plan",
+    accessor: (col) => "تحدي 90 يوم",
+  },
+  {
+    Header: "coach_price",
+    accessor: (col) => "4000 ريال",
+    meta: {
+      header: {
+        style: {
+          width: "180px",
+          maxWidth: "180px",
+          whiteSpace: "wrap",
+        },
+      },
+      row: {
+        style: {
+          width: "180px",
+          maxWidth: "180px",
+        },
+      },
+    },
+  },
+  {
+    Header: "coach_price_in_eg",
+    accessor: (col) => "3600 ريال",
+  },
+  {
+    Header: "coach_subscription",
+    accessor: () => "2/3/2023",
+  },
+  {
+    Header: "coach_subscription_end",
+    accessor: (col) => "2/3/2023",
+  },
+  {
+    Header: "coach_days",
+    accessor: () => "60",
+  },
+  {
+    Header: "coach_profit",
+    accessor: () => "240 ج",
   },
 ];

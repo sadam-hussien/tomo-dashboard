@@ -14,10 +14,23 @@ import { Col, Row } from "react-bootstrap";
 
 import { edit_coach_fields } from "../constants";
 
-import { Btn, DynamicFileUploaderInput, InputsHandler } from "components";
+import {
+  Btn,
+  DynamicFileUploaderInput,
+  ImageUploaderPreview,
+  InputsHandler,
+} from "components";
 
-import UploadImage from "./UploadImage";
-import UploadVideo from "./UploadVideo";
+import UploadImage from "modules/blogs/components/UploadImage";
+
+// schema
+const schema = Yup.object().shape({
+  name: Yup.string().required("this_field_is_required"),
+  description: Yup.string().required("this_field_is_required"),
+  certification: Yup.string().required("this_field_is_required"),
+  experience: Yup.string().required("this_field_is_required"),
+  image: Yup.string().required("please_upload_your_image"),
+});
 
 export default function Edit({ handleClose, data }) {
   const { t } = useTranslation("common");
@@ -39,15 +52,6 @@ export default function Edit({ handleClose, data }) {
       queryFn: apiUploadImage,
     });
 
-  // schema
-  const schema = Yup.object().shape({
-    name: Yup.string().required("this_field_is_required"),
-    description: Yup.string().required("this_field_is_required"),
-    certification: Yup.string().required("this_field_is_required"),
-    experience: Yup.string().required("this_field_is_required"),
-    image: Yup.string().required("please_upload_your_image"),
-  });
-
   return (
     <Formik
       initialValues={{
@@ -57,39 +61,40 @@ export default function Edit({ handleClose, data }) {
         certification: data.data?.certification || "",
         image: data.data?.image || "",
         experience: data.data?.experience || "",
-        active: true
+        active: data.data?.status || true,
+        type: data.data?.type || "food",
+        images: data?.data?.images || [],
+        password: data?.data?.password || "",
       }}
       validationSchema={schema}
       onSubmit={handleSubmit}
     >
       {() => (
         <Form>
-          <Row style={{overflow:"auto",height:"400px"}}>
+          <Row style={{ overflow: "auto", height: "400px" }}>
             {edit_coach_fields.map((item) => (
               <Col key={item.id} xs={12} md={item.col}>
                 {item.type === "file" ? (
-                  <DynamicFileUploaderInput
-                    item={item}
-                    serverCallback={mutateImageUploading}
-                  >
-                    <UploadImage
-                      name={item.name}
-                      isLoading={isLoadingImageUploading}
-                    />
-                  </DynamicFileUploaderInput>
-                ) : item.type === "video-file" ?(
-                  <DynamicFileUploaderInput
-                  item={item}
-                  serverCallback={mutateImageUploading}
-                >
-                  <UploadVideo
-                    name={item.name}
-                    // isLoading={isLoadingImageUploading}
-                  />
-                </DynamicFileUploaderInput>
-              )
-              : (
-                <InputsHandler item={item} translation="common" />
+                  item.multiple ? (
+                    <DynamicFileUploaderInput
+                      item={item}
+                      serverCallback={mutateImageUploading}
+                    >
+                      <ImageUploaderPreview
+                        multiple={item.multiple}
+                        isLoading={isLoadingImageUploading}
+                      />
+                    </DynamicFileUploaderInput>
+                  ) : (
+                    <DynamicFileUploaderInput
+                      item={item}
+                      serverCallback={mutateImageUploading}
+                    >
+                      <UploadImage />
+                    </DynamicFileUploaderInput>
+                  )
+                ) : (
+                  <InputsHandler item={item} translation="common" />
                 )}
               </Col>
             ))}

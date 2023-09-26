@@ -10,43 +10,38 @@ export const clients_columns = [
   {
     Header: "user_name",
     accessor: (col) => (
-      <Link to={col.user.id}>
-        <ImageAndName img={col.user?.profile?.avatar} title={col.user?.name} />
+      <Link to={col?.id}>
+        <ImageAndName img={col?.user?.profile?.avatar} title={col?.name} />
       </Link>
     ),
   },
   {
     Header: "quota",
-    accessor: (col) =>(
-      col.user?.profile?.plan.name ? col.user?.profile?.plan.name : "لو كارب"
-    ),
+    accessor: (col) => col?.profile?.plan.name,
   },
   {
     Header: "register_date",
-    accessor: (col) => "5/12/2020",
+    accessor: (col) => new Date(col.createdAt).toLocaleString(),
   },
   {
     Header: "subscription_data",
-    accessor: (col) => {
-      const date = isNaN(new Date(col.user?.profile?.plan.createdAt)) ? new Date() : new Date(col.user?.profile?.plan.createdAt)
-      return date?.getDay() + '/' + (date?.getMonth()+1) + '/' + date?.getFullYear()
-    },
+    accessor: (col) => new Date().toLocaleString(),
   },
   {
     Header: "subscription_expire_date",
-    accessor: (col) => "2/3/2023",
+    accessor: (col) => new Date().toLocaleString(),
   },
   {
     Header: "current_nutritionist",
-    accessor: (col) => "مي",
+    accessor: (col) => col.foodCoach,
   },
   {
     Header: "current_coach",
-    accessor: (col) => "نور",
+    accessor: (col) => col.sportCoach,
   },
   {
     Header: "subscription_status",
-    accessor: (col) => <Status status={"نشط"} />,
+    accessor: (col) => <Status status={col.payment ? "نشط" : "انتهى"} />,
   },
   {
     Header: "actions",
@@ -89,4 +84,4 @@ export const client_trainings = [
     Header: "days",
     accessor: (col, index) => "اليوم " + (index + 1),
   },
-]
+];

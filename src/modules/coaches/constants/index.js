@@ -7,6 +7,17 @@ export const add_coach_fields = [
     label: "coach_image",
   },
   {
+    id: "coach-radio-inp",
+    type: "radiobox",
+    options: [
+      { label: "مدرب رياضى ", value: "food" },
+      { label: "مدرب غذائى ", value: "sport" },
+    ],
+    name: "type",
+    col: "12",
+    label: "نوع المدرب",
+  },
+  {
     id: "coach-name-inp",
     type: "text",
     name: "name",
@@ -75,7 +86,6 @@ export const add_coach_fields = [
       flexDirection: "row-reverse",
     },
   },
-
   {
     id: "coach-password-inp",
     type: "password",
@@ -85,13 +95,13 @@ export const add_coach_fields = [
     col: "6",
     label: "coach_password",
   },
-
   {
-    id: "coach-video",
-    type: "video-file",
-    name: "video",
+    id: "coach-images",
+    type: "file",
+    name: "images",
     col: "12",
     label: "coach_video",
+    multiple: true,
   },
 ];
 
@@ -103,6 +113,17 @@ export const edit_coach_fields = [
     name: "image",
     col: "12",
     label: "coach_image",
+  },
+  {
+    id: "coach-radio-inp",
+    type: "radiobox",
+    options: [
+      { label: "مدرب رياضى ", value: "food" },
+      { label: "مدرب غذائى ", value: "sport" },
+    ],
+    name: "type",
+    col: "12",
+    label: "نوع المدرب",
   },
   {
     id: "coach-name-inp",
@@ -117,7 +138,6 @@ export const edit_coach_fields = [
       flexDirection: "row-reverse",
     },
   },
-
   {
     id: "coach-desc-inp",
     type: "textarea",
@@ -131,7 +151,15 @@ export const edit_coach_fields = [
       flexDirection: "row-reverse",
     },
   },
-
+  {
+    id: "coach-password-inp",
+    type: "password",
+    name: "password",
+    placeholder: "coach_password",
+    noBorder: true,
+    col: "12",
+    label: "coach_password",
+  },
   {
     id: "coach-experience-inp",
     type: "text",
@@ -145,7 +173,6 @@ export const edit_coach_fields = [
       flexDirection: "row-reverse",
     },
   },
-
   {
     id: "coach-certification-inp",
     type: "text",
@@ -159,22 +186,21 @@ export const edit_coach_fields = [
       flexDirection: "row-reverse",
     },
   },
-
   {
-    id: "coach-video",
-    type: "video-file",
-    name: "video",
+    id: "coach-images",
+    type: "file",
+    name: "images",
     col: "12",
     label: "coach_video",
+    multiple: true,
   },
-
   {
     id: "coach-active-inp",
     type: "switch",
     name: "active",
     col: "auto",
     labelInner: "activate_coach",
-  }
+  },
 ];
 
 export const coach_page = [
@@ -183,5 +209,5 @@ export const coach_page = [
     type: "date",
     name: "date",
     col: "12",
-  }
-]
+  },
+];

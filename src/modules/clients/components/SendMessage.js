@@ -5,7 +5,7 @@ export default function SendMessage({ data }) {
   const { t } = useTranslation("common");
   return (
     <Link
-      to={{ pathname: "/messages", search: `?user=${data?.user?.id}` }}
+      to={{ pathname: "/messages", search: `?user=${data?.id}` }}
       className="users-message-link"
     >
       <img

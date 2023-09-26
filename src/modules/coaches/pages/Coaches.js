@@ -1,4 +1,13 @@
-import { Modal, Table, alertConfirmation } from "components";
+import {
+  AddBtn,
+  DefaultActions,
+  Modal,
+  Pagination,
+  Search,
+  Table,
+  Table2,
+  alertConfirmation,
+} from "components";
 
 import { useFetch, usePost } from "hooks";
 
@@ -12,62 +21,107 @@ import { Add, Edit } from "../components";
 
 import { Link, useSearchParams } from "react-router-dom";
 
-export default function Coaches() {
-  // translation
-  const { t } = useTranslation("common");
-
-  // fetch users using react-query library
-  const { isLoading: isLoadingCoaches, data: coachesData } = useFetch({
-    queryKey: "get-coaches",
-    queryFn: apiGetCoaches,
-  });
-  
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const programType = searchParams.get("program_type");
-
-  const { isLoading: isLoadingPrograms, data: programsData } = useFetch({
-    queryKey: ["get-programs", programType],
-    queryFn: () =>
-      apiGetPrograms({
-        program_type: programType,
-      }),
-  });
-
+export function Actions({ col }) {
   // delete coach
   const { mutate } = usePost({
     queryFn: apiDeleteCoache,
     queryKey: "get-coaches",
   });
 
-  console.log(coachesData)
+  return (
+    <DefaultActions
+      data={col}
+      edit
+      remove={{ removeFn: (id) => alertConfirmation({ mutate, id }) }}
+    />
+  );
+}
+
+export default function Coaches() {
+  // translation
+  const { t } = useTranslation("common");
+
+  const [searchParams] = useSearchParams();
+
+  const coachType = searchParams.get("type");
+  // sport, food
+
+  const searchParam = searchParams.get("search");
+
+  const pageParam = searchParams.get("page");
+
+  // fetch users using react-query library
+  const { isLoading, data } = useFetch({
+    queryKey: ["get-coaches", searchParam, pageParam, coachType],
+    queryFn: () =>
+      apiGetCoaches({
+        page: pageParam,
+        search: searchParam,
+        type: coachType,
+      }),
+  });
+
+  const meta = data?.data?.meta;
+
+  const coachesData = data?.data?.coaches;
 
   return (
-    <section className="coaches-page"> 
-      <Table
-        data={coachesData?.data}
+    <section className="coaches-page">
+      <div className="d-flex align-items-center justify-content-between mb-5 gap-5 flex-wrap">
+        <AddBtn
+          title={t("add_coach")}
+          modalBtnTitle={t("save")}
+          modalTitle={t("add_new_coach")}
+        />
+        <Search placeholder={t("search_about_coach")} />
+      </div>
+
+      <div className="d-flex align-items-center mb-5 border-bottom">
+        <Link
+          to={{
+            pathname: "",
+            search: "?type=food",
+          }}
+          className={`d-flex gap-3 pb-4 px-4 program-type align-items-center ${
+            coachType === "food" ? "active" : ""
+          }`}
+        >
+          <img
+            src="/assets/images/food-program.svg"
+            alt="food"
+            className="img-fluid"
+          />
+          <span>{t("food_program")}</span>
+        </Link>
+        <Link
+          to={{
+            pathname: "",
+            search: "?type=sport",
+          }}
+          className={`d-flex gap-3 pb-4 px-4 program-type align-items-center ${
+            coachType === "sport" ? "active" : ""
+          }`}
+        >
+          <img
+            src="/assets/images/sporting-program.svg"
+            alt="food"
+            className="img-fluid"
+          />
+          <span>{t("sporting_program")}</span>
+        </Link>
+      </div>
+      <Table2
+        data={coachesData}
         columns={coaches_columns}
-        isLoading={isLoadingCoaches}
-        programType = {programType}
-        selector
-        search
+        isLoading={isLoading}
         selection
-        searchPlaceholder={t("search_about_coach")}
-        actions={{
-          addAction: true,
-          addActionTitle: t("add_coach"),
-          addActionModalTitle: t("add_new_coach"),
-          addActionModalBtnTitle: t("save"),
-          selectAction: false,
-        }}
-        innerActions={{
-          editing: true,
-          editingModalTitle: t("edit_coach"),
-          editingModalBtnTitle: t("save"),
-          deleting: true,
-          deletingFn: (id) => alertConfirmation({ mutate, id }),
-        }}
-        tableHeaderClass="d-flex flex-row-reverse justify-content-between align-items-center"
+      />
+
+      <Pagination
+        page={meta?.page}
+        total={meta?.pageCount}
+        hasPreviousPage={meta?.hasPreviousPage}
+        hasNextPage={meta?.hasNextPage}
       />
 
       <Modal edit={<Edit />} add={<Add />} />

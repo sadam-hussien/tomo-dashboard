@@ -1,7 +1,15 @@
 import Api from "server/axios";
 
-export const apiGetCoaches = () => {
-  return Api().get("coaches");
+export const apiGetCoaches = (params) => {
+  return Api().get("coaches", {
+    params,
+  });
+};
+
+export const apiGetSingleCoache = (params) => {
+  return Api().get("coaches/coach", {
+    params,
+  });
 };
 
 export const apiAddCoache = (data) => {
@@ -13,7 +21,7 @@ export const apiEditCoache = (data) => {
 };
 
 export const apiDeleteCoache = (id) => {
-  return Api().delete(`coaches/${id}`);
+  return Api().delete(`coaches?id=${id}`);
 };
 
 export const apiGetPrograms = (params) => {

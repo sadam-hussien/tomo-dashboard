@@ -14,6 +14,12 @@
   --light-bg: #f4f5f7;
   --natu: #fafafa;
 
+  --sub-color: #29384e;
+  --sub-text-color: #2e2e2e;
+  --sub-color-deep: #29384e;
+  --sub-color-dark: #050c41;
+  --sub-color-3: #29384e;
+
   --primary-ar: "Tajawal", sans-serif;
 
   --font-size-xs: 0.75rem; /*12px*/
