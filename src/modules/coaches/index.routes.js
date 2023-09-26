@@ -9,8 +9,7 @@ const routes = [
     component: Coach,
     path: "/coaches/:id",
     boxed: true,
-    nopadding:true
-  }
+  },
 ];
 
 export default routes;

@@ -1,4 +1,12 @@
-export function handleDate(d) {
+export function handleDate(d, time = null) {
+  if (time) {
+    const date = new Date(d);
+    const hours = date.getHours() > 9 ? date.getHours() : "0" + date.getHours();
+    const minutes =
+      date.getMinutes() > 9 ? date.getMinutes() : "0" + date.getMinutes();
+
+    return `${hours}:${minutes}`;
+  }
   const months = [
     "Jan",
     "Feb",

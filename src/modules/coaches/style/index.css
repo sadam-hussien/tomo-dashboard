@@ -5,58 +5,57 @@
   height: 100%;
   background: rgba(0 0 0 / 0.5);
   color: var(--bs-white);
-
 }
 /****************************           ReactDatePicker           ********************************************************/
 
-.react-datepicker__input-container input{
+.react-datepicker__input-container input {
   width: 100%;
   border: 2px solid gray;
   border-radius: 5px;
   padding: 10px;
 }
-.react-datepicker{
+.react-datepicker {
   direction: ltr;
   border-radius: 15px;
   padding: 20px 20px 0 20px;
 }
-.react-datepicker__day-names{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding-inline: 12px;
+.react-datepicker__day-names {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-inline: 12px;
 }
-.react-datepicker__day--keyboard-selected{
-  background-color: var( --secondary) !important;
+.react-datepicker__day--keyboard-selected {
+  background-color: var(--secondary) !important;
 }
-.react-datepicker__week{
+.react-datepicker__week {
   flex-direction: row;
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
-.react-datepicker__day--in-range{
-  background-color: var( --secondary);
+.react-datepicker__day--in-range {
+  background-color: var(--secondary);
 }
-.react-datepicker__day--in-selecting-range{
-  background-color: var( --secondary) !important;
+.react-datepicker__day--in-selecting-range {
+  background-color: var(--secondary) !important;
 }
-.react-datepicker__day--in-range{
-  background-color: var( --secondary) !important;
+.react-datepicker__day--in-range {
+  background-color: var(--secondary) !important;
 }
-.react-datepicker__header{
+.react-datepicker__header {
   background-color: transparent;
   border: none;
 }
-.react-datepicker__header button{
+.react-datepicker__header button {
   background-color: transparent;
   border: none;
 }
-.react-datepicker__header select{
+.react-datepicker__header select {
   background-color: transparent;
   border: none;
   font-size: 0.95rem;
 }
-.react-datepicker__month-container{
+.react-datepicker__month-container {
   width: fit-content;
 }
 .react-datepicker__portal .react-datepicker__day-name,
@@ -65,115 +64,114 @@
   line-height: 3rem;
   width: 40px;
 }
-.react-datepicker__day{
+.react-datepicker__day {
   border-radius: 50%;
   width: 50px !important;
   height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color:lightgray;
+  background-color: lightgray;
 }
-.react-datepicker__day:hover{
+.react-datepicker__day:hover {
   border-radius: 50%;
-  background-color: var( --secondary);
+  background-color: var(--secondary);
   color: white;
 }
 
-
 /****************************           ReactDatePicker           ********************************************************/
 
-.confirm-buttons{
-  text-align:end;
+.confirm-buttons {
+  text-align: end;
   padding-top: 50px;
 }
-.confirm-buttons button{
-  background-color:white;
-  border:none;
-  font-size:1.1rem;
+.confirm-buttons button {
+  background-color: white;
+  border: none;
+  font-size: 1.1rem;
   padding: 20px 20px 10px 20px;
   color: var(--secondary);
 }
 
-.custom-header select{
+.custom-header select {
   outline: none;
 }
 
-.custom-header button{
+.custom-header button {
   outline: none;
   font-size: 1.2rem;
   font-weight: bolder;
   padding-inline: 20px;
 }
 
-.coach-page{
+.coach-page {
   margin-top: var(--header-height);
   margin-inline-start: var(--sidebar-width);
   transition: 0.3s;
 }
-.coach-container{
+.coach-container {
   display: grid;
-  grid-template-columns:3fr 1fr;
-  gap:20px;
+  grid-template-columns: 3fr 1fr;
+  gap: 20px;
   margin-inline: 20px;
 }
 
-.coach-left-side{
+.coach-left-side {
   background-color: white;
   min-height: calc(100vh - var(--header-height));
   padding: 20px 30px;
 }
-.coach-degree-img{
+.coach-degree-img {
   margin-block: 20px;
   justify-content: center;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
 }
-.coach-degree-img img{
+.coach-degree-img img {
   width: 22%;
 }
 
-.coach-left-side-top{
+.coach-left-side-top {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.coach-left-side-top img{
+.coach-left-side-top img {
   border-radius: 100%;
   width: 90px;
   height: 90px;
   object-fit: cover;
   margin-bottom: 10px;
 }
-.coach-left-side p{
+.coach-left-side p {
   margin: 0;
   padding: 0;
   font-weight: bold;
 }
 
-.coach-left-side span{
+.coach-left-side span {
   background-color: var(--light-bg);
   padding: 8px;
   border-radius: 7px;
 }
 
-.coach-table{
+.coach-table {
   background: var(--bs-white);
   border-radius: 10px;
   padding: 5px 24px 10px 24px;
   height: fit-content;
 }
 
-.coach-page hr{
+.coach-page hr {
   margin-block: 30px;
 }
-.contact-details{
+.contact-details {
   display: flex;
   align-items: center;
   gap: 10px;
 }
-.contact-details i{
+.contact-details i {
   background-color: rgba(208, 32, 73, 0.05);
   color: var(--secondary);
   border-radius: 50%;
@@ -187,7 +185,122 @@
   }
 }
 @media (max-width: 1220px) {
-  .coach-container{
+  .coach-container {
     display: block;
   }
+}
+
+/* single coach  */
+.single-coach-page {
+  margin-top: calc(-1 * var(--space-lg));
+}
+
+.single-coach-header {
+  margin-bottom: 32px;
+}
+
+.single-coach-name {
+  font-size: 24px;
+  color: var(--sub-text-color);
+  margin-bottom: 0;
+}
+
+.single-coach-name-back {
+  color: var(--sub-color);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.single-coach-table tr:last-child td:first-child,
+.single-coach-table tr:last-child td:nth-child(4),
+.single-coach-table tr:last-child td:last-child {
+  background: #e8e8e8;
+}
+
+.single-coach-profile-avatar {
+  width: 115px;
+  height: 115px;
+  border-radius: 50%;
+  margin-bottom: 16px;
+}
+
+.single-coach-profile-name {
+  font-size: 16px;
+  color: var(--sub-text-color);
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.single-coach-profile-status {
+  margin-bottom: 24px;
+}
+
+.single-coach-profile-status img {
+  width: 16px;
+  height: 16px;
+}
+
+.single-coach-profile-status span {
+  display: block;
+  color: var(--sub-color-deep);
+  font-size: 14px;
+  margin-bottom: -2px;
+  font-weight: 500;
+}
+
+.single-coach-profile-box:not(.last) {
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #ececec;
+}
+
+.single-coach-profile-box-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--sub-color-dark);
+  margin-bottom: 16px;
+}
+
+.single-coach-profile-box-desc {
+  padding: 8px;
+  background: #f7f8f9;
+  border-radius: 6.819px;
+  color: var(--sub-color-3);
+  font-size: 14px;
+  font-weight: 400;
+  display: inline-block;
+}
+
+.single-coach-profile-box-images {
+  margin-top: 24px;
+}
+
+.single-coach-profile-box-images img {
+  width: 72px;
+  height: 46px;
+  border-radius: 2px;
+}
+
+.single-coach-profile-box-contacts:not(:last-child) {
+  margin-bottom: 24px;
+}
+
+.single-coach-profile-box-contacts-img {
+  width: 40px;
+  height: 40px;
+  background: rgba(208, 32, 73, 0.05);
+  border-radius: 50%;
+}
+
+.single-coach-profile-box-contacts-title {
+  font-size: 14px;
+  font-weight: 400;
+  color: #29384e;
+  margin-bottom: 8px;
+}
+
+.single-coach-profile-box-contacts-response {
+  font-weight: 400;
+  color: #7b7b7b;
+  font-size: 12px;
 }

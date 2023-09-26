@@ -4,9 +4,23 @@ import { Link, useParams, useSearchParams } from "react-router-dom";
 
 import { apiGetUserById } from "../server";
 
-import { Spinner, Tab, Table, Tabs } from "react-bootstrap";
+import { Col, Row, Spinner } from "react-bootstrap";
 
 import { useTranslation } from "react-i18next";
+
+import {
+  ClientFilter,
+  Meals,
+  Workout,
+  Reports,
+  Updates,
+  SubscriptionInfo,
+  ViewWeight,
+  Measure,
+  Progress,
+} from "../components";
+
+import { Modal } from "components";
 
 import { useDispatch } from "react-redux";
 
@@ -14,146 +28,313 @@ import { openModal } from "store/global";
 
 import { modalTypes } from "constants";
 
-import { Modal } from "components";
-
-import { AssignProgramToUser, ViewWeight, SubscriptionInfo, Measure } from "../components";
-
-import { Edit } from "modules/programs/components";
-
-import { client_trainings_columns } from "../columns";
-
-import { Table as MyTable } from "components";
-
-import DatePicker from "../components/DatePicker";
-import LeftSide from "../components/LeftSide";
-import Meals from "../components/Meals";
-import Workout from "../components/Workout";
-import Reports from "../components/Reports";
-import Updates from "../components/Updates";
-
-
 export default function Client() {
+  const { t } = useTranslation("common");
+
   const { id } = useParams();
-  console.log(id)
+
+  const [searchParams] = useSearchParams();
+
+  const programType = searchParams.get("program_type");
+
   const { data, isLoading } = useFetch({
-    queryKey: ["get-user", id],
+    queryKey: ["get-sinle-client", id],
     queryFn: () => apiGetUserById(id),
   });
 
-  const { t } = useTranslation("common");
+  const clientData = data?.data?.user;
 
-
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const programType = searchParams.get("program_type") ? searchParams.get("program_type") : "food";
-
+  const dispatch = useDispatch();
 
   return (
-    <section className="user-page">
-      {isLoading ? (
-        <div style={{position:"absolute",inset:"0",display:"flex",justifyContent:"center",alignItems:"center"}} className="boxed">
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        </div>
-      ) : (
-        <section className="client-page"> 
-          <div className="client-container">
-            <div>
-              <div className="client-table">
-                  <div>
-                      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"25px"}}>
-                          <h2>{"تقرير اليوم"}</h2>
-                          <div style={{display:"flex",alignItems:"center",fontWeight:"bold"}}>
-                            <Link style={{color:"black"}} to='/clients'>{t("clients")}</Link>
-                            <i class="las la-angle-left"></i>
-                          </div>
-                      </div>
-
-                      <div className="d-flex align-items-center mb-5 border-bottom overflow-auto">
-                        <Link
-                          to={{
-                            pathname: "",
-                            search: "?program_type=food",
-                          }}
-                          className={`d-flex gap-3 pb-4 px-4 program-type align-items-center ${
-                            programType === "food" || programType === null ? "active" : ""
-                          }`}
-                        >
-                          <img
-                            src="/assets/images/food-program.svg"
-                            alt="food"
-                            className="img-fluid"
-                          />
-                          <span>{t("food")}</span>
-                        </Link>
-                        <Link
-                          to={{
-                            pathname: "",
-                            search: "?program_type=sporting",
-                          }}
-                          className={`d-flex gap-3 pb-4 px-4 program-type align-items-center ${
-                            programType === "sporting" ? "active" : ""
-                          }`}
-                        >
-                          <img
-                            src="/assets/images/sporting-program.svg"
-                            alt="food"
-                            className="img-fluid"
-                          />
-                          <span>{t("sport")}</span>
-                        </Link>
-                        <Link
-                          to={{
-                            pathname: "",
-                            search: "?program_type=reports",
-                          }}
-                          className={`d-flex gap-3 pb-4 px-4 program-type align-items-center ${
-                            programType === "reports" ? "active" : ""
-                          }`}
-                        >
-                          <img
-                            src="/assets/images/sporting-program.svg"
-                            alt="food"
-                            className="img-fluid"
-                          />
-                          <span>{t("reports")}</span>
-                        </Link>
-                        <Link
-                          to={{
-                            pathname: "",
-                            search: "?program_type=updates",
-                          }}
-                          className={`d-flex gap-3 pb-4 px-4 program-type align-items-center ${
-                            programType === "updates" ? "active" : ""
-                          }`}
-                        >
-                          <img
-                            src="/assets/images/sporting-program.svg"
-                            alt="food"
-                            className="img-fluid"
-                          />
-                          <span>{t("updates")}</span>
-                        </Link>
-                      </div>
-
-                      <div style={{width:"100%",backgroundColor:"#F7F8F9",padding:"10px",borderRadius:"8px"}}>
-                        <DatePicker/>
-                      </div> 
-                  </div>
-                {programType === "reports" ? <Reports/> : programType === "updates" ? <Updates/> : null}
-              </div>
-
-              {programType === "food" ? <Meals/> : programType === "sporting" ? <Workout/> : null}
-
+    <section className="single-client-page">
+      <Row>
+        <Col lg={9}>
+          <div className="boxed">
+            <div className="d-flex align-items-center justify-content-between single-coach-header">
+              <h4 className="single-coach-name">تقرير اليوم</h4>
+              <Link
+                className="d-flex align-items-center gap-2 single-coach-name-back"
+                to="/clients"
+              >
+                {t("clients")}
+                <i className="las la-angle-left"></i>
+              </Link>
             </div>
-            <LeftSide items={data?.data}/>
+
+            <ClientFilter />
+
+            {isLoading ? (
+              <div className="d-flex justify-content-center mt-5">
+                <Spinner animation="border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+              </div>
+            ) : clientData ? (
+              <>
+                {programType === "nutrition" || !programType ? (
+                  <Meals programs={clientData.programs} />
+                ) : programType === "sports" ? (
+                  <Workout programs={clientData.programs} />
+                ) : programType === "reports" ? (
+                  <Reports reports={clientData.pdf} />
+                ) : (
+                  <Updates />
+                )}
+              </>
+            ) : null}
           </div>
-        </section>
-      )}
+        </Col>
+        <Col lg={3}>
+          <div className="boxed">
+            {isLoading ? (
+              <div className="d-flex justify-content-center mt-5">
+                <Spinner animation="border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+              </div>
+            ) : clientData ? (
+              <div className="single-coach-profile">
+                <div className="d-flex justify-content-center">
+                  <img
+                    src={clientData.profile?.avatar}
+                    alt=""
+                    className="img-fluid single-coach-profile-avatar"
+                  />
+                </div>
+
+                <h6 className="single-coach-profile-name text-center">
+                  {clientData.name}
+                </h6>
+                <div className="d-flex align-items-center justify-content-center gap-2 single-coach-profile-status">
+                  {clientData.status ? (
+                    <>
+                      <img
+                        src="/assets/images/active-icon.svg"
+                        alt=""
+                        className="img-fluid"
+                      />
+                      <span>نشط</span>
+                    </>
+                  ) : (
+                    <>
+                      <img
+                        src="/assets/images/terminate-icon.svg"
+                        alt=""
+                        className="img-fluid"
+                      />
+                      <span>غير نشط</span>
+                    </>
+                  )}
+                </div>
+
+                {/* section  */}
+                <div className="single-coach-profile-box d-flex align-items-center flex-wrap gap-3">
+                  {/* <h6 className="single-coach-profile-box-title">التخصص</h6> */}
+                  <p className="single-coach-profile-box-desc d-flex align-items-center gap-1 mb-0">
+                    {clientData.position}
+                    <span>نقطة</span>
+                  </p>
+
+                  <p className="single-coach-profile-box-desc d-flex align-items-center gap-1 mb-0">
+                    <span>صوم</span>
+                    {clientData.fasting}
+                  </p>
+
+                  <p className="single-coach-profile-box-desc d-flex align-items-center gap-1 mb-0">
+                    <span>السن:</span>
+                    {clientData.profile?.age}
+                  </p>
+
+                  <p className="single-coach-profile-box-desc d-flex align-items-center gap-1 mb-0">
+                    <span>الطول:</span>
+                    {clientData.profile?.height}
+                  </p>
+                </div>
+                {/* // *******  */}
+
+                {/* section  */}
+                <div className="single-coach-profile-box">
+                  <h6 className="single-coach-profile-box-title">
+                    بيانات التواصل
+                  </h6>
+                  <div className="d-flex align-items-center gap-4 single-coach-profile-box-contacts">
+                    <div className="single-coach-profile-box-contacts-img d-flex align-items-center justify-content-center ">
+                      <img
+                        src="/assets/images/phone-icon.svg"
+                        className="img-fluid"
+                        alt=""
+                      />
+                    </div>
+                    <div>
+                      <h6 className="single-coach-profile-box-contacts-title">
+                        رقم الهاتف
+                      </h6>
+                      <h6 className="single-coach-profile-box-contacts-response mb-0">
+                        {clientData.phone}
+                      </h6>
+                    </div>
+                  </div>
+                  <div className="d-flex align-items-center gap-4 single-coach-profile-box-contacts">
+                    <div className="single-coach-profile-box-contacts-img d-flex align-items-center justify-content-center ">
+                      <img
+                        src="/assets/images/id-icon.svg"
+                        className="img-fluid"
+                        alt=""
+                      />
+                    </div>
+                    <div>
+                      <h6 className="single-coach-profile-box-contacts-title">
+                        البريد الالكترونى
+                      </h6>
+                      <h6 className="single-coach-profile-box-contacts-response mb-0">
+                        {clientData.email}
+                      </h6>
+                    </div>
+                  </div>
+                </div>
+                {/* // *******  */}
+
+                <div className="single-coach-profile-box border-bottom-0">
+                  <div className="d-flex align-items-end justify-content-between">
+                    <img src="/assets/images/bullseye.svg" alt="" />
+                    <img src="/assets/images/flagstart.svg" alt="" />
+                  </div>
+
+                  <div className="single-client-progress position-relative">
+                    <div
+                      className="single-client-progress-bar"
+                      style={{
+                        width: +clientData.profile?.weight + "%",
+                      }}
+                    >
+                      {clientData.profile?.weight > 0 && (
+                        <span>{clientData.profile?.weight}kg</span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="d-flex align-items-center justify-content-between single-client-progress-values">
+                    <span>110kg</span>
+                    <span>85kg</span>
+                  </div>
+                </div>
+
+                <div className="single-coach-profile-box">
+                  <button
+                    className="bg-transparent border-0 m-0 p-0 d-flex gap-2 align-items-center"
+                    type="button"
+                    onClick={() =>
+                      dispatch(
+                        openModal({
+                          modal_type: modalTypes.view,
+                          title: t("weights"),
+                          ...clientData,
+                        })
+                      )
+                    }
+                  >
+                    الاوزان السابقة
+                    <img
+                      src="/assets/images/details-icon.svg"
+                      alt="details"
+                      className="img-fluid"
+                    />
+                  </button>
+                </div>
+
+                <div className="single-coach-profile-box">
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <div
+                      onClick={() =>
+                        dispatch(
+                          openModal({
+                            modal_type: modalTypes.measure,
+                            title: t("subscription1_info"),
+                            ...clientData,
+                          })
+                        )
+                      }
+                      style={{
+                        boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
+                        textAlign: "center",
+                        borderRadius: "10px",
+                        padding: "25px 40px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <i
+                        style={{ fontSize: "2rem", color: "#FF725E" }}
+                        className="las la-chalkboard"
+                      ></i>
+                      <p>القياسات</p>
+                    </div>
+                    <div
+                      onClick={() =>
+                        dispatch(
+                          openModal({
+                            modal_type: modalTypes.info,
+                            title: t("subscription_info"),
+                            ...clientData,
+                          })
+                        )
+                      }
+                      style={{
+                        boxShadow: "rgba(0, 0, 0, 0.1) 0px 4px 12px",
+                        textAlign: "center",
+                        borderRadius: "10px",
+                        padding: "25px 25px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <i
+                        style={{ fontSize: "2rem", color: "#097D4F" }}
+                        className="lar la-question-circle"
+                      ></i>
+                      <p>معلومات الاشتراك</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="single-coach-profile-box last d-flex flex-wrap gap-4 justify-content-center">
+                  <Progress
+                    image="fork.svg"
+                    title="ساعه صوم"
+                    value={clientData.fasting.substring(0, 2)}
+                  />
+                  <Progress
+                    image="fire.svg"
+                    title="سعر"
+                    value={clientData.profile?.calories}
+                  />
+                  <Progress
+                    image="footprint.svg"
+                    title="خطوة"
+                    value={clientData.profile?.steps?.month}
+                  />
+                  <Progress
+                    image="water.svg"
+                    title="الشرب"
+                    value={clientData.profile?.steps?.month}
+                  />
+                  <Progress
+                    image="sleep.svg"
+                    title="النوم"
+                    value={clientData.profile?.steps?.month}
+                  />
+                </div>
+              </div>
+            ) : null}
+          </div>
+        </Col>
+      </Row>
 
       <Modal
-        // edit={<AssignProgramToUser />}
         info={<SubscriptionInfo />}
         view={<ViewWeight />}
         measure={<Measure />}
@@ -161,156 +342,3 @@ export default function Client() {
     </section>
   );
 }
-
-
-{/* <>
-<div className="boxed">
-  <div className="d-flex justify-content-between align-items-center mb-lg">
-    <div className="d-flex align-items-center gap-3">
-      {data.data.user?.profile?.avatar && (
-        <img
-          src={data.data.user.profile?.avatar}
-          className="img-fluid user-page-avatar"
-          alt="mahmoud hussien"
-        />
-      )}
-      <h6 className="user-page-name mb-0">{data.data.user.name}</h6>
-    </div>
-    <div className="user-page-subscription d-flex align-items-center justify-content-center text-center">
-      مشترك في 90 يوم
-    </div>
-  </div>
-
-  <h5 className="user-personal-info">المعلومات الشخصية</h5>
-  <Table bordered responsive className="w-auto">
-    <thead>
-      <tr>
-        <th>الوزن</th>
-        <th>الوزن المستهدف</th>
-        <th>السن</th>
-        <th>الطول</th>
-        <th>الهدف</th>
-        <th>البرنامج</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <div className="d-flex gap-1 justify-content-between align-items-center">
-            <span>{data.data.user?.profile?.weight}kg</span>
-            <button
-              type="button"
-              onClick={() =>
-                dispatch(
-                  openModal({
-                    modal_type: modalTypes.view,
-                    title: t("weights"),
-                    ...data.data.user,
-                  })
-                )
-              }
-            >
-              <img
-                src="/assets/images/details-icon.svg"
-                alt="details"
-                className="img-fluid"
-              />
-            </button>
-          </div>
-        </td>
-        <td>{data.data.user.profile?.plan?.name}</td>
-        <td>25</td>
-        <td>{data.data.user.profile?.height}</td>
-        <td>{data.data.user.profile?.plan?.name}</td>
-        <td className="large-td">
-          <div className="d-flex gap-1 justify-content-between align-items-center">
-            <span>
-              {data.data.user.programs.length
-                ? data.data.user.programs[0].name
-                : ""}
-            </span>
-            <button
-              type="button"
-              onClick={
-                () =>
-                  dispatch(
-                    openModal({
-                      modal_type: modalTypes.edit,
-                      title: t("assign_program_to_user"),
-                      btnTitle: t("save"),
-                      ...data.data.user.programs[0],
-                    })
-                  )
-                // dispatch(
-                //   openModal({
-                //     modal_type: modalTypes.edit,
-                //     title: t("assign_program_to_user"),
-                //     btnTitle: t("save"),
-                //     id,
-                //   })
-                // )
-              }
-            >
-              <img
-                src="/assets/images/edit-pen-red-icon.svg"
-                alt="edit"
-                className="img-fluid"
-              />
-            </button>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </Table>
-
-  <h5 className="user-personal-info mt-lg">المعلومات الصحية</h5>
-  <Table bordered responsive className="w-auto">
-    <thead>
-      <tr>
-        <th>معدل التمرين</th>
-        <th>معدل الحركة</th>
-        <th>مكملات غذائية</th>
-        <th>مشاكل صحية</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td className="large-td">
-          {data.data.user?.profile?.weeklyExcersiceRate?.name}
-        </td>
-        <td className="large-td">
-          {data.data.user?.profile?.dailyMovementRate?.name}
-        </td>
-        <td className="large-td">ليمتلييس</td>
-        <td className="large-td">لا يوجد</td>
-      </tr>
-    </tbody>
-  </Table>
-</div>
-
-<div className="boxed mt-xl">
-  <h5 className="user-personal-info">التدريب</h5>
-
-  <Tabs
-    defaultActiveKey="meals"
-    id="trainings-and-meals-tabs"
-    className="mb-lg trainings-and-meals-tabs p-0 gap-5"
-  >
-    <Tab eventKey="meals" title="الوجبات">
-      <div>
-        <MyTable
-          tableHeaderClass="trainings-and-meals-tabs-search"
-          data={data.data?.user?.programs[0]?.mainMeals}
-          columns={client_trainings_columns}
-          isLoading={isLoading}
-          search
-          searchPlaceholder={t("search_about_day_meal")}
-        />
-      </div>
-    </Tab>
-    <Tab eventKey="trainings" title="التمارين">
-      hello 2
-    </Tab>
-  </Tabs>
-</div>
-</> */}
