@@ -1,5 +1,5 @@
 .settings-nav {
-  border-bottom: 1px solid var(--natu);
+  border-bottom: 1px solid #ececec;
   margin-bottom: var(--space-xl);
 }
 
@@ -13,7 +13,8 @@
   transition: 0.3s;
 }
 
-.settings-nav-item.active {
+.settings-nav-item.active,
+.settings-nav-item:hover {
   color: var(--secondary);
   border-bottom-color: var(--secondary);
 }
@@ -26,6 +27,58 @@
 
 .profile-subtitle {
   color: var(--gray);
-  margin-bottom: var(--space-xl);
+  margin-bottom: 64px;
   font-size: var(--font-size-sm);
+}
+
+.setting-input-container {
+  /* max-width: 460px; */
+  margin-bottom: 64px;
+}
+
+.setting-input-container label:not(.form-label-icon) {
+  margin-bottom: 8px !important;
+  font-size: 18px;
+}
+
+.setting-input-container .form-group {
+  margin-bottom: 0 !important;
+}
+
+.profile-page-divider {
+  border: 1px solid #ececec;
+  margin-bottom: 64px;
+}
+
+.profile-page-change-image-img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.setting-input-container .custom-date-input-field,
+.setting-input-container .input-withicon,
+.profile-page .select-box {
+  height: 49px !important;
+}
+
+.setting-input-container .custom-date-input-field,
+.profile-page .select-box,
+.setting-input-container .input-withicon-group {
+  border-color: rgba(38, 50, 56, 0.1) !important;
+}
+
+.setting-input-container .input-error-msg {
+  margin-top: 8px !important;
+}
+
+.setting-subscription-delete-item {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid var(--primary);
 }

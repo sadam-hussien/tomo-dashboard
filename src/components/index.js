@@ -48,3 +48,7 @@ export { default as Modal } from "./modal";
 export { default as Pagination } from "./pagination";
 
 export { default as ImageUploaderPreview } from "./imageUploaderPreview";
+
+export { CustomDateInput } from "./form/dateInput";
+
+export { default as Tabs } from "./tabs";

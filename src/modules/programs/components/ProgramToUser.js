@@ -1,5 +1,5 @@
 import { Btn, CheckBoxInput, InputWithIcon } from "components";
-import { Form, Formik } from "formik";
+import { ErrorMessage, Form, Formik } from "formik";
 import { useFetch, usePost } from "hooks";
 
 import { apiGetUsers } from "modules/users/server";
@@ -9,9 +9,21 @@ import { apiAssignProgramToUser } from "../server";
 import { useState } from "react";
 
 import { Spinner } from "react-bootstrap";
+
 import ChooosePrograms from "./ChooosePrograms";
 
+import * as Yup from "yup";
+import { useTranslation } from "react-i18next";
+
+const schema = Yup.object().shape({
+  userId: Yup.array()
+    .min(1, "please_select_one_user")
+    .required("please_select_one_user"), // You can customize the error message
+});
+
 export default function ProgramToUser({ handleClose, data }) {
+  const { t } = useTranslation("common");
+
   const [search, setSearch] = useState("");
 
   // get users
@@ -61,12 +73,16 @@ export default function ProgramToUser({ handleClose, data }) {
               userId: [],
             }}
             onSubmit={handleSubmit}
+            validationSchema={schema}
           >
             {() => (
               <Form>
+                <ErrorMessage name="userId">
+                  {(msg) => <div className="input-error-msg">{t(msg)}</div>}
+                </ErrorMessage>
                 <div className="list-of-users-inner">
-                  {usersData?.data && usersData.data.length
-                    ? usersData.data.map((item) => (
+                  {usersData?.data?.coaches && usersData.data.coaches.length
+                    ? usersData.data.coaches.map((item) => (
                         <div
                           className="d-flex align-items-center justify-content-between list-of-users-user"
                           key={item.id}
@@ -91,6 +107,7 @@ export default function ProgramToUser({ handleClose, data }) {
                             id={item?.id}
                             name="userId"
                             value={item?.id}
+                            noError
                           />
                         </div>
                       ))

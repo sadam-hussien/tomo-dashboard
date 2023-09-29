@@ -23,18 +23,23 @@ import { Add, Edit, ProgramToUser, ChooosePrograms } from "../components";
 
 import { modalTypes } from "constants";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { openModal } from "store/global";
 
 import { Link, useSearchParams } from "react-router-dom";
+
 import { useState } from "react";
+
+import { programTypes } from "constants";
 
 export default function Programs() {
   // translation
   const { t } = useTranslation("common");
 
   const dispatch = useDispatch();
+
+  const { modal } = useSelector((state) => state.global);
 
   const [searchParams] = useSearchParams();
 
@@ -53,6 +58,9 @@ export default function Programs() {
         page: pageParam,
         search: searchParam,
       }),
+    options: {
+      enabled: !modal.isShow,
+    },
   });
 
   const programsData = data?.data?.programs;
@@ -129,10 +137,10 @@ export default function Programs() {
         <Link
           to={{
             pathname: "",
-            search: "?program_type=nutrition",
+            search: `?program_type=${programTypes.nutrition}`,
           }}
           className={`d-flex gap-3 pb-4 px-4 program-type align-items-center ${
-            programType === "nutrition" ? "active" : ""
+            programType === programTypes.nutrition ? "active" : ""
           }`}
         >
           <img
@@ -145,10 +153,10 @@ export default function Programs() {
         <Link
           to={{
             pathname: "",
-            search: "?program_type=sports",
+            search: `?program_type=${programTypes.sports}`,
           }}
           className={`d-flex gap-3 pb-4 px-4 program-type align-items-center ${
-            programType === "sports" ? "active" : ""
+            programType === programTypes.sports ? "active" : ""
           }`}
         >
           <img

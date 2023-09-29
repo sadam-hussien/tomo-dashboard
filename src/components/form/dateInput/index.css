@@ -1,0 +1,36 @@
+.custom-date-input {
+}
+
+.custom-date-input .date-input-label {
+  margin-bottom: var(--space-base);
+  color: var(--primary);
+  font-size: var(--font-size-md);
+}
+
+.custom-date-input-field {
+  height: 56px;
+  background-color: transparent;
+  padding: 0 calc(var(--space-base) + var(--space-sm)) 0 var(--space-base);
+  color: var(--dark);
+  border-radius: var(--border-radius-sm);
+  border: 1px solid var(--gray) !important;
+  width: 100%;
+}
+
+.custom-date-input-icon {
+  font-size: 1.3rem;
+  line-height: 0;
+  color: var(--bs-gray-500);
+  transition: 0.3s;
+}
+
+.react-datepicker-popper[data-placement^="top"]
+  .react-datepicker__triangle::before,
+.react-datepicker-popper[data-placement^="bottom"]
+  .react-datepicker__triangle::before,
+.react-datepicker-popper[data-placement^="top"]
+  .react-datepicker__triangle::after,
+.react-datepicker-popper[data-placement^="bottom"]
+  .react-datepicker__triangle::after {
+  left: auto;
+}

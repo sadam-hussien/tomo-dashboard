@@ -48,7 +48,7 @@ export default function InputWithIcon({
         style={containerStyle}
       >
         {icon && (
-          <Form.Label htmlFor={id} className="m-0 ">
+          <Form.Label htmlFor={id} className="m-0 form-label-icon">
             <i className={icon}></i>
           </Form.Label>
         )}
@@ -84,6 +84,9 @@ export default function InputWithIcon({
             type="button"
             onClick={togglePassword}
             className="show-passowrd bg-transparent border-0 p-0"
+            style={{
+              lineHeight: 0,
+            }}
           >
             {passwordIsVisible ? (
               <i className="lar la-eye"></i>

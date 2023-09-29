@@ -1,4 +1,4 @@
-import { Main, Profile, Schedule, Security } from "./pages";
+import { Main, Profile, Subscriptions } from "./pages";
 
 const routes = [
   {
@@ -15,14 +15,14 @@ const routes = [
         path: "profile",
       },
       {
-        path: "security",
-        component: Security,
+        path: "subscriptions",
+        component: Subscriptions,
       },
 
-      {
-        path: "schedule",
-        component: Schedule,
-      },
+      // {
+      //   path: "schedule",
+      //   component: Schedule,
+      // },
     ],
   },
 ];

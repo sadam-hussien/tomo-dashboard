@@ -1,3 +1,5 @@
+import { programTypes } from "constants";
+
 export const subMealsTitle = [
   "الوجبة الأولى",
   "الوجبة الثانية",
@@ -90,29 +92,29 @@ export const excersices = [
   },
 ];
 
-export const defaultProgramType = "nutrition";
+export const defaultProgramType = programTypes.nutrition;
 
-export const programTypeSports = "sports";
+export const programTypeSports = programTypes.sports;
 
-export const programTypePsychological = "psychological";
+export const programTypePsychological = programTypes.psychological;
 
-export const programTypeSupplements = "supplements";
+export const programTypeSupplements = programTypes.supplements;
 
 export const programTypeOptions = [
   {
     label: "برنامج غذائى",
-    value: defaultProgramType,
+    value: programTypes.nutrition,
   },
   {
     label: "برنامج رياضى",
-    value: programTypeSports,
+    value: programTypes.sports,
   },
   {
     label: "برنامج نفسى",
-    value: programTypePsychological,
+    value: programTypes.psychological,
   },
   {
     label: "مكملات",
-    value: programTypeSupplements,
+    value: programTypes.supplements,
   },
 ];

@@ -7,12 +7,12 @@ const links = [
     path: "profile",
   },
   {
-    title: "security",
-    path: "security",
+    title: "subscription_dates",
+    path: "subscriptions",
   },
   {
-    title: "schedule",
-    path: "schedule",
+    title: "session_dates",
+    path: "Ssessions",
   },
 ];
 
@@ -22,7 +22,6 @@ export default function Main() {
   const { t } = useTranslation("common");
 
   function activeClass(href) {
-    console.log(pathname);
     if (pathname.includes(href)) {
       return "active";
     }
@@ -30,7 +29,7 @@ export default function Main() {
   }
   return (
     <section className="settings-page">
-      <nav className="settings-nav d-flex align-items-center gap-5">
+      <nav className="settings-nav d-flex align-items-center gap-5 flex-wrap">
         {links.map((link, index) => (
           <Link
             key={index}

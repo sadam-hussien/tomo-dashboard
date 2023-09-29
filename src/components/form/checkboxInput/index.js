@@ -15,6 +15,7 @@ export default function CheckBoxInput({
   basic,
   value,
   onChange,
+  noError = false,
 }) {
   const { t } = useTranslation("validation");
 
@@ -56,9 +57,11 @@ export default function CheckBoxInput({
         </div>
         <div className="checkbox-label-label text-capitalize">{label}</div>
       </Form.Label>
-      <ErrorMessage name={name}>
-        {(msg) => <div className="input-error-msg">{t(msg)}</div>}
-      </ErrorMessage>
+      {!noError && (
+        <ErrorMessage name={name}>
+          {(msg) => <div className="input-error-msg">{t(msg)}</div>}
+        </ErrorMessage>
+      )}
     </Form.Group>
   );
 }
