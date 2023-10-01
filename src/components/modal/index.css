@@ -18,7 +18,7 @@
   border: none;
   background: var(--bs-white);
   border-radius: var(--border-radius-base);
-  padding: 63px;
+  padding: 32px;
 }
 
 @media (max-width: 576px) {

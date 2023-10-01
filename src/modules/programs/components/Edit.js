@@ -42,6 +42,7 @@ import {
   subWorkOutTitle,
 } from "../constants";
 import { apiUploadImage } from "server";
+import useProgram from "../hooks/useProgram";
 
 // schema
 const schema = Yup.object().shape({
@@ -56,6 +57,7 @@ const schema = Yup.object().shape({
           Yup.object().shape({
             name: Yup.string().required("this_field_is_required"),
             details: Yup.string().required("this_field_is_required"),
+            way: Yup.string().required("this_field_is_required"),
             calories: Yup.string().required("this_field_is_required"),
           })
         ),
@@ -68,6 +70,7 @@ const schema = Yup.object().shape({
           Yup.object().shape({
             name: Yup.string().notRequired(),
             details: Yup.string().notRequired(),
+            way: Yup.string().notRequired(),
             calories: Yup.string().notRequired(),
           })
         ),
@@ -190,35 +193,10 @@ export default function Edit({ handleClose, data }) {
     arrayHelpers.remove(arrayHelpers.form.values.excersices.length - 1);
   }
 
-  const handleMeals = data?.data?.mainMeals
-    ? data.data.mainMeals.map((item) => {
-        return {
-          name: item.name,
-          extra: item.extraMeals.map((i) => {
-            return {
-              name: i.name,
-              details: i.details,
-              calories: i.calories,
-              image: i.image,
-            };
-          }),
-        };
-      })
-    : [];
-
-  const handleExcersices = data?.data?.excercises
-    ? data.data.excercises.map((item) => {
-        return {
-          name: item.name,
-          details: item.details,
-          tools: item.tools,
-          duration: item.duration,
-          reps: item.reps,
-          calories: item.calories,
-          images: item.images,
-        };
-      })
-    : [];
+  const { handleMeals, handleExcersices } = useProgram(
+    data?.data?.mainMeals,
+    data?.data?.excercises
+  );
 
   return (
     <Formik
@@ -357,7 +335,7 @@ export default function Edit({ handleClose, data }) {
                                       </p>
                                     </div>
                                   </div>
-                                  <Row xs={1} md={2} className="g-3">
+                                  <Row xs={1} md={3} className="g-3">
                                     <Col>
                                       <Textarea
                                         name={`meals[${index}].extra[${idx}].details`}
@@ -371,19 +349,20 @@ export default function Edit({ handleClose, data }) {
                                         }
                                       />
                                     </Col>
-                                    {/* <Col>
+
+                                    <Col>
                                       <Textarea
-                                        name={`meals[${index}].extra[${idx}].details`}
-                                        placeholder={t("meal_details")}
-                                        label={t("meal_details")}
+                                        name={`meals[${index}].extra[${idx}].way`}
+                                        placeholder={t("meal_way")}
+                                        label={t("meal_way")}
                                         id={
-                                          "program-extra-meal-" +
+                                          "program-extra-meal-way-" +
                                           index +
                                           "__" +
                                           idx
                                         }
                                       />
-                                    </Col> */}
+                                    </Col>
 
                                     <Col>
                                       <Textarea

@@ -2,7 +2,7 @@ import { Btn, CheckBoxInput, InputWithIcon } from "components";
 import { ErrorMessage, Form, Formik } from "formik";
 import { useFetch, usePost } from "hooks";
 
-import { apiGetUsers } from "modules/users/server";
+import { apiGetClients } from "../server";
 
 import { apiAssignProgramToUser } from "../server";
 
@@ -29,7 +29,7 @@ export default function ProgramToUser({ handleClose, data }) {
   // get users
   const { data: usersData, isLoading } = useFetch({
     queryKey: ["get-user-to-assign", search],
-    queryFn: () => apiGetUsers({ search: search }),
+    queryFn: () => apiGetClients({ search: search }),
   });
 
   const { mutate, isLoading: isLoadingMutate } = usePost({
@@ -81,8 +81,9 @@ export default function ProgramToUser({ handleClose, data }) {
                   {(msg) => <div className="input-error-msg">{t(msg)}</div>}
                 </ErrorMessage>
                 <div className="list-of-users-inner">
-                  {usersData?.data?.coaches && usersData.data.coaches.length
-                    ? usersData.data.coaches.map((item) => (
+                  {usersData?.data?.leaders?.users &&
+                  usersData?.data?.leaders?.users.length
+                    ? usersData?.data?.leaders?.users.map((item) => (
                         <div
                           className="d-flex align-items-center justify-content-between list-of-users-user"
                           key={item.id}
@@ -90,7 +91,7 @@ export default function ProgramToUser({ handleClose, data }) {
                           <div className="d-flex align-items-center gap-2">
                             <img
                               src={
-                                item?.avatar ||
+                                item?.profile?.avatar ||
                                 "/assets/images/user-placeholder.png"
                               }
                               alt={item?.name}

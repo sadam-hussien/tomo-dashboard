@@ -37,7 +37,7 @@
 }
 
 .add-program-form .accordion-item .accordion-button {
-  padding: var(--space-base);
+  padding: var(--space-base) 0;
   font-weight: 500;
   font-size: var(--font-size-lg);
   color: var(--text);
@@ -61,6 +61,10 @@
 .add-program-form .accordion-item .accordion-button:focus {
   box-shadow: none;
   border-color: none;
+}
+
+.add-program-form .accordion-body {
+  padding: 0 !important;
 }
 
 .assign-program-to-user .input-withicon-group {
@@ -183,4 +187,60 @@
   left: 170px;
   font-size: 14px;
   color: var(--secondary);
+}
+
+.import-program-option {
+  padding: 10px;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.import-program-option.active,
+.import-program-option:hover {
+  background: #ececec;
+}
+
+.import-program-option-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid #1c1b1f;
+  position: relative;
+}
+
+.import-program-option-circle::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: transparent;
+}
+
+.import-program-option.active .import-program-option-circle {
+  border-color: var(--secondary);
+}
+
+.import-program-option.active .import-program-option-circle::after {
+  background-color: var(--secondary);
+}
+
+.import-program-option-text {
+  color: var(--text, #29384e);
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.choose-program-selectbox .select__option {
+}
+
+.choose-program-selectbox .select__option:active {
+  background-color: transparent !important;
+}
+
+.choose-program-selectbox .input-error-msg {
+  margin-top: -15px;
 }

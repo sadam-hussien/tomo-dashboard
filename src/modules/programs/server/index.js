@@ -6,6 +6,12 @@ export const apiGetPrograms = (params) => {
   });
 };
 
+export const apiGetClients = (params) => {
+  return Api().get("leaders", {
+    params: params,
+  });
+};
+
 export function apiAddProgram(data) {
   return Api().post(`programs`, data);
 }
