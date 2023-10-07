@@ -1,35 +1,17 @@
-import {
-  DateInput,
-  DynamicFileUploaderInput,
-  InputsHandler,
-  Modal,
-  SwitchInput,
-  Table,
-  Table2,
-  alertConfirmation,
-} from "components";
+import { CustomDateInput, Table2 } from "components";
 
-import { useFetch, usePost } from "hooks";
+import { useFetch } from "hooks";
 
-import {
-  apiGetCoaches,
-  apiDeleteCoache,
-  apiGetPrograms,
-  apiGetSingleCoache,
-} from "../server";
+import { apiGetSingleCoache } from "../server";
 
-import { coach_columns, coaches_columns } from "../columns";
+import { coach_columns } from "../columns";
 
 import { useTranslation } from "react-i18next";
 
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
-import LeftSide from "../components/LeftSide";
-
-import DatePicker from "../components/DatePicker";
-
-import { useRef, useState } from "react";
 import { Col, Row, Spinner } from "react-bootstrap";
+import { Form, Formik } from "formik";
 
 export default function Coach() {
   // translation
@@ -66,6 +48,30 @@ export default function Coach() {
                   <i className="las la-angle-left"></i>
                 </Link>
               </div>
+              <Formik
+                initialValues={{ coach_filter_start: "", coach_filter_end: "" }}
+              >
+                {({ values, setFieldValue }) => (
+                  <Form className="mb-5">
+                    <CustomDateInput
+                      name="coach_filter"
+                      id="coach-filter"
+                      noBorder
+                      containerStyle={{
+                        flexDirection: "row-reverse",
+                      }}
+                      startDate={values.coach_filter_start}
+                      endDate={values.coach_filter_end}
+                      selectsRange
+                      onChange={(dates) => {
+                        const [start, end] = dates;
+                        setFieldValue("coach_filter_start", start);
+                        setFieldValue("coach_filter_end", end);
+                      }}
+                    />
+                  </Form>
+                )}
+              </Formik>
 
               <div className="single-coach-table">
                 <Table2

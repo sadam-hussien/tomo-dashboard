@@ -8,13 +8,13 @@ import * as Yup from "yup";
 
 import { change_password_fields } from "../constants";
 
-import { Btn, InputsHandler } from "components";
+import { Btn, InputWithIcon, InputsHandler } from "components";
 
 import { usePost } from "hooks";
 
 import { apiUpdatePassword } from "../server";
 
-export default function Security() {
+export default function SecurityForm() {
   const { t } = useTranslation("common");
 
   const { mutate, isLoading } = usePost({
@@ -34,6 +34,7 @@ export default function Security() {
   }
   return (
     <div className="">
+      <h5 className="profile-title mb-5 ">{t("change_password")}</h5>
       <Formik
         validationSchema={schema}
         onSubmit={handleSubmit}
@@ -45,18 +46,47 @@ export default function Security() {
       >
         {({ handleReset }) => (
           <Form>
-            <Row>
-              {change_password_fields.map((item, index) => (
-                <Col key={index} xs={12}>
-                  <Row>
-                    <Col xs={12} md={10} lg={8}>
-                      <InputsHandler item={item} translation="common" />
-                    </Col>
-                  </Row>
-                </Col>
-              ))}
+            <Row className="gx-5">
+              <Col md={6}>
+                <div className="setting-input-container">
+                  <InputWithIcon
+                    label={t("type_your_current_password")}
+                    type="password"
+                    name="oldPassword"
+                    id="current-password-inp"
+                    noBorder
+                    placeholder={t("type_your_current_password")}
+                  />
+                </div>
+              </Col>
+              <Col></Col>
+              <Col md={6}>
+                <div className="setting-input-container">
+                  <InputWithIcon
+                    label={t("type_your_new_password")}
+                    type="password"
+                    name="password"
+                    id="new-password-inp"
+                    noBorder
+                    placeholder={t("type_your_new_password")}
+                  />
+                </div>
+              </Col>
+              <Col md={6}>
+                <div className="setting-input-container">
+                  <InputWithIcon
+                    label={t("type_your_confirm_new_password")}
+                    type="password"
+                    name="confirmPassword"
+                    id="confirm-new-password-inp"
+                    noBorder
+                    placeholder={t("type_your_confirm_new_password")}
+                  />
+                </div>
+              </Col>
             </Row>
-            <div className="mt-3 d-flex align-items-center justify-content-end gap-4">
+
+            <div className="mt-3 d-flex align-items-center justify-content-end gap-4 flex-wrap">
               <Btn
                 title={t("save")}
                 type="submit"

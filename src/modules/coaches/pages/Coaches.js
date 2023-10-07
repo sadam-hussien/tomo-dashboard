@@ -6,6 +6,7 @@ import {
   Search,
   Table,
   Table2,
+  Tabs,
   alertConfirmation,
 } from "components";
 
@@ -20,6 +21,21 @@ import { useTranslation } from "react-i18next";
 import { Add, Edit } from "../components";
 
 import { Link, useSearchParams } from "react-router-dom";
+
+const tabsData = [
+  {
+    title: "coach_food_program",
+    path: `?type=food`,
+    id: "food",
+    image: "/assets/images/food-program.svg",
+  },
+  {
+    title: "coach_sporting_program",
+    path: `?type=sport`,
+    id: "sport",
+    image: "/assets/images/sporting-program.svg",
+  },
+];
 
 export function Actions({ col }) {
   // delete coach
@@ -76,39 +92,18 @@ export default function Coaches() {
         <Search placeholder={t("search_about_coach")} />
       </div>
 
-      <div className="d-flex align-items-center mb-5 border-bottom">
-        <Link
-          to={{
-            pathname: "",
-            search: "?type=food",
-          }}
-          className={`d-flex gap-3 pb-4 px-4 program-type align-items-center ${
-            coachType === "food" ? "active" : ""
-          }`}
-        >
-          <img
-            src="/assets/images/food-program.svg"
-            alt="food"
-            className="img-fluid"
-          />
-          <span>{t("food_program")}</span>
-        </Link>
-        <Link
-          to={{
-            pathname: "",
-            search: "?type=sport",
-          }}
-          className={`d-flex gap-3 pb-4 px-4 program-type align-items-center ${
-            coachType === "sport" ? "active" : ""
-          }`}
-        >
-          <img
-            src="/assets/images/sporting-program.svg"
-            alt="food"
-            className="img-fluid"
-          />
-          <span>{t("sporting_program")}</span>
-        </Link>
+      <div className="mb-5">
+        <Tabs
+          data={tabsData}
+          active={coachType}
+          itemClassName="d-flex gap-3 pb-4 px-4 align-items-center"
+          element={(item, index) => (
+            <>
+              <img src={item.image} alt={item.id} className="img-fluid" />
+              <span>{t(item.title)}</span>
+            </>
+          )}
+        />
       </div>
       <Table2
         data={coachesData}

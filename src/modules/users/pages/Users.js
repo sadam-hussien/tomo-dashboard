@@ -1,4 +1,13 @@
-import { Modal, Table, alertConfirmation } from "components";
+import {
+  AddBtn,
+  DefaultActions,
+  Modal,
+  Pagination,
+  Search,
+  Table,
+  Table2,
+  alertConfirmation,
+} from "components";
 
 import { useFetch, usePost } from "hooks";
 
@@ -10,16 +19,10 @@ import { useTranslation } from "react-i18next";
 
 import { Add, Edit } from "../components";
 
-export default function Users() {
-  // translation
-  const { t } = useTranslation("common");
+import { useSearchParams } from "react-router-dom";
 
-  // fetch users using react-query library
-  const { isLoading, data } = useFetch({
-    queryKey: "get-users",
-    queryFn: apiGetUsers,
-  });
-
+export function Actions({ col }) {
+  // delete coach
   // delete one program
   const { mutate } = usePost({
     queryFn: apiDeleteUser,
@@ -27,8 +30,66 @@ export default function Users() {
   });
 
   return (
-    <section className="programs-page">
-      <Table
+    <DefaultActions
+      data={col}
+      edit
+      remove={{ removeFn: (id) => alertConfirmation({ mutate, id }) }}
+    />
+  );
+}
+
+export default function Users() {
+  // translation
+  const { t } = useTranslation("common");
+
+  const [searchParams] = useSearchParams();
+
+  const searchParam = searchParams.get("search");
+
+  const pageParam = searchParams.get("page");
+
+  // fetch users using react-query library
+  const { isLoading, data } = useFetch({
+    queryKey: ["get-users", pageParam, searchParam],
+    queryFn: () =>
+      apiGetUsers({
+        page: pageParam,
+        search: searchParam,
+      }),
+  });
+
+  const usersData = data?.data?.coaches;
+
+  const meta = data?.data?.meta;
+
+  return (
+    <section className="users-page">
+      <div className="d-flex justify-content-end mb-5">
+        <Search placeholder={t("search_about_users_user")} />
+      </div>
+
+      <div className="d-flex align-items-center justify-content-between mb-4">
+        <AddBtn
+          title={t("add_user")}
+          modalBtnTitle={t("save")}
+          modalTitle={t("add_new_user")}
+        />
+      </div>
+
+      <Table2
+        data={usersData}
+        columns={users_columns}
+        isLoading={isLoading}
+        selection
+      />
+
+      <Pagination
+        page={meta?.page}
+        total={meta?.pageCount}
+        hasPreviousPage={meta?.hasPreviousPage}
+        hasNextPage={meta?.hasNextPage}
+      />
+      {/* <Table
         data={data?.data}
         columns={users_columns}
         isLoading={isLoading}
@@ -66,7 +127,7 @@ export default function Users() {
           deleting: true,
           deletingFn: (id) => alertConfirmation({ mutate, id }),
         }}
-      />
+      /> */}
       <Modal edit={<Edit />} add={<Add />} />
     </section>
   );

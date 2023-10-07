@@ -1,0 +1,40 @@
+.global-tabs {
+  border-bottom: 1px solid rgba(var(--text-rgb), 0.1);
+  padding-bottom: 8px;
+}
+
+.global-tabs-item {
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 400;
+  position: relative;
+  padding-inline-end: 14px;
+  transition: 0.3s;
+}
+
+.global-tabs-item::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  right: 0;
+  left: 0;
+  height: 1px;
+  background-color: transparent;
+  transition: 0.3s;
+}
+
+.global-tabs-item.active,
+.global-tabs-item:hover {
+  color: var(--secondary);
+}
+
+.global-tabs-item.active::after,
+.global-tabs-item:hover::after {
+  background-color: var(--secondary);
+}
+
+.global-tabs-item.active img,
+.global-tabs-item:hover img {
+  filter: invert(21%) sepia(65%) saturate(5159%) hue-rotate(336deg)
+    brightness(85%) contrast(90%);
+}

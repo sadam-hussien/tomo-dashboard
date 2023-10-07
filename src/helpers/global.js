@@ -1,3 +1,18 @@
+export const months = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "June",
+  "July",
+  "Aug",
+  "Sept",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
 export function handleDate(d, time = null) {
   if (time) {
     const date = new Date(d);
@@ -7,20 +22,6 @@ export function handleDate(d, time = null) {
 
     return `${hours}:${minutes}`;
   }
-  const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "June",
-    "July",
-    "Aug",
-    "Sept",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
   if (d) {
     const date = new Date(d);
     const days = date.getDate();

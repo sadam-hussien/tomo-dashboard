@@ -8,6 +8,7 @@ import {
   Search,
   Table,
   Table2,
+  Tabs,
   alertConfirmation,
 } from "components";
 
@@ -23,18 +24,38 @@ import { Add, Edit, ProgramToUser, ChooosePrograms } from "../components";
 
 import { modalTypes } from "constants";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { openModal } from "store/global";
 
 import { Link, useSearchParams } from "react-router-dom";
+
 import { useState } from "react";
+
+import { programTypes } from "constants";
+
+const tabsData = [
+  {
+    title: "food_program",
+    path: `?program_type=${programTypes.nutrition}`,
+    id: programTypes.nutrition,
+    image: "/assets/images/food-program.svg",
+  },
+  {
+    title: "sporting_program",
+    path: `?program_type=${programTypes.sports}`,
+    id: programTypes.sports,
+    image: "/assets/images/sporting-program.svg",
+  },
+];
 
 export default function Programs() {
   // translation
   const { t } = useTranslation("common");
 
   const dispatch = useDispatch();
+
+  const { modal } = useSelector((state) => state.global);
 
   const [searchParams] = useSearchParams();
 
@@ -53,6 +74,9 @@ export default function Programs() {
         page: pageParam,
         search: searchParam,
       }),
+    options: {
+      enabled: !modal.isShow,
+    },
   });
 
   const programsData = data?.data?.programs;
@@ -125,39 +149,18 @@ export default function Programs() {
         </Btn>
       </div>
 
-      <div className="d-flex align-items-center mb-5 border-bottom">
-        <Link
-          to={{
-            pathname: "",
-            search: "?program_type=nutrition",
-          }}
-          className={`d-flex gap-3 pb-4 px-4 program-type align-items-center ${
-            programType === "nutrition" ? "active" : ""
-          }`}
-        >
-          <img
-            src="/assets/images/food-program.svg"
-            alt="food"
-            className="img-fluid"
-          />
-          <span>{t("food_program")}</span>
-        </Link>
-        <Link
-          to={{
-            pathname: "",
-            search: "?program_type=sports",
-          }}
-          className={`d-flex gap-3 pb-4 px-4 program-type align-items-center ${
-            programType === "sports" ? "active" : ""
-          }`}
-        >
-          <img
-            src="/assets/images/sporting-program.svg"
-            alt="food"
-            className="img-fluid"
-          />
-          <span>{t("sporting_program")}</span>
-        </Link>
+      <div className="mb-5">
+        <Tabs
+          data={tabsData}
+          active={programType}
+          itemClassName="d-flex gap-3 pb-4 px-4 align-items-center"
+          element={(item, index) => (
+            <>
+              <img src={item.image} alt={item.id} className="img-fluid" />
+              <span>{t(item.title)}</span>
+            </>
+          )}
+        />
       </div>
 
       <Table2
