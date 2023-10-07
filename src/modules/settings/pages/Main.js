@@ -1,5 +1,8 @@
+import { useFetch } from "hooks";
 import { useTranslation } from "react-i18next";
 import { Link, Outlet, useLocation } from "react-router-dom";
+import { apiGetProfile } from "../server";
+import { Spinner } from "react-bootstrap";
 
 const links = [
   {
@@ -12,7 +15,7 @@ const links = [
   },
   {
     title: "session_dates",
-    path: "Ssessions",
+    path: "sessions",
   },
 ];
 
@@ -21,12 +24,18 @@ export default function Main() {
 
   const { t } = useTranslation("common");
 
+  const { isLoading, data } = useFetch({
+    queryFn: apiGetProfile,
+    queryKey: "get-profile-data",
+  });
+
   function activeClass(href) {
     if (pathname.includes(href)) {
       return "active";
     }
     return "";
   }
+
   return (
     <section className="settings-page">
       <nav className="settings-nav d-flex align-items-center gap-5 flex-wrap">
@@ -44,7 +53,16 @@ export default function Main() {
           </Link>
         ))}
       </nav>
-      <Outlet />
+      {isLoading ? (
+        <Spinner
+          as="span"
+          animation="border"
+          role="status"
+          aria-hidden="true"
+        />
+      ) : (
+        <Outlet context={{ data: data?.data?.coach }} />
+      )}
     </section>
   );
 }

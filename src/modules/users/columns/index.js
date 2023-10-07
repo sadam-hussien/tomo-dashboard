@@ -1,4 +1,6 @@
-import { DynamicStatus } from "components";
+import { DynamicStatus, Status } from "components";
+
+import { Actions } from "../pages/Users";
 
 export const users_columns = [
   {
@@ -15,14 +17,10 @@ export const users_columns = [
   },
   {
     Header: "status",
-    accessor: (col) => (
-      <DynamicStatus
-        status={
-          col.status
-            ? { en: "active", ar: "نشط", img: "active-icon.svg" }
-            : { en: "inactive", ar: "غير نشط", img: "pending-icon.svg" }
-        }
-      />
-    ),
+    accessor: (col) => <Status status={col.status ? "نشط" : "انتهى"} />,
+  },
+  {
+    Header: "actions",
+    accessor: (col) => <Actions col={col} />,
   },
 ];

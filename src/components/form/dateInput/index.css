@@ -24,13 +24,16 @@
   transition: 0.3s;
 }
 
-.react-datepicker-popper[data-placement^="top"]
-  .react-datepicker__triangle::before,
-.react-datepicker-popper[data-placement^="bottom"]
-  .react-datepicker__triangle::before,
-.react-datepicker-popper[data-placement^="top"]
-  .react-datepicker__triangle::after,
-.react-datepicker-popper[data-placement^="bottom"]
-  .react-datepicker__triangle::after {
-  left: auto;
+.react-datepicker-popper[data-placement^="top"] .react-datepicker__triangle,
+.react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle {
+  margin-left: -14px;
+}
+
+.react-datepicker {
+  direction: ltr;
+}
+
+.react-datepicker__day--today:not(.react-datepicker__day--in-range),
+.react-datepicker__day--today:not(.react-datepicker__day--selected) {
+  background-color: rgba(var(--primary-rgb) / 0.2) !important;
 }

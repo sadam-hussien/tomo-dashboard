@@ -20,7 +20,7 @@ const subscriptionField = {
   number: "",
 };
 
-export default function Schedule() {
+export default function Sessions() {
   const { t } = useTranslation("common");
 
   const { data } = useOutletContext();

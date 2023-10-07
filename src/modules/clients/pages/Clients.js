@@ -6,6 +6,7 @@ import {
   Pagination,
   Search,
   Filter,
+  Tabs,
 } from "components";
 
 import { useFetch, usePost } from "hooks";
@@ -16,7 +17,22 @@ import { clients_columns } from "../columns";
 
 import { useTranslation } from "react-i18next";
 
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
+
+const tabsData = [
+  {
+    title: "training_clients",
+    path: `?type=`,
+    id: "",
+    image: "/assets/images/sidebar/client.svg",
+  },
+  {
+    title: "tomo_clients",
+    path: `?type=tomo`,
+    id: "tomo",
+    image: "/assets/images/sidebar/client.svg",
+  },
+];
 
 export default function Clients() {
   // translation
@@ -74,39 +90,18 @@ export default function Clients() {
         <Search placeholder={t("search_about_users")} />
       </div>
 
-      <div className="d-flex align-items-center mb-5 border-bottom">
-        <Link
-          to={{
-            pathname: "",
-            search: "?type=tomo",
-          }}
-          className={`d-flex gap-3 pb-4 px-4 program-type align-items-center ${
-            clientsType === "tomo" ? "active" : ""
-          }`}
-        >
-          <img
-            src="/assets/images/food-program.svg"
-            alt="tomo"
-            className="img-fluid"
-          />
-          <span>{t("tomo_clients")}</span>
-        </Link>
-        <Link
-          to={{
-            pathname: "",
-            search: "?type=",
-          }}
-          className={`d-flex gap-3 pb-4 px-4 program-type align-items-center ${
-            clientsType === "" ? "active" : ""
-          }`}
-        >
-          <img
-            src="/assets/images/sporting-program.svg"
-            alt="food"
-            className="img-fluid"
-          />
-          <span>{t("training_clients")}</span>
-        </Link>
+      <div className="mb-5">
+        <Tabs
+          data={tabsData}
+          active={clientsType}
+          itemClassName="d-flex gap-3 pb-4 px-4 align-items-center"
+          element={(item, index) => (
+            <>
+              <img src={item.image} alt={item.id} className="img-fluid" />
+              <span>{t(item.title)}</span>
+            </>
+          )}
+        />
       </div>
 
       <Table2

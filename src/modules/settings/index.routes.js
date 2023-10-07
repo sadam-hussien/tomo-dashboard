@@ -1,4 +1,4 @@
-import { Main, Profile, Subscriptions } from "./pages";
+import { Main, Profile, Subscriptions, Sessions } from "./pages";
 
 const routes = [
   {
@@ -17,6 +17,10 @@ const routes = [
       {
         path: "subscriptions",
         component: Subscriptions,
+      },
+      {
+        path: "sessions",
+        component: Sessions,
       },
 
       // {

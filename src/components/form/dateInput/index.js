@@ -120,7 +120,6 @@ export function CustomDateInput({
               customInput={<InputField />}
               shouldCloseOnSelect={false}
               {...field}
-              {...props}
               selected={selValue}
               id={id}
               onChange={(date) => setFieldValue(name, date)}
@@ -128,6 +127,7 @@ export function CustomDateInput({
               className={`form-control input-withicon ${
                 noBorder ? "border-0" : ""
               }`}
+              {...props}
             />
           );
         }}

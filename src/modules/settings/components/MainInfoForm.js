@@ -22,8 +22,9 @@ import ChangeProfileImage from "./ChangeProfileImage";
 import { languagesOptions } from "constants";
 
 import { components } from "react-select";
+import { apiUpdateCoachData } from "../server";
 
-export default function MainInfoForm() {
+export default function MainInfoForm({ data }) {
   const { t } = useTranslation("common");
 
   // image uploading
@@ -31,6 +32,10 @@ export default function MainInfoForm() {
     usePost({
       queryFn: apiUploadImage,
     });
+
+  const { isLoading, mutate } = usePost({
+    queryFn: apiUpdateCoachData,
+  });
 
   const Item = (props) => {
     return (
@@ -59,20 +64,29 @@ export default function MainInfoForm() {
 
   function handleSubmit(values) {
     console.log(values);
+    const payload = {
+      name: values.name,
+      email: values.email,
+      lang: values.lang,
+      birthday: values.birth_of_date,
+      image: values.image,
+      phone: values.phone,
+    };
+    mutate(payload);
   }
+
   return (
     <div>
       <h5 className="profile-title">{t("personal_info")}</h5>
       <h6 className="profile-subtitle">{t("personal_info_subtitle")}</h6>
       <Formik
         initialValues={{
-          name: "",
-          phone: "",
-          email: "",
-          birth_of_date: "",
-          image: "",
-
-          lang: "",
+          name: data?.name || "",
+          phone: data?.phone || "",
+          email: data?.email || "",
+          birth_of_date: data?.birthday || "",
+          image: data?.image || "",
+          lang: data?.lang || "",
         }}
         onSubmit={handleSubmit}
       >
@@ -210,7 +224,7 @@ export default function MainInfoForm() {
                   width: "133px",
                   fontSize: "var(--font-size-md)",
                 }}
-                // loading={isLoading}
+                loading={isLoading}
               />
               <Btn
                 title={t("reset")}
@@ -222,7 +236,7 @@ export default function MainInfoForm() {
                   width: "133px",
                   fontSize: "var(--font-size-md)",
                 }}
-                // disabled={isLoading}
+                disabled={isLoading}
               />
             </div>
           </Form>
