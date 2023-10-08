@@ -12,12 +12,13 @@ import { Btn, CustomDateInput, InputWithIcon, InputsHandler } from "components";
 
 import { usePost } from "hooks";
 
-import { apiUpdatePassword } from "../server";
+import { apiUpdateSessions } from "../server";
+
 import { useOutletContext } from "react-router-dom";
 
-const subscriptionField = {
-  day: "",
-  number: "",
+const sessionsField = {
+  date: "",
+  number_of_seats: "",
 };
 
 export default function Sessions() {
@@ -25,14 +26,12 @@ export default function Sessions() {
 
   const { data } = useOutletContext();
 
-  console.log(data);
-
   const { mutate, isLoading } = usePost({
-    queryFn: apiUpdatePassword,
+    queryFn: apiUpdateSessions,
   });
 
   function handleSubmit(values) {
-    // mutate(values);
+    mutate({ items: values.sessions });
   }
 
   return (
@@ -40,23 +39,23 @@ export default function Sessions() {
       <Formik
         onSubmit={handleSubmit}
         initialValues={{
-          subscriptions: [subscriptionField],
+          sessions: data?.coachSessions || [sessionsField],
         }}
       >
         {({ handleReset, values }) => (
           <Form>
             <div className="setting-input-container">
               <FieldArray
-                name="subscriptions"
+                name="sessions"
                 render={(arrayHelpers) => (
                   <div className="">
-                    {values.subscriptions.map((item, index) => (
+                    {values.sessions.map((item, index) => (
                       <div key={index} className="setting-input-container">
                         <Row className="g-5">
                           <Col lg={4}>
                             <CustomDateInput
-                              name={`subscriptions[${index}].day`}
-                              id={`subscription-${index}-date`}
+                              name={`sessions[${index}].date`}
+                              id={`sessions-${index}-date`}
                               // placeholder={t("profile_birth_of_date")}
                               label={t("the_day")}
                               noBorder
@@ -68,7 +67,7 @@ export default function Sessions() {
                           <Col sm={8} lg={4}>
                             <InputWithIcon
                               type="text"
-                              name={`subscriptions[${index}].number`}
+                              name={`sessions[${index}].number_of_seats`}
                               label={t("number_of")}
                               placeholder={t("number_of")}
                               icon="las la-edit"
@@ -79,7 +78,7 @@ export default function Sessions() {
                               }}
                             />
                           </Col>
-                          {values.subscriptions.length > 1 && (
+                          {values.sessions.length > 1 && (
                             <Col sm={4} className="d-flex align-items-end">
                               <button
                                 type="button"
@@ -110,7 +109,7 @@ export default function Sessions() {
                         marginTop: "32px",
                       }}
                       type="button"
-                      onClick={() => arrayHelpers.push(subscriptionField)}
+                      onClick={() => arrayHelpers.push(sessionsField)}
                     >
                       <i className="las la-plus"></i>
                       <span>اضافة موعد جديد</span>

@@ -12,12 +12,13 @@ import { Btn, CustomDateInput, InputWithIcon, InputsHandler } from "components";
 
 import { usePost } from "hooks";
 
-import { apiUpdatePassword } from "../server";
+import { apiUpdateScedules } from "../server";
+
 import { useOutletContext } from "react-router-dom";
 
 const subscriptionField = {
-  day: "",
-  number: "",
+  date: "",
+  number_of_seats: "",
 };
 
 export default function Schedule() {
@@ -25,14 +26,12 @@ export default function Schedule() {
 
   const { data } = useOutletContext();
 
-  console.log(data);
-
   const { mutate, isLoading } = usePost({
-    queryFn: apiUpdatePassword,
+    queryFn: apiUpdateScedules,
   });
 
   function handleSubmit(values) {
-    // mutate(values);
+    mutate({ items: values.subscriptions });
   }
 
   return (
@@ -40,7 +39,7 @@ export default function Schedule() {
       <Formik
         onSubmit={handleSubmit}
         initialValues={{
-          subscriptions: [subscriptionField],
+          subscriptions: data?.coachScedules || [subscriptionField],
         }}
       >
         {({ handleReset, values }) => (
@@ -55,7 +54,7 @@ export default function Schedule() {
                         <Row className="g-5">
                           <Col lg={4}>
                             <CustomDateInput
-                              name={`subscriptions[${index}].day`}
+                              name={`subscriptions[${index}].date`}
                               id={`subscription-${index}-date`}
                               // placeholder={t("profile_birth_of_date")}
                               label={t("the_day")}
@@ -68,7 +67,7 @@ export default function Schedule() {
                           <Col sm={8} lg={4}>
                             <InputWithIcon
                               type="text"
-                              name={`subscriptions[${index}].number`}
+                              name={`subscriptions[${index}].number_of_seats`}
                               label={t("number_of")}
                               placeholder={t("number_of")}
                               icon="las la-edit"
