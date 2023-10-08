@@ -11,3 +11,11 @@ export const apiUpdateCoachData = (data) => {
 export const apiUpdatePassword = (data) => {
   return Api().put(`coaches/updatePassword`, data);
 };
+
+export const apiUpdateScedules = (data) => {
+  return Api().put(`coaches/add-schedule`, data);
+};
+
+export const apiUpdateSessions = (data) => {
+  return Api().put(`coaches/add-session`, data);
+};
